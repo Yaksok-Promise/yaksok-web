@@ -28,13 +28,6 @@
     "build-storybook": {
       "dependsOn": ["^storybook"],
       "outputs": []
-    },
-    "test": {
-      "dependsOn": ["transit", "@yaksok/test-config#build"],
-      "outputs": ["coverage.json"]
-    },
-    "transit": {
-      "dependsOn": ["^transit"]
     }
   }
 }
