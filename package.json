@@ -13,7 +13,9 @@
     "lint:fix": "biome check --fix --unsafe",
     "lefthook": "lefthook install",
     "storybook": "turbo run storybook --filter yaksok-docs",
-    "build:storybook": "turbo run build-storybook --filter yaksok-docs"
+    "build:storybook": "turbo run build-storybook --filter yaksok-docs",
+    "test": "turbo run test",
+    "view-report": "turbo run view-report"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
