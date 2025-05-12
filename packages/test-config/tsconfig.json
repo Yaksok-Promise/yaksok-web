@@ -1,8 +1,0 @@
-{
-  "extends": ["@yaksok/typescript-config/test.json"],
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["configs", "scripts"],
-  "exclude": ["node_modules", "dist"]
-}
