@@ -409,12 +409,9 @@ importers:
       '@tailwindcss/cli':
         specifier: ^4.0.12
         version: 4.1.4
-<<<<<<< HEAD
       '@yaksok/icons':
         specifier: workspace:*
         version: link:../icons
-=======
->>>>>>> 6176778 (fix: tailwindcss 적용 버그 수정)
       '@yaksok/utils':
         specifier: workspace:*
         version: link:../utils
