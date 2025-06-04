@@ -10,10 +10,10 @@
   "scripts": {
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit",
+    "test": "vitest run",
     "build": "tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "dev": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
-    "type-check": "tsc --noEmit",
-    "test": "vitest run"
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
