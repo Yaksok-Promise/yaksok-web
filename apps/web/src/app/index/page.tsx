@@ -1,6 +1,7 @@
 import TopBar from '@/components/common/TopBar'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import Carousel from '@yaksok/ui/carousel/index'
 
 export default function MainPage() {
   const { push } = useFlow()
