@@ -16,3 +16,7 @@
 pnpm install
 pnpm run lefthook
 ```
+
+## tailwind css ui 적용
+- ui package에서 적용한 Css를 우선 빌드하여 style 파일로 추출후 적용하는 app에 정적 Import를 해주어야 합니다.
+- `pnpm run dev:ui` 실행하여 정적 style 배포 파일을 생성하여 작업을 진행해주세요
