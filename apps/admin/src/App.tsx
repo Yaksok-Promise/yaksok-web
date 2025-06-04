@@ -19,6 +19,7 @@ function App() {
             ))}
           </Carousel.Track>
           <Carousel.DotButton />
+          <Carousel.Controller />
         </Carousel.Root>
       </div>
     </div>
