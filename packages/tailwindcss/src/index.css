@@ -129,9 +129,13 @@
   --color-gray02: #48484a;
   --color-gray03: #636366;
   --color-gray04: #f4f4f4;
+  --color-gray06: #e3e3e3;
+  --color-gray07: #f4f4f4;
   --color-subGray01: #c4c4c4;
   --color-red01: #da1e28;
   --color-blue01: #3cb4f7;
+
+  /*  carousel style */
 }
 
 html {
