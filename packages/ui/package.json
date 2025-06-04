@@ -36,6 +36,7 @@
     "@tailwindcss/cli": "^4.0.12",
     "@yaksok/icons": "workspace:*",
     "@yaksok/utils": "workspace:*",
+    "@yaksok/icons": "workspace:*",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
