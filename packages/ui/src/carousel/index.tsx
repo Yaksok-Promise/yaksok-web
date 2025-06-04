@@ -1,6 +1,4 @@
 import { CarouselDotButton } from './carousel-buttons'
-import { CarouselController } from './carousel-controller'
-// index.ts
 import { CarouselRoot } from './carousel-root'
 import { CarouselSlide } from './carousel-slide'
 import { CarouselTrack } from './carousel-track'
@@ -10,7 +8,6 @@ export const Carousel = {
   Track: CarouselTrack,
   Slide: CarouselSlide,
   DotButton: CarouselDotButton,
-  Controller: CarouselController,
 }
 
 export { type EmblaOptionsType as CarouselOptionsType } from 'embla-carousel'
