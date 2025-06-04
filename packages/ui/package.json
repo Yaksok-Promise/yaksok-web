@@ -12,8 +12,7 @@
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "build": "tailwindcss -i ./src/styles.css -o ./dist/styles.css",
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
-    "type-check": "tsc --noEmit"
+    "dev": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -33,6 +32,7 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.0.12",
     "@yaksok/utils": "workspace:*",
+    "@yaksok/icons": "workspace:*",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
