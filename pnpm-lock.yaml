@@ -141,7 +141,7 @@ importers:
         version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.0)(storybook@8.6.12(prettier@2.8.8))(typescript@5.7.3)(vite@6.3.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0))
       '@storybook/test':
         specifier: ^8.6.12
-        version: 8.6.12(storybook@8.6.12)
+        version: 8.6.12(storybook@8.6.12(prettier@2.8.8))
       '@tailwindcss/vite':
         specifier: ^4.0.17
         version: 4.1.4(vite@6.3.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0))
@@ -427,6 +427,9 @@ importers:
       '@vitest/coverage-istanbul':
         specifier: ^3.0.7
         version: 3.1.3(vitest@3.1.3(@types/node@22.14.0)(@vitest/browser@3.1.2)(@vitest/ui@3.0.7)(jiti@2.4.2)(jsdom@26.1.0)(lightningcss@1.29.2)(terser@5.39.0))
+      '@vitest/ui':
+        specifier: 3.0.7
+        version: 3.0.7(vitest@3.1.3)
       '@yaksok/tailwindcss-config':
         specifier: workspace:*
         version: link:../tailwindcss
@@ -6045,7 +6048,6 @@ snapshots:
       tinyglobby: 0.2.13
       tinyrainbow: 2.0.0
       vitest: 3.1.3(@types/node@22.14.0)(@vitest/browser@3.1.2)(@vitest/ui@3.0.7)(jiti@2.4.2)(jsdom@26.1.0)(lightningcss@1.29.2)(terser@5.39.0)
-    optional: true
 
   '@vitest/utils@2.0.5':
     dependencies:
