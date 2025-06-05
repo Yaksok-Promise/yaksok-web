@@ -8,18 +8,16 @@ export const CarouselController: React.FC = () => {
   const { selectedIndex, scrollSnaps, embla } = useCarousel()
 
   return (
-    <div className="mt-7 grid grid-cols-[auto_1fr] justify-between gap-4">
-      <div className="-mr-[0.6rem] flex flex-wrap items-center justify-end">
-        <CarouselAnimationBar
-          selectedIndex={selectedIndex}
-          totalLength={scrollSnaps.length}
-        />
-        <CarouselAutoPlayButton embla={embla} />
-        <CarouselBadge
-          selectedIndex={selectedIndex}
-          totalLength={scrollSnaps.length}
-        />
-      </div>
+    <div className="-mr-[0.6rem] flex flex-wrap items-center gap-[8px]">
+      <CarouselAnimationBar
+        selectedIndex={selectedIndex}
+        totalLength={scrollSnaps.length}
+      />
+      <CarouselAutoPlayButton embla={embla} />
+      <CarouselBadge
+        selectedIndex={selectedIndex}
+        totalLength={scrollSnaps.length}
+      />
     </div>
   )
 }
