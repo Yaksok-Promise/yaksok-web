@@ -10,6 +10,10 @@ export const CarouselController: React.FC = () => {
   return (
     <div className="mt-7 grid grid-cols-[auto_1fr] justify-between gap-4">
       <div className="-mr-[0.6rem] flex flex-wrap items-center justify-end">
+        <CarouselAnimationBar
+          selectedIndex={selectedIndex}
+          totalLength={scrollSnaps.length}
+        />
         <CarouselAutoPlayButton embla={embla} />
         <CarouselBadge
           selectedIndex={selectedIndex}
@@ -20,11 +24,11 @@ export const CarouselController: React.FC = () => {
   )
 }
 
-type CarouselBageProps = {
+type CarouselCountProps = {
   selectedIndex: number
   totalLength: number
 }
-const CarouselBadge: React.FC<CarouselBageProps> = ({
+const CarouselBadge: React.FC<CarouselCountProps> = ({
   selectedIndex,
   totalLength,
 }) => {
@@ -52,5 +56,21 @@ const CarouselAutoPlayButton: React.FC<CarouselAutoPlayButtonProps> = ({
     <Pause onClick={toggleAutoplay} width={18} height={18} />
   ) : (
     <Play onClick={toggleAutoplay} width={18} height={18} />
+  )
+}
+
+const CarouselAnimationBar: React.FC<CarouselCountProps> = ({
+  selectedIndex,
+  totalLength,
+}) => {
+  const percentage = ((selectedIndex + 1) / totalLength) * 100
+
+  return (
+    <div className="relative h-[2px] w-[150px] overflow-hidden rounded-sm bg-gray06">
+      <div
+        className="absolute top-0 left-0 h-full bg-green01 transition-all duration-700 ease-in-out"
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
   )
 }
