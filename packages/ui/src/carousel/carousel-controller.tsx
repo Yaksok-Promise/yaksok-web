@@ -1,4 +1,4 @@
-import { Pause, Play } from '@yaksok/icons/index.js'
+import { Pause, Play } from '@yaksok/icons'
 import { changeNumberToString, cn } from '@yaksok/utils'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useCarousel } from './carousel-context'
@@ -8,23 +8,25 @@ export const CarouselController: React.FC = () => {
   const { selectedIndex, scrollSnaps, embla } = useCarousel()
 
   return (
-    <div className="mt-7 grid grid-cols-[auto_1fr] justify-between gap-4">
-      <div className="-mr-[0.6rem] flex flex-wrap items-center justify-end">
-        <CarouselAutoPlayButton embla={embla} />
-        <CarouselBadge
-          selectedIndex={selectedIndex}
-          totalLength={scrollSnaps.length}
-        />
-      </div>
+    <div className="-mr-[0.6rem] flex flex-wrap items-center gap-[8px]">
+      <CarouselAnimationBar
+        selectedIndex={selectedIndex}
+        totalLength={scrollSnaps.length}
+      />
+      <CarouselAutoPlayButton embla={embla} />
+      <CarouselBadge
+        selectedIndex={selectedIndex}
+        totalLength={scrollSnaps.length}
+      />
     </div>
   )
 }
 
-type CarouselBageProps = {
+type CarouselCountProps = {
   selectedIndex: number
   totalLength: number
 }
-const CarouselBadge: React.FC<CarouselBageProps> = ({
+const CarouselBadge: React.FC<CarouselCountProps> = ({
   selectedIndex,
   totalLength,
 }) => {
@@ -52,5 +54,21 @@ const CarouselAutoPlayButton: React.FC<CarouselAutoPlayButtonProps> = ({
     <Pause onClick={toggleAutoplay} width={18} height={18} />
   ) : (
     <Play onClick={toggleAutoplay} width={18} height={18} />
+  )
+}
+
+const CarouselAnimationBar: React.FC<CarouselCountProps> = ({
+  selectedIndex,
+  totalLength,
+}) => {
+  const percentage = ((selectedIndex + 1) / totalLength) * 100
+
+  return (
+    <div className="relative h-[2px] w-[150px] overflow-hidden rounded-sm bg-gray06">
+      <div
+        className="absolute top-0 left-0 h-full bg-green01 transition-all duration-700 ease-in-out"
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
   )
 }
