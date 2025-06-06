@@ -1,17 +1,23 @@
+import { cn } from '@yaksok/utils'
 import { EmblaOptionsType } from 'embla-carousel'
 import Autoplay, { AutoplayOptionsType } from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
-// CarouselContainer.tsx
-import React, { ReactElement, useMemo } from 'react'
+import React, { ComponentPropsWithoutRef, ReactElement, useMemo } from 'react'
 import { CarouselContext } from './carousel-context'
 import { useDotButton } from './use-carousel-dot-button'
 
+export type DivWihoutRefAndChildren = Omit<
+  ComponentPropsWithoutRef<'div'>,
+  'children'
+>
 // CarouselRoot.tsx
-export const CarouselRoot: React.FC<{
-  children: ReactElement[]
-  options?: EmblaOptionsType
-  autoPlayOption?: AutoplayOptionsType
-}> = ({ children, options, autoPlayOption }) => {
+export const CarouselRoot: React.FC<
+  {
+    children: ReactElement[] | ReactElement
+    options?: EmblaOptionsType
+    autoPlayOption?: AutoplayOptionsType
+  } & DivWihoutRefAndChildren
+> = ({ children, options, autoPlayOption, className, ...props }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     Autoplay({ ...autoPlayOption }),
   ])
@@ -38,7 +44,9 @@ export const CarouselRoot: React.FC<{
 
   return (
     <CarouselContext.Provider value={value}>
-      <div className="relative mx-auto max-w-3xl">{children}</div>
+      <div className={cn('relative mx-auto max-w-3xl', className)} {...props}>
+        {children}
+      </div>
     </CarouselContext.Provider>
   )
 }

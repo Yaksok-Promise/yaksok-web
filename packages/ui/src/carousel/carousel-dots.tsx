@@ -2,7 +2,6 @@ import { cn } from '@yaksok/utils'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useRef } from 'react'
 import { useCarousel } from './carousel-context'
-import { useAutoplay } from './use-auto-play'
 import { useAutoplayProgress } from './use-auto-play-progress'
 
 interface DotProps {
