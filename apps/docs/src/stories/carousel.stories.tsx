@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Carousel } from '@yaksok/ui/carousel/index'
 
-const meta: Meta<typeof Carousel> = {
+const meta: Meta<typeof Carousel.Root> = {
   component: Carousel.Root,
 }
 
 export default meta
 
-type Story = StoryObj<typeof Carousel>
+type Story = StoryObj<typeof Carousel.Root>
 
 export const Primary: Story = {
   render: props => (
@@ -17,10 +17,15 @@ export const Primary: Story = {
           <Carousel.Slide key={index}>{index + 1}</Carousel.Slide>
         ))}
       </Carousel.Track>
-      <Carousel.DotButton />
+      <Carousel.Dots />
       <Carousel.Controller />
     </Carousel.Root>
   ),
   name: 'Carousel',
-  args: {},
+  args: {
+    options: {},
+    autoPlayOption: {
+      delay: 2000,
+    },
+  },
 }
