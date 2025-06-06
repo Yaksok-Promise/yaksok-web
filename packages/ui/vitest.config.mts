@@ -5,7 +5,7 @@ const config = mergeConfig(
   uiConfig,
   defineProject({
     test: {
-      setupFiles: ['./setup.ts'], // ← 여기 포함돼야 함
+      setupFiles: ['./setup.ts'],
     },
   })
 )

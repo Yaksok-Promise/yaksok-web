@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Pause, Play } from '@yaksok/icons'
-=======
-import { Pause, Play } from '@yaksok/icons/index.js'
->>>>>>> cf6d647 (feat: carousel controller autoplay, badge)
 import { changeNumberToString, cn } from '@yaksok/utils'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useCarousel } from './carousel-context'
@@ -12,7 +8,6 @@ export const CarouselController: React.FC = () => {
   const { selectedIndex, scrollSnaps, embla } = useCarousel()
 
   return (
-<<<<<<< HEAD
     <div className="-mr-[0.6rem] flex flex-wrap items-center gap-[8px]">
       <CarouselAnimationBar
         selectedIndex={selectedIndex}
@@ -23,33 +18,15 @@ export const CarouselController: React.FC = () => {
         selectedIndex={selectedIndex}
         totalLength={scrollSnaps.length}
       />
-=======
-    <div className="mt-7 grid grid-cols-[auto_1fr] justify-between gap-4">
-      <div className="-mr-[0.6rem] flex flex-wrap items-center justify-end">
-        <CarouselAutoPlayButton embla={embla} />
-        <CarouselBadge
-          selectedIndex={selectedIndex}
-          totalLength={scrollSnaps.length}
-        />
-      </div>
->>>>>>> cf6d647 (feat: carousel controller autoplay, badge)
     </div>
   )
 }
 
-<<<<<<< HEAD
 type CarouselCountProps = {
   selectedIndex: number
   totalLength: number
 }
 const CarouselBadge: React.FC<CarouselCountProps> = ({
-=======
-type CarouselBageProps = {
-  selectedIndex: number
-  totalLength: number
-}
-const CarouselBadge: React.FC<CarouselBageProps> = ({
->>>>>>> cf6d647 (feat: carousel controller autoplay, badge)
   selectedIndex,
   totalLength,
 }) => {
@@ -79,7 +56,6 @@ const CarouselAutoPlayButton: React.FC<CarouselAutoPlayButtonProps> = ({
     <Play onClick={toggleAutoplay} width={18} height={18} />
   )
 }
-<<<<<<< HEAD
 
 const CarouselAnimationBar: React.FC<CarouselCountProps> = ({
   selectedIndex,
@@ -96,5 +72,3 @@ const CarouselAnimationBar: React.FC<CarouselCountProps> = ({
     </div>
   )
 }
-=======
->>>>>>> cf6d647 (feat: carousel controller autoplay, badge)
