@@ -10,7 +10,10 @@
     "dev": "pnpm run build && tsc --noEmit"
   },
   "exports": {
-    "./*": "./src/*"
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
   },
   "devDependencies": {
     "@svgr/cli": "^8.1.0",

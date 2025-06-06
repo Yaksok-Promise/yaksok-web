@@ -1,4 +1,4 @@
-import { Pause, Play } from '@yaksok/icons/index.js'
+import { Pause, Play } from '@yaksok/icons'
 import { changeNumberToString, cn } from '@yaksok/utils'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useCarousel } from './carousel-context'

@@ -18,21 +18,19 @@ const Dot: React.FC<DotProps> = ({ isActive, embla }) => {
 
   if (isActive) {
     return (
-      <>
+      <div
+        className={cn(
+          'relative h-1.25 w-[35px] overflow-hidden rounded-[10px] bg-gray06'
+        )}
+      >
         <div
-          className={cn(
-            'relative h-1.25 w-[35px] overflow-hidden rounded-[10px] bg-gray06'
-          )}
-        >
-          <div
-            ref={progressRef}
-            className="absolute top-0 bottom-0 w-full origin-left bg-black01"
-            style={{
-              animation: `slide var(--autoplay-duration, ${timeUntilNext}ms) linear forwards`,
-            }}
-          />
-        </div>
-      </>
+          ref={progressRef}
+          className="absolute top-0 bottom-0 w-full origin-left bg-black01"
+          style={{
+            animation: `slide var(--autoplay-duration, ${timeUntilNext}ms) linear forwards`,
+          }}
+        />
+      </div>
     )
   }
 
