@@ -138,7 +138,55 @@
   --color-green01: #018381;
 
   /*  carousel style */
-  --animate-slide: slide var(--autoplay-duration, 3000ms) linear forwards;
+    --animate-slide: slide var(--autoplay-duration, 3000ms) linear forwards;
+  
+  --text-head1--line-height: 52px;
+  --text-head1--letter-spacing: -0.6px;
+  --text-head1--font-weight: 800;
+  --text-head2: 36px;
+  --text-head2--line-height: 46px;
+  --text-head2--letter-spacing: -0.6px;
+  --text-head2--font-weight: 800;
+  --text-head3: 36px;
+  --text-head3--line-height: 46px;
+  --text-head3--letter-spacing: -0.6px;
+  --text-head3--font-weight: 800;
+  --text-head4: 32px;
+  --text-head4--line-height: 42px;
+  --text-head4--letter-spacing: -0.6px;
+  --text-head4--font-weight: 800;
+  --text-head5: 24px;
+  --text-head5--line-height: 34px;
+  --text-head5--letter-spacing: -0.6px;
+  --text-head5--font-weight: 700;
+  --text-head6: 80px;
+  --text-head6--line-height: 28px;
+  --text-head6--letter-spacing: -0.6px;
+  --text-head6--font-weight: 700;
+  --text-subhead1: 16px;
+  --text-subhead1--line-height: 28px;
+  --text-subhead1--letter-spacing: -0.6px;
+  --text-subhead1--font-weight: 700;
+  --text-subhead2: 14px;
+  --text-subhead2--line-height: 24px;
+  --text-subhead2--letter-spacing: -0.6px;
+  --text-subhead2--font-weight: 700;
+  --text-subhead3: 12px;
+  --text-subhead3--line-height: 18px;
+  --text-subhead3--letter-spacing: -0.6px;
+  --text-subhead3--font-weight: 700;
+  --text-body1: 16px;
+  --text-body1--line-height: 24px;
+  --text-body1--letter-spacing: -0.6px;
+  --text-body1--font-weight: 400;
+  --text-body2: 14px;
+  --text-body2--line-height: 20px;
+  --text-body2--letter-spacing: -0.6px;
+  --text-body2--font-weight: 400;
+  --text-caption1: 12px;
+  --text-caption1--line-height: 18px;
+  --text-caption1--letter-spacing: -0.6px;
+  --text-caption1--font-weight: 400;
 }
 
 html {
