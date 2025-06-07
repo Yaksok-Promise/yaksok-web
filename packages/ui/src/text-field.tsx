@@ -25,6 +25,7 @@ export interface TextFieldProps
   message: Message
   regex: RegExp
   onVerify?: (value: string) => boolean
+  onFormat?: (value: string) => string
 }
 
 export default function TextField({
@@ -32,9 +33,18 @@ export default function TextField({
   className,
   ...props
 }: TextFieldProps) {
+  const [value, setValue] = useState('')
   const [status, setStatus] = useState<Status>(undefined)
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+
+    // input value 값 업데이트
+    if (props.onFormat) {
+      setValue(props.onFormat(value))
+    } else {
+      setValue(value)
+    }
 
     if (value.length === 0) {
       setStatus(undefined)
@@ -77,6 +87,7 @@ export default function TextField({
           <input
             type={type}
             data-slot="input"
+            value={value}
             className={cn(
               textFieldVariants({
                 className,

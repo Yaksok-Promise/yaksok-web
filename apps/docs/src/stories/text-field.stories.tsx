@@ -18,8 +18,9 @@ const meta: Meta<TextFieldProps> = {
   tags: ['autodocs'],
   argTypes: {
     type: {
+      options: ['text', 'password'],
       control: {
-        disable: true,
+        type: 'select',
       },
     },
     onVerify: {
@@ -35,7 +36,7 @@ const meta: Meta<TextFieldProps> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Email: Story = {
   args: {
     placeholder: '이메일을 입력해 주세요',
     type: 'text',
@@ -44,6 +45,32 @@ export const Primary: Story = {
     message: {
       regexError: '이메일 형식이 올바르지 않습니다.',
       verificationError: '이메일 인증에 실패했습니다.',
+    },
+  },
+  render: args => {
+    const handleVerify = (value: string) => {
+      console.log(value)
+      return args.onVerify as boolean
+    }
+
+    return (
+      <TextField {...({ ...args, onVerify: handleVerify } as TextFieldProps)} />
+    )
+  },
+}
+
+export const PhoneNumber: Story = {
+  args: {
+    label: '휴대폰번호',
+    placeholder: '- 없이 숫자만 입력',
+    type: 'text',
+    regex: /^[0-9]{10,11}$/,
+    message: {
+      regexError: '휴대폰번호 형식이 올바르지 않습니다.',
+      verificationError: '휴대폰번호 인증에 실패했습니다.',
+    },
+    onFormat: (value: string) => {
+      return value.replace(/[^0-9]/g, '')
     },
   },
   render: args => {
