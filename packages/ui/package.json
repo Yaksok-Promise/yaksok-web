@@ -4,8 +4,8 @@
   "private": true,
   "exports": {
     "./*": "./src/*.tsx",
-    "./styles.css": "./dist/styles.css",
-    "./Colors": "./src/Colors.tsx"
+    "./carousel": "./src/carousel/index.ts",
+    "./styles.css": "./dist/styles.css"
   },
   "scripts": {
     "generate:component": "turbo gen react-component",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.6.1",
     "@turbo/gen": "^2.5.0",
     "@types/node": "^22.14.0",
