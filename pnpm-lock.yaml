@@ -166,6 +166,9 @@ importers:
       '@yaksok/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       globals:
         specifier: ^16.0.0
         version: 16.0.0
@@ -442,6 +445,9 @@ importers:
       '@yaksok/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       typescript:
         specifier: 5.8.2
         version: 5.8.2
