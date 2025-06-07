@@ -135,9 +135,11 @@
   --color-subGray01: #c4c4c4;
   --color-red01: #da1e28;
   --color-blue01: #3cb4f7;
+  --color-green01: #018381;
 
   /*  carousel style */
-
+    --animate-slide: slide var(--autoplay-duration, 3000ms) linear forwards;
+  
   --text-head1--line-height: 52px;
   --text-head1--letter-spacing: -0.6px;
   --text-head1--font-weight: 800;
@@ -189,4 +191,15 @@
 
 html {
   background-color: #f4f4f4;
+}
+
+@keyframes slide {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
