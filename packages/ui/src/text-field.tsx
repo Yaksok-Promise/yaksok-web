@@ -28,11 +28,10 @@ export interface TextFieldProps
   onFormat?: (value: string) => string
 }
 
-export default function TextField({
-  type = 'text',
-  className,
-  ...props
-}: TextFieldProps) {
+export const TextField = React.forwardRef(function TextField(
+  { type = 'text', className, ...props }: TextFieldProps,
+  ref: React.Ref<HTMLInputElement>
+) {
   const [value, setValue] = useState('')
   const [status, setStatus] = useState<Status>(undefined)
 
@@ -85,6 +84,7 @@ export default function TextField({
       <div className="flex items-center gap-[16px]">
         <div className="flex w-full flex-1 items-center justify-between border-black01 border-b-[2px]">
           <input
+            ref={ref}
             type={type}
             data-slot="input"
             value={value}
@@ -110,4 +110,6 @@ export default function TextField({
       </div>
     </div>
   )
-}
+})
+
+export default TextField
