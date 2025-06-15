@@ -42,7 +42,6 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-istanbul": "^3.0.7",
-    "@yaksok/tailwindcss-config": "workspace:*",
     "@yaksok/test-config": "workspace:*",
     "@yaksok/typescript-config": "workspace:*",
     "globals": "^15.15.0",
