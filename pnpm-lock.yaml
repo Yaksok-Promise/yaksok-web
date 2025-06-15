@@ -217,6 +217,9 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
+      '@yaksok/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@yaksok/ui':
         specifier: workspace:*
         version: link:../../packages/ui

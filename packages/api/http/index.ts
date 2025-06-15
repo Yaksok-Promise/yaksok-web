@@ -1,10 +1,10 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosRequestConfig } from 'axios'
 import { type PathType, type UrlOption, makePath } from '../path'
 import { instance } from './instance'
 
-type RequestOption<T> = UrlOption &
+export type RequestOption<T> = UrlOption &
   AxiosRequestConfig & {
-    body: T
+    body?: T
   }
 
 const get = async <BODY, RES>(
