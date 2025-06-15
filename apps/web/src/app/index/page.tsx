@@ -1,7 +1,6 @@
 import TopBar from '@/components/common/TopBar'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import Carousel from '@yaksok/ui/carousel/index'
 
 export default function MainPage() {
   const { push } = useFlow()
@@ -13,12 +12,17 @@ export default function MainPage() {
   }
 
   return (
-    <AppScreen>
+    <div>
       <TopBar />
-      <div className="h-screen bg-bgColor">
-        <button onClick={onClick}>의약품 및 건강기능식품 성분 비교하기</button>
-        <div className="text-3xl">d안녕하세요</div>
+      <div className="mt-10 h-[calc(100vh-64px)] bg-bgColor px-10">
+        <button
+          onClick={onClick}
+          className="my-10 w-full bg-black01 text-center text-white01"
+        >
+          의약품 및 건강기능식품 성분 비교하기
+        </button>
+        <div className="text-2xl">안녕하세요</div>
       </div>
-    </AppScreen>
+    </div>
   )
 }
