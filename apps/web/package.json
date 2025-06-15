@@ -20,6 +20,8 @@
     "@tanstack/react-query-devtools": "^5.70.0",
     "@yaksok/api": "workspace:*",
     "@yaksok/ui": "workspace:*",
+    "@yaksok/tailwindcss-config": "workspace:*",
+    "@yaksok/utils": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.485.0",
     "path": "^0.12.7",
