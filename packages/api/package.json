@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./userType": "./type/user.ts",
+    "./commentType": "./type/comment.ts"
   },
   "scripts": {
     "test": "vitest run"
