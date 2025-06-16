@@ -117,6 +117,9 @@
   body {
     @apply bg-bgColor text-foreground;
   }
+  .clickable {
+    @apply transform cursor-pointer transition-transform active:scale-95;
+  }
 }
 
 @theme {
