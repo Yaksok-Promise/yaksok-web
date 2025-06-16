@@ -1,4 +1,3 @@
-// useHttpMutation.ts
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
 import { http, PathType, RequestOption } from '@yaksok/api'
 

@@ -1,8 +1,6 @@
 import TopBar from '@/components/common/TopBar'
-import { useHttpQuery } from '@/hooks/use-http-query'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { UserInfoResponse } from '@yaksok/api/userType'
 
 export default function MainPage() {
   const { push } = useFlow()
@@ -12,13 +10,6 @@ export default function MainPage() {
       title: '성분 비교하기',
     })
   }
-
-  // const { data } = useHttpQuery<undefined, UserInfoResponse>(
-  //   ['myInfo'],
-  //   '/api/user/info',
-  //   {}
-  // )
-  // console.log(data)
 
   return (
     <AppScreen>

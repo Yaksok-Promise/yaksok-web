@@ -1,4 +1,3 @@
-// useHttpQuery.ts
 import {
   QueryKey,
   UseQueryOptions,
