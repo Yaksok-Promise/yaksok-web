@@ -5,7 +5,8 @@ export type StepProps = {
   name: string
   children: ReactNode
 }
-export type FunnelProps = { children: ReactElement<StepProps>[] }
+
+export type FunnelProps = Array<ReactElement<StepProps>>
 
 export const useFunnel = (defaultStep: string) => {
   const [step, setStep] = useState<string>(defaultStep)
@@ -15,7 +16,7 @@ export const useFunnel = (defaultStep: string) => {
     return <>{children}</>
   }
 
-  const Funnel = ({ children }: FunnelProps) => {
+  const Funnel = ({ children }: { children: FunnelProps }) => {
     const targetStep = children.find(
       childStep => childStep.props?.name === step
     )
