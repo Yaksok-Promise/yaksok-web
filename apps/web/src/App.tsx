@@ -4,6 +4,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Router from './router'
 import '@stackflow/plugin-basic-ui/index.css'
 import '@yaksok/ui/styles.css'
+import { Suspense } from 'react'
+import { ErrorProvider } from './components/common/error-boundary'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,8 +20,12 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
-      <Stack />
+      <ErrorProvider>
+        <Suspense fallback={<div>LOADING</div>}>
+          <Router />
+          <Stack />
+        </Suspense>
+      </ErrorProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
