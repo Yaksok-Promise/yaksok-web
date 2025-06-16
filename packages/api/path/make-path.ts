@@ -13,9 +13,11 @@ export const makePath = (
 ): string => {
   const queryString = new URLSearchParams(query).toString()
 
-  const urlWithParams = Object.entries(params).reduce((acc, values) => {
-    const [key, value] = values
-    return acc.replace(`{${key}}`, value)
+  const urlWithParams = Object.entries(params).reduce((acc, [key, value]) => {
+    // 모든 {key} 패턴을 전역 치환
+    const regex = new RegExp(`{${key}}`, 'g')
+    return acc.replace(regex, value)
   }, path)
-  return queryString ? urlWithParams + '?' + queryString : urlWithParams
+
+  return queryString ? `${urlWithParams}?${queryString}` : urlWithParams
 }

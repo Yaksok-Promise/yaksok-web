@@ -15,9 +15,6 @@ const callbackSucess = (response: AxiosResponse<any, any>) => response
 
 const callbackError = async (error: AxiosError<CustomError>) => {
   if (isAxiosError(error)) {
-    // 토큰이 만료된 경우 토큰 갱신
-    // 본래 요청에 대한 정보는 error.config에 담겨져 있습니다.
-
     const { response, config } = error
     console.error(error)
 

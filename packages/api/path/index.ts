@@ -1,2 +1,2 @@
-export * from './makePath'
+export * from './make-path'
 export * from './path'
