@@ -19,7 +19,9 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
-
+    outputs:
+      status: ${{ job.status }}
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
