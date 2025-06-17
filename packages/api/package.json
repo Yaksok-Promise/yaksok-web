@@ -1,0 +1,23 @@
+{
+  "name": "@yaksok/api",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./userType": "./type/user.ts",
+    "./commentType": "./type/comment.ts"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "axios": "^1.10.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-istanbul": "^3.0.7",
+    "@yaksok/test-config": "workspace:*",
+    "@yaksok/typescript-config": "workspace:*",
+    "typescript": "^5.8.2",
+    "vitest": "^3.1.3"
+  }
+}
