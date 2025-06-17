@@ -50,13 +50,24 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   return (
-    <label className={cn(checkboxVariants({ className, theme }), className)}>
+    <label
+      className={cn(
+        checkboxVariants({ className, theme }),
+        setChecked || 'pointer-events-none' // setChecked 없으면 부모 이벤트 위임
+      )}
+    >
       <Check className={checkVariants({ theme })} />
       <input
         type="checkbox"
         className="hidden"
         checked={checked ?? false}
-        onChange={e => setChecked?.(e.target.checked)}
+        onChange={e => {
+          if (setChecked) {
+            setChecked?.(e.target.checked)
+          } else {
+            props.onChange?.(e)
+          }
+        }}
         {...props}
       />
     </label>
