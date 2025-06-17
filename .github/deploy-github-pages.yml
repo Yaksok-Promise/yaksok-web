@@ -1,7 +1,9 @@
-name: Deploy storybook-static to Pages
+name: Deploy storybook-static to GitHub Pages
 
 on:
   push:
+    branches: ["dev"]
+  pull_request:
     branches: ["dev"]
   workflow_dispatch:
 
@@ -15,14 +17,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -41,14 +43,17 @@ jobs:
       - name: Build Storybook
         run: pnpm run build:storybook
 
-      - name: Setup Pages
+      - name: Setup GitHub Pages
+        if: github.event_name == 'push'
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload Storybook artifact
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./apps/docs/storybook-static"
 
       - name: Deploy to GitHub Pages
+        if: github.event_name == 'push'
         id: deployment
         uses: actions/deploy-pages@v4
