@@ -38,7 +38,7 @@ jobs:
           corepack prepare pnpm@9.0.0 --activate
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build Storybook
         run: pnpm run build:storybook
