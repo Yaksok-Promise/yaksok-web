@@ -1,0 +1,18 @@
+
+name: Validate PR title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR title contains issue number
+        run: |
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          if [[ "${{ github.event.pull_request.body }}" != *"Closes #"* ]]; then
+            echo "❌ PR 본문에 반드시 관련 이슈 close 설정을 해주세요 'Closes #<issue_number>'"
+            exit 1
+          fi
