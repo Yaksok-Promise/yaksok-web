@@ -1,3 +1,4 @@
+import React from 'react'
 import { ReactElement, ReactNode, useState } from 'react'
 
 export type StepProps = {
