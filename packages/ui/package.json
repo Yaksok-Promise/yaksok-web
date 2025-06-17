@@ -5,6 +5,7 @@
   "exports": {
     "./*": "./src/*.tsx",
     "./carousel": "./src/carousel/index.ts",
+    "./agreement": "./src/agreement/index.tsx",
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
