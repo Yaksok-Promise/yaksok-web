@@ -86,6 +86,7 @@ function AgreementItem({
   const requirementLabel = isRequired ? '필수' : '선택'
 
   const handleItemClick = () => {
+    console.log('handleItemClick')
     setChecked(id)
   }
 
@@ -95,7 +96,7 @@ function AgreementItem({
         className="clickable flex flex-1 items-center gap-[20px] text-body2"
         onClick={handleItemClick}
       >
-        <Checkbox checked={checked} setChecked={handleItemClick} />
+        <Checkbox checked={checked} />
         <span>{`(${requirementLabel}) ${content}`}</span>
       </button>
       {showDetailButton && (
