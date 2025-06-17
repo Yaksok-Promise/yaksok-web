@@ -2,19 +2,19 @@ import * as React from 'react'
 import type { SVGProps } from 'react'
 const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
-    viewBox="0 0 15 10"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
-      stroke="#000"
+      d="M6 12L10.2426 16.2426L18.727 7.75732"
+      stroke="black"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="m1 5 4.243 4.243L13.727.757"
     />
   </svg>
 )
