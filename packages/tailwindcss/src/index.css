@@ -117,6 +117,9 @@
   body {
     @apply bg-bgColor text-foreground;
   }
+  button {
+    @apply cursor-pointer;
+  }
   .clickable {
     @apply transform cursor-pointer transition-transform active:scale-95;
   }
@@ -131,7 +134,7 @@
   --color-gray01: #2c2c2e;
   --color-gray02: #48484a;
   --color-gray03: #636366;
-  --color-gray04: #f4f4f4;
+  --color-gray04: #7b7b7f;
   --color-gray05: #959598;
   --color-gray06: #e3e3e3;
   --color-gray07: #f4f4f4;
