@@ -30,6 +30,17 @@ const post = async <BODY, RES>(
   return result.data
 }
 
+const patch = async <BODY, RES>(
+  path: PathType,
+  { params, query, body, ...props }: RequestOption<BODY>
+): Promise<RES> => {
+  const url = makePath(path, { params, query })
+
+  const result = await instance.patch<RES>(url, body, { ...props })
+
+  return result.data
+}
+
 const _delete = async <BODY, RES>(
   path: PathType,
   { params, query, ...props }: RequestOption<BODY>
@@ -44,5 +55,6 @@ const _delete = async <BODY, RES>(
 export const http = {
   get,
   post,
+  patch,
   delete: _delete,
 }
