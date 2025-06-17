@@ -6,13 +6,18 @@
     "dev": "turbo run dev",
     "dev:web": "turbo run dev --filter yaksok-web",
     "dev:admin": "turbo run dev --filter yaksok-admin",
+    "dev:ui": "turbo run dev --filter @yaksok/ui",
+    "dev:icon": "turbo run dev --filter @yaksok/icons",
+    "dev:docs": "turbo run storybook --filter yaksok-docs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "lint": "biome check . --write",
     "lint:fix": "biome check --fix --unsafe",
     "lefthook": "lefthook install",
-    "storybook": "turbo run storybook --filter yaksok-docs",
-    "build:storybook": "turbo run build-storybook --filter yaksok-docs"
+    "build:storybook": "turbo run build-storybook --filter yaksok-docs",
+    "build:ui": "turbo run build --filter @yaksok/ui",
+    "test": "turbo run test",
+    "view-report": "turbo run view-report"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,19 +1,61 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from '@yaksok/ui/button'
+import { Button, ButtonProps } from '@yaksok/ui/button'
 
-const meta: Meta<typeof Button> = {
+const meta: Meta<ButtonProps> = {
+  title: 'stories/button',
   component: Button,
-}
-
+  parameters: {
+    layout: 'centered',
+  },
+  decorators: [
+    Story => (
+      <div className="flex w-[500px] justify-center">
+        <Story />
+      </div>
+    ),
+  ],
+  tags: ['autodocs'],
+  argTypes: {
+    children: {
+      control: {
+        type: 'text',
+      },
+    },
+    variant: {
+      options: ['default'],
+      control: {
+        type: 'radio',
+      },
+    },
+    disabled: {
+      control: {
+        type: 'boolean',
+      },
+    },
+    rounded: {
+      options: ['full', 'md'],
+      control: {
+        type: 'radio',
+      },
+    },
+  },
+  args: {
+    children: 'Button',
+    variant: 'default',
+    rounded: 'md',
+  },
+} satisfies Meta<ButtonProps>
 export default meta
 
 type Story = StoryObj<typeof Button>
 
 export const Primary: Story = {
-  render: props => <Button {...props}>Hello</Button>,
+  render: props => <Button {...props}>{props.children}</Button>,
   name: 'Button',
   args: {
-    children: 'Hello',
-    className: 'bg-red-100',
+    children: 'Button',
+    onClick: () => {
+      alert('clicked')
+    },
   },
 }

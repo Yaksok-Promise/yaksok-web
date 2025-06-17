@@ -1,0 +1,12 @@
+{
+  "extends": "@yaksok/typescript-config/react-library.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "jsx": "react"
+  },
+  "include": ["svg", "index.ts", "svg.d.ts"]
+}

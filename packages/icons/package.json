@@ -1,0 +1,29 @@
+{
+  "name": "@yaksok/icons",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "files": ["src"],
+  "scripts": {
+    "clean": "rm -rf src",
+    "build": "pnpm run clean && svgr --typescript --icon --out-dir src svg",
+    "dev": "pnpm run build && tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "devDependencies": {
+    "@svgr/cli": "^8.1.0",
+    "@yaksok/typescript-config": "workspace:*",
+    "typescript": "^5.8.2",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
