@@ -15,6 +15,7 @@
     "lint:fix": "biome check --fix --unsafe",
     "lefthook": "lefthook install",
     "build:storybook": "turbo run build-storybook --filter yaksok-docs",
+    "build:ui": "turbo run build --filter @yaksok/ui",
     "test": "turbo run test",
     "view-report": "turbo run view-report"
   },
