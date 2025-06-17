@@ -23,7 +23,7 @@ const checkboxVariants = cva(
       },
     },
     defaultVariants: {
-      theme: 'rounded',
+      theme: 'default',
       size: 'default',
     },
   }
@@ -33,12 +33,12 @@ const checkVariants = cva('transition-all [&>path]:stroke-[2px]', {
   variants: {
     theme: {
       default:
-        '[&>path]:stroke-subGray01 group-has-[:checked]:[&>path]:stroke-black',
+        '[&>path]:stroke-subGray01 group-has-[:checked]:[&>path]:stroke-black w-[20px] h-[20px]',
       rounded: '[&>path]:stroke-white w-[16px] h-[20px]',
     },
   },
   defaultVariants: {
-    theme: 'rounded',
+    theme: 'default',
   },
 })
 
