@@ -62,12 +62,12 @@ function Agreement({ itemList }: { itemList: AgreementItemContent[] }) {
         setChecked={handleCheckAllButtonClick}
       />
       <ul className="flex flex-col gap-[20px]">
-        {itemList.map(item => (
+        {itemList.map(props => (
           <AgreementItem
-            key={item.id}
-            {...item}
-            checked={itemsChecked[item.id]}
+            key={props.id}
+            checked={itemsChecked[props.id]}
             setChecked={handleCheckItem}
+            {...props}
           />
         ))}
       </ul>
