@@ -1,0 +1,38 @@
+name: Validate PR body
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  check-pr-body:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR body for 'Closes #'
+        id: check
+        run: |
+          echo "Checking PR body: ${{ github.event.pull_request.body }}"
+          if [[ "${{ github.event.pull_request.body }}" != *"Closes #"* ]]; then
+            echo "missing=true" >> $GITHUB_OUTPUT
+          else
+            echo "missing=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Leave comment on PR if missing
+        if: steps.check.outputs.missing == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "❌ PR 본문에 반드시 관련 이슈 close 설정을 해주세요 `'Closes #<issue_number>'`"
+            })
+
+      - name: Fail if PR body is missing 'Closes #'
+        if: steps.check.outputs.missing == 'true'
+        run: |
+          echo "❌ PR 본문에 Closes #이 포함되어야 합니다."
+          exit 1
