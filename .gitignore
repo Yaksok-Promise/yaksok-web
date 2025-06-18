@@ -40,3 +40,10 @@ yarn-error.log*
 *storybook.log
 
 .vscode
+
+
+
+# Ignore coverage reports
+**/coverage/
+**/coverage.json
+**/.nyc_output/

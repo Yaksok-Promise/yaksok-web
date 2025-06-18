@@ -1,0 +1,6 @@
+{
+  "extends": "@yaksok/typescript-config/react-library.json",
+
+  "include": ["."],
+  "exclude": ["build", "node_modules"]
+}

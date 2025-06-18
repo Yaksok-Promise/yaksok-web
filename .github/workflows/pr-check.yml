@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   check-pr-body:
     runs-on: ubuntu-latest
@@ -19,17 +23,15 @@ jobs:
             echo "missing=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Leave comment on PR if missing
+      - name: Leave comment using thollander/actions-comment-pull-request
         if: steps.check.outputs.missing == 'true'
-        uses: actions/github-script@v7
+        uses: thollander/actions-comment-pull-request@v1
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "❌ PR 본문에 반드시 관련 이슈 close 설정을 해주세요 `'Closes #<issue_number>'`"
-            })
+          message: |
+            ❌ PR 본문에 반드시 관련 이슈 close 설정을 해주세요  
+            예: `'Closes #<issue_number>'`
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fail if PR body is missing 'Closes #'
         if: steps.check.outputs.missing == 'true'

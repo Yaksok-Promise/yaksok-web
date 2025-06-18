@@ -1,6 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
 import type { EmblaCarouselType } from 'embla-carousel'
-import { describe, expect, it, vi } from 'vitest'
 import { useDotButton } from './use-carousel-dot-button'
 
 const createEmblaMock = (): EmblaCarouselType => {
