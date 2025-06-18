@@ -113,4 +113,4 @@ function AgreementItem<T extends string>({
   )
 }
 
-export { Agreement, CheckAllButton, AgreementItem }
+export { Agreement, CheckAllButton, AgreementItem, useAgreement }
