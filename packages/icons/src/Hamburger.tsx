@@ -1,21 +1,21 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
+const SvgHamburger = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
-    viewBox="0 0 15 10"
+    viewBox="0 0 24 25"
     {...props}
   >
     <path
-      stroke="#000"
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
-      d="m1 5 4.243 4.243L13.727.757"
+      d="M5 17.751h14m-14-5h14m-14-5h14"
     />
   </svg>
 );
-export default SvgCheck;
+export default SvgHamburger;

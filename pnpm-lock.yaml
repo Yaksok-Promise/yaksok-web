@@ -96,6 +96,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@yaksok/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@yaksok/ui':
         specifier: workspace:*
         version: link:../../packages/ui
