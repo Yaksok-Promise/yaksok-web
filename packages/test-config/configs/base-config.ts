@@ -15,5 +15,6 @@ export const baseConfig = defineConfig({
       ],
       enabled: true,
     },
+    globals: true,
   },
 })
