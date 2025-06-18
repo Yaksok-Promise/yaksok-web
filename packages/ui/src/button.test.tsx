@@ -1,38 +1,44 @@
-import { render, screen } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { Button } from './button'
 
-const APP = 'GameLink'
+beforeAll(() => {
+  window.alert = vi.fn()
+})
 
 describe('<Button />', () => {
-  /** Reset a fresh mock for window.alert before every spec */
-  beforeEach(() => {
-    // jsdom provides window but no alert, so we stub it
-    // (globalThis works the same)
-    // eslint‑disable‑next‑line @typescript-eslint/ban-ts-comment
-    // @ts-ignore – we are intentionally overriding it
-    window.alert = vi.fn()
+  afterEach(() => {
+    cleanup()
   })
 
-  it('shows the correct alert message when clicked', async () => {
-    render(<Button appName={APP}>Click me</Button>)
-
-    await userEvent.click(screen.getByRole('button', { name: /click me/i }))
-
-    expect(window.alert).toHaveBeenCalledTimes(1)
-    expect(window.alert).toHaveBeenCalledWith(`Hello from your ${APP} app!`)
+  it('className이 버튼에 정상적으로 적용된다.', () => {
+    render(<Button className="text-caption1">button</Button>)
+    const button = screen.getByRole('button', { name: /button/i })
+    expect(button).toHaveClass('text-caption1')
   })
 
-  it('applies the given className to the button element', () => {
+  it('children으로 전달된 텍스트가 버튼에 렌더링된다.', () => {
+    render(<Button>테스트</Button>)
+    expect(screen.getByRole('button', { name: '테스트' })).toBeInTheDocument()
+  })
+
+  it('disabled 속성이 true일 때 클릭 이벤트가 발생하지 않는다.', async () => {
+    const onClick = vi.fn()
     render(
-      <Button appName={APP} className="my-custom-class">
-        Styled
+      <Button disabled onClick={onClick}>
+        비활성
       </Button>
     )
+    await userEvent.click(screen.getByRole('button'))
+    expect(onClick).not.toHaveBeenCalled()
+  })
 
-    expect(screen.getByRole('button', { name: /styled/i })).toHaveClass(
-      'my-custom-class'
-    )
+  it("onClick에서 alert('clicked')를 호출하면 alert가 정상적으로 호출된다.", async () => {
+    const onClick = vi.fn(() => alert('clicked'))
+    render(<Button onClick={onClick}>Click me</Button>)
+    await userEvent.click(screen.getByRole('button', { name: /click me/i }))
+    expect(onClick).toHaveBeenCalled()
+    expect(window.alert).toHaveBeenCalledWith('clicked')
   })
 })
