@@ -31,10 +31,7 @@ function CheckAllButton({
       onClick={handleClick}
     >
       <Checkbox checked={checked} setChecked={handleClick} theme="rounded" />
-      <p className="flex items-center gap-[4px]">
-        <span className="text-subhead1">전체 동의</span>
-        <span className="text-body2 text-gray04">(선택 항목 제외)</span>
-      </p>
+      <span className="text-subhead1">전체 동의</span>
     </button>
   )
 }
@@ -53,11 +50,11 @@ function Agreement<T extends string>({
     handleCheckItem,
     handleCheckAll,
     handleUncheckAll,
-    isAgreementCheckedComplete,
+    isAllAgreementChecked,
   } = agreementHook
 
   const handleCheckAllButtonClick = () => {
-    if (isAgreementCheckedComplete) {
+    if (isAllAgreementChecked) {
       handleUncheckAll()
     } else {
       handleCheckAll()
@@ -67,7 +64,7 @@ function Agreement<T extends string>({
   return (
     <div className="flex w-full flex-col gap-[32px]">
       <CheckAllButton
-        checked={isAgreementCheckedComplete}
+        checked={isAllAgreementChecked}
         setChecked={handleCheckAllButtonClick}
       />
       <ul className="flex flex-col gap-[20px]">
