@@ -45,7 +45,7 @@ jobs:
         run: pnpm run build:ui
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
