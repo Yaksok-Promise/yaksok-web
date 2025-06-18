@@ -83,7 +83,6 @@ const LeftContent = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
         ref={ref}
         className={cn('col-start-1', textColor, className)}
         {...props}
-        role=""
       >
         {props.children}
       </div>
@@ -92,7 +91,7 @@ const LeftContent = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
 )
 LeftContent.displayName = 'Header.Left'
 
-const Title = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
+const Title = forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<'h1'>>(
   ({ className, ...props }, ref) => {
     const theme = useHeaderTheme()
     const textColor = theme === 'black' ? 'text-white' : 'text-black'
@@ -101,7 +100,7 @@ const Title = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
       <h1
         ref={ref}
         className={cn(
-          'col-start-2 text-center text-subhead1',
+          '-translate-x-1/2 absolute left-1/2 text-center text-subhead1',
           textColor,
           className
         )}
