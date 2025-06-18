@@ -19,8 +19,6 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ job.status }}
 
     steps:
       - name: Checkout repository
@@ -52,6 +50,18 @@ jobs:
           workingDir: apps/docs
           onlyChanged: true
           exitZeroOnChanges: true
+
+      - name: Print all Chromatic outputs
+        run: |
+          echo "url: ${{ steps.chromatic.outputs.url }}"
+          echo "buildUrl: ${{ steps.chromatic.outputs.buildUrl }}"
+          echo "buildNumber: ${{ steps.chromatic.outputs.buildNumber }}"
+          echo "changeCount: ${{ steps.chromatic.outputs.changeCount }}"
+          echo "componentCount: ${{ steps.chromatic.outputs.componentCount }}"
+          echo "specCount: ${{ steps.chromatic.outputs.specCount }}"
+          echo "actualCaptureCount: ${{ steps.chromatic.outputs.actualCaptureCount }}"
+          echo "webUrl: ${{ steps.chromatic.outputs.webUrl }}"
+
 
       - name: Set URL
         if: success()
