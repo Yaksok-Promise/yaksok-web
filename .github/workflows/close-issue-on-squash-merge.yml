@@ -1,0 +1,26 @@
+name: Close linked issues on merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  close-issues:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract issue numbers from PR body
+        id: extract
+        run: |
+          echo "BODY<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.pull_request.body }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Close referenced issues
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-pattern: '(?:[Cc]loses|[Ff]ix(?:es)?)\s+#([0-9]+)'
+          comment: |
+            ✅ This issue was automatically closed because the pull request was merged.
