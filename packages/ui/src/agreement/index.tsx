@@ -1,16 +1,17 @@
 import { Checkbox } from '../checkbox'
 import { useAgreement } from './use-agreement'
 
-export interface AgreementItemContent {
-  id: string
+export interface AgreementItemContent<T extends string> {
+  id: T
   content: string
   isRequired?: boolean
   showDetailButton?: boolean
 }
 
-export interface AgreementItemProps extends AgreementItemContent {
+export interface AgreementItemProps<T extends string>
+  extends AgreementItemContent<T> {
   checked: boolean
-  setChecked: (id: string) => void
+  setChecked: (id: T) => void
 }
 
 function CheckAllButton({
@@ -38,7 +39,13 @@ function CheckAllButton({
   )
 }
 
-function Agreement({ itemList }: { itemList: AgreementItemContent[] }) {
+function Agreement<T extends string>({
+  itemList,
+}: {
+  itemList: AgreementItemContent<
+    T extends string ? (string extends T ? never : T) : T
+  >[]
+}) {
   const {
     itemsChecked,
     handleCheckItem,
@@ -63,10 +70,10 @@ function Agreement({ itemList }: { itemList: AgreementItemContent[] }) {
       />
       <ul className="flex flex-col gap-[20px]">
         {itemList.map(props => (
-          <AgreementItem
+          <AgreementItem<T>
             key={props.id}
             checked={itemsChecked[props.id]}
-            setChecked={handleCheckItem}
+            setChecked={handleCheckItem as (id: T) => void}
             {...props}
           />
         ))}
@@ -75,18 +82,17 @@ function Agreement({ itemList }: { itemList: AgreementItemContent[] }) {
   )
 }
 
-function AgreementItem({
+function AgreementItem<T extends string>({
   id,
   content,
   isRequired,
   showDetailButton,
   checked,
   setChecked,
-}: AgreementItemProps) {
+}: AgreementItemProps<T>) {
   const requirementLabel = isRequired ? '필수' : '선택'
 
   const handleItemClick = () => {
-    console.log('handleItemClick')
     setChecked(id)
   }
 

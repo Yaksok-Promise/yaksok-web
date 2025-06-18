@@ -1,8 +1,10 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { Agreement } from './index'
+import { Agreement, AgreementItemContent } from './index'
 
-const itemList = [
+type AgreementItemId = 'age' | 'personal-info-agreement' | 'marketing-agreement'
+
+const itemList: AgreementItemContent<AgreementItemId>[] = [
   { id: 'age', content: '만 14세 이상', isRequired: true },
   {
     id: 'personal-info-agreement',

@@ -46,7 +46,7 @@ export default meta
 type Story = StoryObj<typeof AgreementItem>
 
 export const Primary: Story = {
-  render: (props: AgreementItemProps) => {
+  render: (props: AgreementItemProps<string>) => {
     const [checked, setChecked] = useState({
       [props.id]: props.checked,
     })

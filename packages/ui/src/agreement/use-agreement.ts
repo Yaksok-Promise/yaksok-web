@@ -1,14 +1,16 @@
 import { Dispatch, useReducer } from 'react'
 import { AgreementItemContent } from '.'
 
-export const useAgreement = (itemList: AgreementItemContent[]) => {
+export const useAgreement = <T extends string>(
+  itemList: AgreementItemContent<T>[]
+) => {
+  type ItemId = T
   const itemIdList = itemList.map(item => item.id)
+
   const defaultItemCheckedState = itemIdList.reduce(
     (acc, id) => ({ ...acc, [id]: false }),
-    {}
+    {} as Record<ItemId, boolean>
   )
-
-  type ItemId = (typeof itemIdList)[number]
 
   type State = Record<ItemId, boolean>
 
@@ -26,14 +28,15 @@ export const useAgreement = (itemList: AgreementItemContent[]) => {
           (acc, id) => ({
             ...acc,
             [id]:
-              itemList.find(item => item.id === id)?.isRequired || state[id],
+              itemList.find(item => item.id === id)?.isRequired ||
+              state[id as ItemId],
           }),
-          {}
+          {} as State
         )
       case 'UNCHECK_ALL':
         return Object.keys(state).reduce(
           (acc, id) => ({ ...acc, [id]: false }),
-          {}
+          {} as State
         )
       default:
         return state
