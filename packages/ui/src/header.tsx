@@ -8,16 +8,43 @@ import { cn } from '@yaksok/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const headerVariants = cva(
-  'absolute top-0 left-0 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
+  'fixed top-0 left-0 z-50 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
   {
     variants: {
       theme: {
-        black: 'bg-black text-white',
-        white: 'bg-white text-black',
+        black: '',
+        white: '',
+      },
+      blur: {
+        true: 'backdrop-blur-[50px]',
+        false: '',
       },
     },
+    compoundVariants: [
+      {
+        theme: 'black',
+        blur: true,
+        class: 'bg-black01/30 text-white',
+      },
+      {
+        theme: 'black',
+        blur: false,
+        class: 'bg-black01 text-white',
+      },
+      {
+        theme: 'white',
+        blur: true,
+        class: 'bg-white/30 text-black01',
+      },
+      {
+        theme: 'white',
+        blur: false,
+        class: 'bg-white text-black01',
+      },
+    ],
     defaultVariants: {
       theme: 'white',
+      blur: false,
     },
   }
 )
@@ -30,16 +57,16 @@ export interface HeaderProps
     VariantProps<typeof headerVariants> {}
 
 const HeaderContainer = forwardRef<HTMLDivElement, HeaderProps>(
-  ({ children, theme = 'white', className, ...props }, ref) => {
+  ({ children, theme = 'white', blur = false, className, ...props }, ref) => {
     return (
       <HeaderThemeContext.Provider value={theme}>
-        <header
+        <div
           ref={ref}
-          className={cn(headerVariants({ theme }), className)}
+          className={cn(headerVariants({ theme, blur }), className)}
           {...props}
         >
           {children}
-        </header>
+        </div>
       </HeaderThemeContext.Provider>
     )
   }
