@@ -65,42 +65,34 @@ describe('Agreement', () => {
     expect(ageCheckbox).not.toBeChecked()
   })
 
-  it('전체 동의 버튼 클릭 시 기존 선택 항목 상태를 유지하면서 필수 항목들이 체크된다', () => {
+  it('전체 동의 버튼 클릭 시 모든 항목이 체크된다', () => {
     render(<TestAgreementWrapper />)
     const checkAllButton = screen.getByText('전체 동의').closest('button')!
     const checkboxes = screen.getAllByRole('checkbox')
-
-    // 마케팅 동의(선택 항목)를 먼저 체크
-    fireEvent.click(
-      screen.getByText('(선택) 마케팅 및 이벤트 활용 동의').closest('button')!
-    )
-    expect(checkboxes[3]).toBeChecked() // 마케팅 동의 체크 확인
-
-    // 전체 동의 버튼 클릭
     fireEvent.click(checkAllButton)
-
-    // 전체 동의 버튼과 필수 항목들이 체크되었는지 확인
-    expect(checkboxes[0]).toBeChecked() // 전체 동의 버튼
-    expect(checkboxes[1]).toBeChecked() // 만 14세 이상
-    expect(checkboxes[2]).toBeChecked() // 개인정보 수집 및 이용약관
-
-    // 선택 항목(마케팅)은 기존 상태 유지
-    expect(checkboxes[3]).toBeChecked() // 마케팅 동의는 여전히 체크 상태
+    checkboxes.forEach(cb => expect(cb).toBeChecked())
   })
 
   it('전체 동의 버튼 클릭 후 다시 클릭하면 모든 항목이 해제된다', () => {
     render(<TestAgreementWrapper />)
     const checkAllButton = screen.getByText('전체 동의').closest('button')!
     const checkboxes = screen.getAllByRole('checkbox')
-    // 전체 동의 클릭(체크) -> 필수 항목들만 체크
+    // 전체 동의 클릭(체크) -> 모든 항목들 체크
     fireEvent.click(checkAllButton)
-    expect(checkboxes[0]).toBeChecked() // 전체 동의 버튼
-    expect(checkboxes[1]).toBeChecked() // 만 14세 이상
-    expect(checkboxes[2]).toBeChecked() // 개인정보 수집 및 이용약관
-    expect(checkboxes[3]).not.toBeChecked() // 마케팅 및 이벤트 활용 동의
+    checkboxes.forEach(cb => expect(cb).toBeChecked())
     // 전체 동의 다시 클릭(해제) -> 모든 항목 해제
     fireEvent.click(checkAllButton)
     checkboxes.forEach(cb => expect(cb).not.toBeChecked())
+  })
+
+  it('하나의 항목이 체크된 상태에서 전체 동의 버튼을 누르면 모든 항목이 체크된다', () => {
+    render(<TestAgreementWrapper />)
+    const checkAllButton = screen.getByText('전체 동의').closest('button')!
+    const checkboxes = screen.getAllByRole('checkbox')
+    fireEvent.click(checkboxes[1])
+    expect(checkboxes[1]).toBeChecked()
+    fireEvent.click(checkAllButton)
+    checkboxes.forEach(cb => expect(cb).toBeChecked())
   })
 
   it('"보기" 버튼이 필요한 항목에만 렌더링된다', () => {
