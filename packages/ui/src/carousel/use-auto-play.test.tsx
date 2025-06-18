@@ -2,7 +2,6 @@ import { act, render, waitFor } from '@testing-library/react'
 import type { EmblaCarouselType } from 'embla-carousel'
 import type { AutoplayType } from 'embla-carousel-autoplay'
 import { useEffect } from 'react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useAutoplay } from './use-auto-play'
 
 type MockEmblaApi = {

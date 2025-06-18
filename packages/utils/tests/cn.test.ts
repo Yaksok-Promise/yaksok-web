@@ -1,5 +1,4 @@
-import { describe, expect, it } from 'vitest'
-import { cn } from '../src/cn' // ← adjust the path as needed
+import { cn } from '../src/cn'
 
 describe('cn utility', () => {
   it('class name을 병합한다', () => {
