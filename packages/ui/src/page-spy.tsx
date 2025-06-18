@@ -12,8 +12,8 @@ export const PageSpy = ({
   className,
   ...props
 }: PageSpyProps) => {
-  const prcentage = ((currentIndex + 1) / totalLength) * 100
-  console.log(prcentage)
+  const percentage = ((currentIndex + 1) / totalLength) * 100
+
   return (
     <div
       className="relative h-0.5 w-full overflow-hidden bg-gray06"
@@ -24,7 +24,7 @@ export const PageSpy = ({
           'absolute top-0 left-0 h-full bg-black01 transition-all duration-700 ease-in-out',
           className
         )}
-        style={{ width: `${prcentage}%` }}
+        style={{ width: `${percentage}%` }}
         {...props}
       ></div>
     </div>
