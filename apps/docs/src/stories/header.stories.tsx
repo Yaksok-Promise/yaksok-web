@@ -1,6 +1,6 @@
 // Header.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react'
-import { ChevronLeft, Hamburger, LogoWithIcon, Bell } from '@yaksok/icons'
+import { Bell, ChevronLeft, Hamburger, LogoWithIcon } from '@yaksok/icons'
 import { Header, type HeaderProps } from '@yaksok/ui/header' // 실제 경로에 맞게 수정하세요
 
 const meta: Meta<HeaderProps> = {
