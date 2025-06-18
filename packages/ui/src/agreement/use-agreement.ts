@@ -23,14 +23,9 @@ export const useAgreement = <T extends string>(
     switch (action.type) {
       case 'CHECK_ITEM':
         return { ...state, [action.itemId]: !state[action.itemId] }
-      case 'CHECK_ALL': // 필수 항목들만 모두 체크
+      case 'CHECK_ALL':
         return Object.keys(state).reduce(
-          (acc, id) => ({
-            ...acc,
-            [id]:
-              itemList.find(item => item.id === id)?.isRequired ||
-              state[id as ItemId],
-          }),
+          (acc, id) => ({ ...acc, [id]: true }),
           {} as State
         )
       case 'UNCHECK_ALL':
@@ -61,15 +56,21 @@ export const useAgreement = <T extends string>(
   }
 
   // 모든 필수 항목들의 체크 여부
-  const isAgreementCheckedComplete: boolean = itemList
+  const isAllRequiredAgreementChecked: boolean = itemList
     .filter(item => item.isRequired)
     .every(item => itemsChecked[item.id])
+
+  // 모든 항목들의 체크 여부
+  const isAllAgreementChecked: boolean = itemList.every(
+    item => itemsChecked[item.id]
+  )
 
   return {
     itemsChecked,
     handleCheckItem,
     handleCheckAll,
     handleUncheckAll,
-    isAgreementCheckedComplete,
+    isAllAgreementChecked,
+    isAllRequiredAgreementChecked,
   }
 }
