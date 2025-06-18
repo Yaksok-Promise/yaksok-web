@@ -60,13 +60,13 @@ const HeaderContainer = forwardRef<HTMLDivElement, HeaderProps>(
   ({ children, theme = 'white', blur = false, className, ...props }, ref) => {
     return (
       <HeaderThemeContext.Provider value={theme}>
-        <div
+        <nav
           ref={ref}
           className={cn(headerVariants({ theme, blur }), className)}
           {...props}
         >
           {children}
-        </div>
+        </nav>
       </HeaderThemeContext.Provider>
     )
   }
