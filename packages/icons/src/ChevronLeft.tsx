@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
+const SvgChevronLeft = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width="1em"
+    height="1em"
     fill="none"
-    viewBox="0 0 24 24"
+    viewBox="0 0 24 27"
     {...props}
   >
     <path
@@ -14,8 +14,8 @@ const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
-      d="m6 12 4.243 4.243 8.484-8.486"
+      d="m15 20.727-7-7 7-7"
     />
   </svg>
 );
-export default SvgCheck;
+export default SvgChevronLeft;
