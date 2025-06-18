@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Agreement } from '@yaksok/ui/agreement'
+import { Agreement, AgreementItemContent } from '@yaksok/ui/agreement'
 
 const meta = {
   title: 'stories/agreement/index',
@@ -23,7 +23,12 @@ type Story = StoryObj<typeof Agreement>
 
 export const Primary: Story = {
   render: () => {
-    const itemList = [
+    type AgreementItemId =
+      | 'age'
+      | 'personal-info-agreement'
+      | 'marketing-agreement'
+
+    const itemList: AgreementItemContent<AgreementItemId>[] = [
       { id: 'age', content: '만 14세 이상', isRequired: true },
       {
         id: 'personal-info-agreement',
