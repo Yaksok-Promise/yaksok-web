@@ -8,7 +8,7 @@ import { cn } from '@yaksok/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const headerVariants = cva(
-  'absolute top-0 left-0 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5 backdrop-blur-sm',
+  'absolute top-0 left-0 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
   {
     variants: {
       theme: {
@@ -25,21 +25,21 @@ const headerVariants = cva(
 const HeaderThemeContext = createContext<'black' | 'white' | null>('white')
 const useHeaderTheme = () => useContext(HeaderThemeContext)
 
-interface HeaderContainerProps
+export interface HeaderProps
   extends ComponentPropsWithoutRef<'div'>,
     VariantProps<typeof headerVariants> {}
 
-const HeaderContainer = forwardRef<HTMLDivElement, HeaderContainerProps>(
+const HeaderContainer = forwardRef<HTMLDivElement, HeaderProps>(
   ({ children, theme = 'white', className, ...props }, ref) => {
     return (
       <HeaderThemeContext.Provider value={theme}>
-        <div
+        <header
           ref={ref}
           className={cn(headerVariants({ theme }), className)}
           {...props}
         >
           {children}
-        </div>
+        </header>
       </HeaderThemeContext.Provider>
     )
   }
@@ -56,6 +56,7 @@ const LeftContent = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
         ref={ref}
         className={cn('col-start-1', textColor, className)}
         {...props}
+        role=""
       >
         {props.children}
       </div>
@@ -70,7 +71,7 @@ const Title = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
     const textColor = theme === 'black' ? 'text-white' : 'text-black'
 
     return (
-      <div
+      <h1
         ref={ref}
         className={cn(
           'col-start-2 text-center text-subhead1',
@@ -80,7 +81,7 @@ const Title = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
         {...props}
       >
         {props.children}
-      </div>
+      </h1>
     )
   }
 )
