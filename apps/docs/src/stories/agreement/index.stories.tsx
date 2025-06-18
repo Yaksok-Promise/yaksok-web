@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Agreement, AgreementItemContent } from '@yaksok/ui/agreement'
-import { useAgreement } from '../../../../../packages/ui/src/agreement/use-agreement'
+import {
+  Agreement,
+  AgreementItemContent,
+  useAgreement,
+} from '@yaksok/ui/agreement'
 
 const meta = {
   title: 'stories/agreement/index',
