@@ -1,11 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Agreement, AgreementItemContent } from '@yaksok/ui/agreement'
+import { useAgreement } from '../../../../../packages/ui/src/agreement/use-agreement'
 
 const meta = {
   title: 'stories/agreement/index',
   component: Agreement,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: '콘솔에서 약관동의 상태를 확인할 수 있습니다.',
+      },
+    },
   },
   decorators: [
     Story => (
@@ -43,7 +49,12 @@ export const Primary: Story = {
       },
     ]
 
-    return <Agreement itemList={itemList} />
+    const agreementHook = useAgreement(itemList)
+    const { itemsChecked } = agreementHook
+
+    console.log(itemsChecked)
+
+    return <Agreement itemList={itemList} agreementHook={agreementHook} />
   },
   name: 'Agreement',
 }

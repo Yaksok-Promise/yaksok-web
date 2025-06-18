@@ -41,10 +41,12 @@ function CheckAllButton({
 
 function Agreement<T extends string>({
   itemList,
+  agreementHook,
 }: {
   itemList: AgreementItemContent<
     T extends string ? (string extends T ? never : T) : T
   >[]
+  agreementHook: ReturnType<typeof useAgreement<T>>
 }) {
   const {
     itemsChecked,
@@ -52,7 +54,7 @@ function Agreement<T extends string>({
     handleCheckAll,
     handleUncheckAll,
     isAgreementCheckedComplete,
-  } = useAgreement(itemList)
+  } = agreementHook
 
   const handleCheckAllButtonClick = () => {
     if (isAgreementCheckedComplete) {
