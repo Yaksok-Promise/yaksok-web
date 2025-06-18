@@ -1,5 +1,5 @@
 import { uiConfig } from '@yaksok/test-config/ui'
-import { mergeConfig, defineProject } from 'vitest/config'
+import { defineProject, mergeConfig } from 'vitest/config'
 
 const config = mergeConfig(
   uiConfig,
