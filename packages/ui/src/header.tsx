@@ -1,11 +1,11 @@
+import { cn } from '@yaksok/utils'
+import { type VariantProps, cva } from 'class-variance-authority'
 import {
+  type ComponentPropsWithoutRef,
   createContext,
   forwardRef,
   useContext,
-  type ComponentPropsWithoutRef,
 } from 'react'
-import { cn } from '@yaksok/utils'
-import { cva, type VariantProps } from 'class-variance-authority'
 
 const headerVariants = cva(
   'fixed top-0 left-0 z-50 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
@@ -24,7 +24,7 @@ const headerVariants = cva(
       {
         theme: 'black',
         blur: true,
-        class: 'bg-black01/30 text-white',
+        class: 'bg-black01 text-white',
       },
       {
         theme: 'black',
