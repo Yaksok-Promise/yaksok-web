@@ -10,12 +10,13 @@ const SVG_DIR = './svg'
 
 const SRC_DIR = './src'
 
-const toPascalCase = (str: string): string =>
+const changeKababToPascal = (str: string): string =>
   str
     .split(/[-_]/)
     .map(word => word[0].toUpperCase() + word.slice(1))
     .join('')
 
+// Svg 폴더내 모든 svg 파일 수집
 const getSvgFileNames = async (): Promise<[string[], string[]]> => {
   const files = await readdir(SVG_DIR)
 
@@ -23,11 +24,12 @@ const getSvgFileNames = async (): Promise<[string[], string[]]> => {
     .filter(file => file.endsWith('.svg'))
     .map(file => path.basename(file, '.svg'))
 
-  const svgToPascal = svgOriginFileNames.map(toPascalCase)
+  const svgToPascal = svgOriginFileNames.map(changeKababToPascal)
 
   return [svgOriginFileNames, svgToPascal]
 }
 
+// src 폴더내 모든 tsx 파일 수집
 const getSrcFileNames = async (): Promise<string[]> => {
   const files = await readdir(SRC_DIR)
   const srcNames = files
@@ -37,6 +39,7 @@ const getSrcFileNames = async (): Promise<string[]> => {
   return srcNames
 }
 
+// src/index.ts 파일 생성
 const generateIndexFile = async () => {
   const files = await getSrcFileNames()
 
@@ -47,6 +50,7 @@ const generateIndexFile = async () => {
   await writeFile(path.join(SRC_DIR, 'index.ts'), exports, 'utf-8')
 }
 
+// 현재 생성된 tsx SvgComponent 와 svg 파일 비교후 없는 component만 생성
 const buildSvgToSrc = async () => {
   const [svgOriginFiles, svgFiles] = await getSvgFileNames()
   const tsxFiles = await getSrcFileNames()
