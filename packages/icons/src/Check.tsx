@@ -1,21 +1,28 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
+import * as React from 'react'
+import type { SVGProps } from 'react'
+const SvgCheck = React.forwardRef<
+  SVGSVGElement,
+  SVGProps<SVGSVGElement> & {
+    size?: number | string
+  }
+>(({ size = 24, ...props }, ref) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
-    fill="none"
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
     {...props}
   >
     <path
-      stroke="#000"
+      d="M6 12L10.2426 16.2426L18.727 7.75732"
+      stroke="black"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="m6 12 4.243 4.243 8.484-8.486"
     />
   </svg>
-);
-export default SvgCheck;
+))
+SvgCheck.displayName = 'SvgCheck'
+export default SvgCheck

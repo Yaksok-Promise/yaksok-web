@@ -1,0 +1,8 @@
+{
+  "svgProps": {
+    "width": "{size}",
+    "height": "{size}",
+    "ref": "{ref}"
+  },
+  "svgo": false
+}
