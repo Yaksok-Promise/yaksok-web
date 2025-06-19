@@ -6,7 +6,7 @@
   "files": ["src"],
   "scripts": {
     "clean": "rm -rf src",
-    "build": "pnpm run clean && svgr --typescript --icon --out-dir src svg",
+    "build": "pnpm dlx tsx ./scripts/build.ts",
     "dev": "pnpm run build && tsc --noEmit"
   },
   "exports": {
@@ -17,10 +17,13 @@
   },
   "devDependencies": {
     "@svgr/cli": "^8.1.0",
-    "@yaksok/typescript-config": "workspace:*",
-    "typescript": "^5.8.2",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@types/node": "^24.0.3",
     "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4"
+    "@types/react-dom": "^19.0.4",
+    "@yaksok/typescript-config": "workspace:*",
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "react": "^19.0.0",
