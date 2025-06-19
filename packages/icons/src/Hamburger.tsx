@@ -7,19 +7,20 @@ const SvgHamburger = React.forwardRef<
   }
 >(({ size = 24, ...props }, ref) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
+    viewBox="0 0 24 25"
     fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     ref={ref}
     {...props}
   >
     <path
+      d="M5 17.751H19M5 12.751H19M5 7.75098H19"
       stroke="currentColor"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M5 17.751h14m-14-5h14m-14-5h14"
     />
   </svg>
 ))
