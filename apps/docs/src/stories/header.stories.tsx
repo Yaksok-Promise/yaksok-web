@@ -1,6 +1,6 @@
 // Header.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react'
-import { Bell, ChevronLeft, Hamburger, LogoWithIcon } from '@yaksok/icons'
+import { Bell, ChevronLeft, Hamburger, LogoWithColor } from '@yaksok/icons'
 import { Header, type HeaderProps } from '@yaksok/ui/header' // 실제 경로에 맞게 수정하세요
 
 const meta: Meta<HeaderProps> = {
@@ -41,11 +41,11 @@ export const WithLeftAndRight: Story = {
   render: props => (
     <Header.Container {...props}>
       <Header.Left>
-        <ChevronLeft width={24} height={24} />
+        <ChevronLeft />
       </Header.Left>
       <Header.Title>매거진</Header.Title>
       <Header.Right>
-        <Hamburger width={24} height={24} />
+        <Hamburger />
       </Header.Right>
     </Header.Container>
   ),
@@ -56,7 +56,7 @@ export const WithOnlyLeft: Story = {
   render: props => (
     <Header.Container {...props}>
       <Header.Left>
-        <ChevronLeft width={24} height={24} stroke="currentColor" />
+        <ChevronLeft stroke="currentColor" />
       </Header.Left>
       <Header.Title>매거진</Header.Title>
     </Header.Container>
@@ -77,7 +77,7 @@ export const HomeHeader: Story = {
   render: props => (
     <Header.Container {...props}>
       <Header.Left>
-        <LogoWithIcon />
+        <LogoWithColor />
       </Header.Left>
       <Header.Right>
         <Bell />

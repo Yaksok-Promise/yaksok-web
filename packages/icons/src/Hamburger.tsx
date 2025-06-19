@@ -1,12 +1,17 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-const SvgHamburger = (props: SVGProps<SVGSVGElement>) => (
+import * as React from 'react'
+import type { SVGProps } from 'react'
+const SvgHamburger = React.forwardRef<
+  SVGSVGElement,
+  SVGProps<SVGSVGElement> & {
+    size?: number | string
+  }
+>(({ size = 24, ...props }, ref) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width={size}
+    height={size}
     fill="none"
-    viewBox="0 0 24 25"
+    ref={ref}
     {...props}
   >
     <path
@@ -17,5 +22,6 @@ const SvgHamburger = (props: SVGProps<SVGSVGElement>) => (
       d="M5 17.751h14m-14-5h14m-14-5h14"
     />
   </svg>
-);
-export default SvgHamburger;
+))
+SvgHamburger.displayName = 'SvgHamburger'
+export default SvgHamburger

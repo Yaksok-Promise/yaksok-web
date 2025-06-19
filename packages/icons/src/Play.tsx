@@ -1,12 +1,18 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-const SvgPlay = (props: SVGProps<SVGSVGElement>) => (
+import * as React from 'react'
+import type { SVGProps } from 'react'
+const SvgPlay = React.forwardRef<
+  SVGSVGElement,
+  SVGProps<SVGSVGElement> & {
+    size?: number | string
+  }
+>(({ size = 24, ...props }, ref) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width={size}
+    height={size}
     fill="none"
     viewBox="0 0 20 20"
+    ref={ref}
     {...props}
   >
     <path
@@ -14,5 +20,6 @@ const SvgPlay = (props: SVGProps<SVGSVGElement>) => (
       d="M13.25 8.567a.5.5 0 0 1 0 .866l-6 3.464a.5.5 0 0 1-.75-.433V5.536a.5.5 0 0 1 .75-.433z"
     />
   </svg>
-);
-export default SvgPlay;
+))
+SvgPlay.displayName = 'SvgPlay'
+export default SvgPlay
