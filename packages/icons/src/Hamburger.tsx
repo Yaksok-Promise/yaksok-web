@@ -15,7 +15,7 @@ const SvgHamburger = React.forwardRef<
     {...props}
   >
     <path
-      stroke="#fff"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

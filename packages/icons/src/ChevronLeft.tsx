@@ -15,7 +15,7 @@ const SvgChevronLeft = React.forwardRef<
     {...props}
   >
     <path
-      stroke="#000"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
