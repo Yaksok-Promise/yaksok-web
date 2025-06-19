@@ -9,7 +9,7 @@ on:
     branches: ['dev']
     paths:
       - 'apps/docs/src/**'
-  workflow_dispatch:
+
 
 permissions:
   contents: read
@@ -19,8 +19,6 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ job.status }}
 
     steps:
       - name: Checkout repository
@@ -45,22 +43,36 @@ jobs:
         run: pnpm run build:ui
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        id: chromatic
+        uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
           workingDir: apps/docs
+          onlyChanged: true
+          exitZeroOnChanges: true
 
-      - name: Publish to Chromatic (manual CLI)
-        id: chromatic
+      - name: Print all Chromatic outputs
         run: |
-          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --working-dir=apps/docs --exit-once-uploaded > chromatic-output.log
-          url=$(grep -o 'https://[^ ]*\.chromatic\.com' chromatic-output.log)
-          echo "storybookUrl=$url" >> $GITHUB_OUTPUT
+          echo "url: ${{ steps.chromatic.outputs.url }}"
+          echo "buildUrl: ${{ steps.chromatic.outputs.buildUrl }}"
+          echo "buildNumber: ${{ steps.chromatic.outputs.buildNumber }}"
+          echo "changeCount: ${{ steps.chromatic.outputs.changeCount }}"
+          echo "componentCount: ${{ steps.chromatic.outputs.componentCount }}"
+          echo "specCount: ${{ steps.chromatic.outputs.specCount }}"
+          echo "actualCaptureCount: ${{ steps.chromatic.outputs.actualCaptureCount }}"
+          echo "webUrl: ${{ steps.chromatic.outputs.webUrl }}"
+
+
+      - name: Set URL
+        if: success()
+        run: echo "STORYBOOK_URL=${{ steps.chromatic.outputs.storybookUrl }}" >> $GITHUB_ENV
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: "🚀 Storybook Preview: ${{ steps.chromatic.outputs.storybookUrl }}"
+          message: |
+            📚 Storybook Preview Ready!
+            🔍 Review URL: ${{ env.STORYBOOK_URL }}
