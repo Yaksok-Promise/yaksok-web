@@ -11,6 +11,12 @@ export default function MainPage() {
     })
   }
 
+  const goSignup = () => {
+    push('SignupPage', {
+      title: '회원가입',
+    })
+  }
+
   return (
     <div>
       <TopBar />
@@ -20,6 +26,13 @@ export default function MainPage() {
           className="my-10 w-full bg-black01 text-center text-white01"
         >
           의약품 및 건강기능식품 성분 비교하기
+        </button>
+
+        <button
+          onClick={goSignup}
+          className="my-10 w-full bg-black01 text-center text-white01"
+        >
+          회원가입
         </button>
         <div className="text-2xl">안녕하세요</div>
       </div>
