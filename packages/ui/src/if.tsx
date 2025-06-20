@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 
-type IfProps = {
+export type IfProps = {
   condition: boolean
   children: ReactElement | ReactElement[]
 }
