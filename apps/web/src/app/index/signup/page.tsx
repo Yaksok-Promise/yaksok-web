@@ -1,15 +1,60 @@
+import AgreementPage from '@/components/signup/agreement'
+import Id from '@/components/signup/id'
 import { useFunnel } from '@/hooks/use-funnel'
-import { Header } from '@yaksok/ui/header'
-import { PageSpy } from '@yaksok/ui/page-spy'
-import { If } from '@yaksok/ui/if'
-import { ChevronLeft } from '@yaksok/icons'
-import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, FormProvider } from 'react-hook-form'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
-import Agreement from '@/components/signup/agreement'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { ChevronLeft } from '@yaksok/icons'
+import { useAgreement, AgreementItemContent } from '@yaksok/ui/agreement'
+import { Header } from '@yaksok/ui/header'
+import { If } from '@yaksok/ui/if'
+import { PageSpy } from '@yaksok/ui/page-spy'
 import { cn } from '@yaksok/utils'
-import { useEffect } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+
+export type AgreementItemId =
+  | 'age'
+  | 'personal-info-agreement'
+  | 'marketing-agreement'
+  | 'service-agreement'
+  | 'location-service'
+  | 'push-notification'
+
+const itemList: AgreementItemContent<AgreementItemId>[] = [
+  {
+    id: 'age',
+    content: '만 14세 이상',
+    isRequired: true,
+  },
+  {
+    id: 'personal-info-agreement',
+    content: '개인정보 수집 및 이용약관',
+    showDetailButton: true,
+    isRequired: true,
+  },
+  {
+    id: 'location-service',
+    content: '위치기반 서비스 이용약관',
+    showDetailButton: true,
+    isRequired: true,
+  },
+  {
+    id: 'service-agreement',
+    content: '서비스 이용약관',
+    showDetailButton: true,
+    isRequired: true,
+  },
+  {
+    id: 'marketing-agreement',
+    content: '마케팅 및 이벤트 활용 동의',
+    showDetailButton: true,
+  },
+  {
+    id: 'push-notification',
+    content: '알림 수신 동의',
+    showDetailButton: true,
+  },
+]
 
 export default function SignupPage() {
   const Steps = [
@@ -53,6 +98,8 @@ export default function SignupPage() {
 
   const onSubmit = (data: SignupRequest) => console.log(data)
 
+  const agreementHook = useAgreement<AgreementItemId>(itemList)
+
   return (
     <AppScreen>
       <If condition={ifCondition}>
@@ -80,9 +127,17 @@ export default function SignupPage() {
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <Funnel>
                 <Step name="agreement">
-                  <Agreement onNext={handleNext} />
+                  <AgreementPage
+                    onNext={handleNext}
+                    agreementHook={
+                      agreementHook as ReturnType<typeof useAgreement>
+                    }
+                    itemList={itemList}
+                  />
                 </Step>
-                <Step name="id">아이디 기입</Step>
+                <Step name="id">
+                  <Id onNext={handleNext} />
+                </Step>
                 <Step name="password">비밀번호 기입</Step>
                 <Step name="phoneNumber">전화번호</Step>
                 <Step name="sex">성별</Step>

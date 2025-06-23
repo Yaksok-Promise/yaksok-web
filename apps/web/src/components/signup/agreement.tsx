@@ -1,62 +1,30 @@
+import { AgreementItemId } from '@/app/index/signup/page'
 import { SignupRequest } from '@/validation/zod'
 import {
+  Agreement,
   AgreementItemContent,
   useAgreement,
-  Agreement,
 } from '@yaksok/ui/agreement'
+import { Button } from '@yaksok/ui/button'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Button } from '@yaksok/ui/button'
-
-type AgreementItemId =
-  | 'age'
-  | 'personal-info-agreement'
-  | 'marketing-agreement'
-  | 'service-agreement'
-  | 'location-service'
-  | 'push-notification'
 
 export type StepPageProps = {
   onNext: () => void
 }
-export default function AgreementPage({ onNext }: StepPageProps) {
+
+type AgreementPageProps = StepPageProps & {
+  itemList: AgreementItemContent<AgreementItemId>[]
+  agreementHook: ReturnType<typeof useAgreement>
+}
+
+export default function AgreementPage({
+  onNext,
+  agreementHook,
+  itemList,
+}: AgreementPageProps) {
   const { setValue } = useFormContext<SignupRequest>()
-  const itemList: AgreementItemContent<AgreementItemId>[] = [
-    {
-      id: 'age',
-      content: '만 14세 이상',
-      isRequired: true,
-    },
-    {
-      id: 'personal-info-agreement',
-      content: '개인정보 수집 및 이용약관',
-      showDetailButton: true,
-      isRequired: true,
-    },
-    {
-      id: 'location-service',
-      content: '위치기반 서비스 이용약관',
-      showDetailButton: true,
-      isRequired: true,
-    },
-    {
-      id: 'service-agreement',
-      content: '서비스 이용약관',
-      showDetailButton: true,
-      isRequired: true,
-    },
-    {
-      id: 'marketing-agreement',
-      content: '마케팅 및 이벤트 활용 동의',
-      showDetailButton: true,
-    },
-    {
-      id: 'push-notification',
-      content: '알림 수신 동의',
-      showDetailButton: true,
-    },
-  ]
-  const agreementHook = useAgreement(itemList)
+
   const { itemsChecked, isAllRequiredAgreementChecked } = agreementHook
 
   const agreedAlarmValue = itemsChecked['push-notification']
