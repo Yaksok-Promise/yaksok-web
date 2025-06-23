@@ -1,61 +1,19 @@
 import AgreementPage from '@/components/signup/agreement'
+import { ITEM_LIST } from '@/components/signup/constant'
 import Id from '@/components/signup/id'
 import Password from '@/components/signup/password'
+import Phonenumber from '@/components/signup/phonenumber'
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
-import { AgreementItemContent, useAgreement } from '@yaksok/ui/agreement'
+import { useAgreement } from '@yaksok/ui/agreement'
 import { Header } from '@yaksok/ui/header'
 import { If } from '@yaksok/ui/if'
 import { PageSpy } from '@yaksok/ui/page-spy'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
-
-export type AgreementItemId =
-  | 'age'
-  | 'personal-info-agreement'
-  | 'marketing-agreement'
-  | 'service-agreement'
-  | 'location-service'
-  | 'push-notification'
-
-const itemList: AgreementItemContent<AgreementItemId>[] = [
-  {
-    id: 'age',
-    content: '만 14세 이상',
-    isRequired: true,
-  },
-  {
-    id: 'personal-info-agreement',
-    content: '개인정보 수집 및 이용약관',
-    showDetailButton: true,
-    isRequired: true,
-  },
-  {
-    id: 'location-service',
-    content: '위치기반 서비스 이용약관',
-    showDetailButton: true,
-    isRequired: true,
-  },
-  {
-    id: 'service-agreement',
-    content: '서비스 이용약관',
-    showDetailButton: true,
-    isRequired: true,
-  },
-  {
-    id: 'marketing-agreement',
-    content: '마케팅 및 이벤트 활용 동의',
-    showDetailButton: true,
-  },
-  {
-    id: 'push-notification',
-    content: '알림 수신 동의',
-    showDetailButton: true,
-  },
-]
 
 export default function SignupPage() {
   const Steps = [
@@ -100,7 +58,7 @@ export default function SignupPage() {
 
   const onSubmit = (data: SignupRequest) => console.log(data)
 
-  const agreementHook = useAgreement<AgreementItemId>(itemList)
+  const agreementHook = useAgreement(ITEM_LIST)
 
   return (
     <AppScreen>
@@ -134,16 +92,24 @@ export default function SignupPage() {
                     agreementHook={
                       agreementHook as ReturnType<typeof useAgreement>
                     }
-                    itemList={itemList}
+                    itemList={ITEM_LIST}
                   />
                 </Step>
                 <Step name="id">
-                  <Id onNext={handleNext} />
+                  <Id onNext={handleNext} title="아이디를 입력해주세요." />
                 </Step>
                 <Step name="password">
-                  <Password onNext={handleNext} />
+                  <Password
+                    onNext={handleNext}
+                    title="비밀번호를 입력해주세요"
+                  />
                 </Step>
-                <Step name="phoneNumber">전화번호</Step>
+                <Step name="phoneNumber">
+                  <Phonenumber
+                    title="전화번호를 입력해주세요."
+                    onNext={handleNext}
+                  />
+                </Step>
                 <Step name="sex">성별</Step>
                 <Step name="birthDate">생일</Step>
                 <Step name="name">이름 기입</Step>

@@ -1,4 +1,3 @@
-import { AgreementItemId } from '@/app/index/signup/page'
 import { SignupRequest } from '@/validation/zod'
 import {
   Agreement,
@@ -8,12 +7,9 @@ import {
 import { Button } from '@yaksok/ui/button'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { AgreementItemId, StepPageProps } from './type'
 
-export type StepPageProps = {
-  onNext: () => void
-}
-
-type AgreementPageProps = StepPageProps & {
+type AgreementPageProps = Omit<StepPageProps, 'title'> & {
   itemList: AgreementItemContent<AgreementItemId>[]
   agreementHook: ReturnType<typeof useAgreement>
 }

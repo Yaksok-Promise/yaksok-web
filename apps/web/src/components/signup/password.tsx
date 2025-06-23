@@ -2,10 +2,10 @@ import { passwordRegex } from '@/validation/zod'
 import { Button } from '@yaksok/ui/button'
 import TextField from '@yaksok/ui/text-field'
 import { useWatch } from 'react-hook-form'
-import { WhitFormContext } from './id'
 import { withFormContext } from './with-form-context'
+import { WithFormContext } from './type'
 
-function Password({ onNext, methods }: WhitFormContext) {
+function Password({ onNext, methods, title }: WithFormContext) {
   const { register, control } = methods
 
   const password = useWatch({ control, name: 'password' })
@@ -18,7 +18,7 @@ function Password({ onNext, methods }: WhitFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">비밀번호를 입력해주세요</h1>
+      <h1 className="mb-10 text-head5">{title}</h1>
       <div className="flex flex-col gap-4">
         <TextField
           label="비밀번호"

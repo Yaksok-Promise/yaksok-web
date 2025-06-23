@@ -1,25 +1,23 @@
 import { Button } from '@yaksok/ui/button'
 import { TextField } from '@yaksok/ui/text-field'
-import { StepPageProps } from './agreement'
-import { useWatch, UseFormReturn } from 'react-hook-form'
-import { emailRegex, SignupRequest } from '@/validation/zod'
+
+import { useWatch } from 'react-hook-form'
+import { emailRegex } from '@/validation/zod'
 import { withFormContext } from './with-form-context'
+import { WithFormContext } from './type'
 
-export interface WhitFormContext extends StepPageProps {
-  methods: UseFormReturn<SignupRequest>
-}
-
-function Id({ onNext, methods }: WhitFormContext) {
+function Id({ onNext, methods, title }: WithFormContext) {
   const loginIdValue = useWatch({
     control: methods.control,
     name: 'loginId',
+    defaultValue: '',
   })
 
   const isDisabled = !emailRegex.test(loginIdValue)
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">아이디를 입력해주세요</h1>
+      <h1 className="mb-10 text-head5">{title}</h1>
       <TextField
         label="아이디"
         placeholder="아이디를 입력해 주세요"
