@@ -1,11 +1,12 @@
-import { SignupRequest, passwordRegex } from '@/validation/zod'
+import { passwordRegex } from '@/validation/zod'
 import { Button } from '@yaksok/ui/button'
 import TextField from '@yaksok/ui/text-field'
-import { useFormContext, useWatch } from 'react-hook-form'
-import { StepPageProps } from './agreement'
+import { useWatch } from 'react-hook-form'
+import { WhitFormContext } from './id'
+import { withFormContext } from './with-form-context'
 
-export default function Password({ onNext }: StepPageProps) {
-  const { register, control } = useFormContext<SignupRequest>()
+function Password({ onNext, methods }: WhitFormContext) {
+  const { register, control } = methods
 
   const password = useWatch({ control, name: 'password' })
   const confirmPassword = useWatch({ control, name: 'confirmPassword' })
@@ -52,3 +53,5 @@ export default function Password({ onNext }: StepPageProps) {
     </div>
   )
 }
+
+export default withFormContext(Password)
