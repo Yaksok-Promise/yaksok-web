@@ -1,9 +1,9 @@
+import { slicePhoneNumber } from '@/utils/slice-phone-number'
 import { Button } from '@yaksok/ui/button'
+import TextField from '@yaksok/ui/text-field'
+import { useState } from 'react'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
-import TextField from '@yaksok/ui/text-field'
-import { slicePhoneNumber } from '@/utils/slice-phone-number'
-import { useState } from 'react'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
   const { register } = methods
@@ -58,7 +58,7 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
 
       <div className="mt-25">
         <Button disabled={!confirm} onClick={onNext}>
-          다음 {signNumber} {!confirm}
+          다음
         </Button>
       </div>
     </div>

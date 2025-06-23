@@ -3,6 +3,7 @@ import { ITEM_LIST } from '@/components/signup/constant'
 import Id from '@/components/signup/id'
 import Password from '@/components/signup/password'
 import Phonenumber from '@/components/signup/phonenumber'
+import Sex from '@/components/signup/sex'
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -110,7 +111,9 @@ export default function SignupPage() {
                     onNext={handleNext}
                   />
                 </Step>
-                <Step name="sex">성별</Step>
+                <Step name="sex">
+                  <Sex title="성별을 입력해주세요" onNext={handleNext} />
+                </Step>
                 <Step name="birthDate">생일</Step>
                 <Step name="name">이름 기입</Step>
                 <Step name="nickname">닉네임 기입</Step>
