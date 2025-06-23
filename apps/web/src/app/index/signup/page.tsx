@@ -1,11 +1,12 @@
 import AgreementPage from '@/components/signup/agreement'
 import Id from '@/components/signup/id'
+import Password from '@/components/signup/password'
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
-import { useAgreement, AgreementItemContent } from '@yaksok/ui/agreement'
+import { AgreementItemContent, useAgreement } from '@yaksok/ui/agreement'
 import { Header } from '@yaksok/ui/header'
 import { If } from '@yaksok/ui/if'
 import { PageSpy } from '@yaksok/ui/page-spy'
@@ -94,6 +95,7 @@ export default function SignupPage() {
 
   const methods = useForm<SignupRequest>({
     resolver: zodResolver(SignupSchema),
+    mode: 'onChange',
   })
 
   const onSubmit = (data: SignupRequest) => console.log(data)
@@ -138,7 +140,9 @@ export default function SignupPage() {
                 <Step name="id">
                   <Id onNext={handleNext} />
                 </Step>
-                <Step name="password">비밀번호 기입</Step>
+                <Step name="password">
+                  <Password onNext={handleNext} />
+                </Step>
                 <Step name="phoneNumber">전화번호</Step>
                 <Step name="sex">성별</Step>
                 <Step name="birthDate">생일</Step>

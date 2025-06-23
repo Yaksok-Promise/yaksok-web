@@ -26,6 +26,7 @@ export interface TextFieldProps
   regex: RegExp
   onVerify?: (value: string) => boolean
   onFormat?: (value: string) => string
+  onCondition?: (value: string) => boolean
 }
 
 export const TextField = React.forwardRef(function TextField(
@@ -40,6 +41,7 @@ export const TextField = React.forwardRef(function TextField(
     onFormat,
     label,
     message,
+    onCondition,
     ...rest
   }: TextFieldProps,
   ref: React.Ref<HTMLInputElement>
@@ -64,6 +66,12 @@ export const TextField = React.forwardRef(function TextField(
 
     if (status === 'success') {
       setStatus(undefined)
+    }
+
+    if (onCondition) {
+      const isTrue = onCondition(e.target.value as string)
+      setStatus(isTrue ? 'success' : 'regexError')
+      return
     }
 
     if (!onVerify) {

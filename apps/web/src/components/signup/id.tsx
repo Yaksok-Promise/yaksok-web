@@ -2,7 +2,7 @@ import { Button } from '@yaksok/ui/button'
 import { TextField } from '@yaksok/ui/text-field'
 import { StepPageProps } from './agreement'
 import { useFormContext, useWatch } from 'react-hook-form'
-import { SignupRequest } from '@/validation/zod'
+import { emailRegex, SignupRequest } from '@/validation/zod'
 
 export default function Id({ onNext }: StepPageProps) {
   const { register, control } = useFormContext<SignupRequest>()
@@ -11,8 +11,8 @@ export default function Id({ onNext }: StepPageProps) {
     control,
     name: 'loginId',
   })
-  const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-  const isDisabled = emailRegex.test(loginIdValue)
+
+  const isDisabled = !emailRegex.test(loginIdValue)
 
   console.log(loginIdValue, isDisabled)
   return (
@@ -30,7 +30,7 @@ export default function Id({ onNext }: StepPageProps) {
         {...register('loginId')}
       />
       <div className="mt-25">
-        <Button disabled={!isDisabled} onClick={onNext}>
+        <Button disabled={isDisabled} onClick={onNext}>
           다음
         </Button>
       </div>
