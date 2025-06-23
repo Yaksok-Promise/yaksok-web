@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { Check } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
@@ -15,7 +14,6 @@ export const textFieldVariants = cva(
 type ErrorStatus = 'regexError' | 'verificationError'
 type SuccessStatus = 'regexSuccess' | 'success'
 type Status = undefined | ErrorStatus | SuccessStatus
-
 type Message = Partial<Record<ErrorStatus, string>> // 에러에 관한 메세지
 
 export interface TextFieldProps
@@ -47,6 +45,7 @@ export const TextField = React.forwardRef(function TextField(
   ref: React.Ref<HTMLInputElement>
 ) {
   const [status, setStatus] = useState<Status>(undefined)
+  const [inputValue, setInputValue] = useState(value)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value
@@ -58,6 +57,7 @@ export const TextField = React.forwardRef(function TextField(
 
     // 외부 onChange 전달
     onChange?.(e)
+    setInputValue(newValue)
 
     if (newValue.length === 0) {
       setStatus(undefined)
@@ -102,7 +102,7 @@ export const TextField = React.forwardRef(function TextField(
             ref={ref}
             type={type}
             data-slot="input"
-            value={value}
+            value={inputValue}
             onChange={handleInputChange}
             onBlur={onBlur}
             className={cn(
