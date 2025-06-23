@@ -7,6 +7,9 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
+import Agreement from '@/components/signup/agreement'
+import { cn } from '@yaksok/utils'
+import { useEffect } from 'react'
 
 export default function SignupPage() {
   const Steps = [
@@ -60,7 +63,12 @@ export default function SignupPage() {
           <Header.Title>회원가입</Header.Title>
         </Header.Container>
       </If>
-      <div className="mt-13">
+      <div
+        className={cn({
+          'mt-0': !ifCondition,
+          'mt-13': ifCondition,
+        })}
+      >
         <If condition={ifCondition}>
           <PageSpy
             currentIndex={currentTrackingIdx}
@@ -71,7 +79,9 @@ export default function SignupPage() {
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <Funnel>
-                <Step name="agreement">동의사항기입</Step>
+                <Step name="agreement">
+                  <Agreement onNext={handleNext} />
+                </Step>
                 <Step name="id">아이디 기입</Step>
                 <Step name="password">비밀번호 기입</Step>
                 <Step name="phoneNumber">전화번호</Step>
