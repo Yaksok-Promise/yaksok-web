@@ -4,6 +4,9 @@ import { PageSpy } from '@yaksok/ui/page-spy'
 import { If } from '@yaksok/ui/if'
 import { ChevronLeft } from '@yaksok/icons'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, FormProvider } from 'react-hook-form'
+import { SignupRequest, SignupSchema } from '@/validation/zod'
 
 export default function SignupPage() {
   const Steps = [
@@ -41,6 +44,12 @@ export default function SignupPage() {
 
   const ifCondition = currentStep !== 'agreement' && currentStep !== 'done'
 
+  const methods = useForm<SignupRequest>({
+    resolver: zodResolver(SignupSchema),
+  })
+
+  const onSubmit = (data: SignupRequest) => console.log(data)
+
   return (
     <AppScreen>
       <If condition={ifCondition}>
@@ -59,17 +68,21 @@ export default function SignupPage() {
           />
         </If>
         <main className="px-4 pt-10">
-          <Funnel>
-            <Step name="agreement">동의사항기입</Step>
-            <Step name="id">아이디 기입</Step>
-            <Step name="password">비밀번호 기입</Step>
-            <Step name="phoneNumber">전화번호</Step>
-            <Step name="sex">성별</Step>
-            <Step name="birthDate">생일</Step>
-            <Step name="name">이름 기입</Step>
-            <Step name="nickname">닉네임 기입</Step>
-            <Step name="done">완료</Step>
-          </Funnel>
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <Funnel>
+                <Step name="agreement">동의사항기입</Step>
+                <Step name="id">아이디 기입</Step>
+                <Step name="password">비밀번호 기입</Step>
+                <Step name="phoneNumber">전화번호</Step>
+                <Step name="sex">성별</Step>
+                <Step name="birthDate">생일</Step>
+                <Step name="name">이름 기입</Step>
+                <Step name="nickname">닉네임 기입</Step>
+                <Step name="done">완료</Step>
+              </Funnel>
+            </form>
+          </FormProvider>
         </main>
       </div>
     </AppScreen>
