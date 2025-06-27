@@ -60,3 +60,7 @@ export type UserInfoResponse = {
 export type CheckResultResponse = {
   result: boolean
 }
+
+export type SMSTestResponse = {
+  response: string
+}

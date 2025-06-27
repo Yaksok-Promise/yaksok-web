@@ -9,6 +9,8 @@ export const nameRegex = /^(?:[가-힣]{2,})$/
 
 export const nicknameRegex = /^[A-Za-z0-9가-힣]{2,6}$/
 
+export const smsCodeRegex = /^[0-9]{6}$/
+
 export const SignupSchema = z
   .object({
     loginId: z.string().email('이메일 형식이 올바르지 않습니다.'),

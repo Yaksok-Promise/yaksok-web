@@ -5,12 +5,41 @@ import { useState } from 'react'
 import SignupTitle from './signup-title'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
+import { useHttpMutation } from '@/hooks/use-http-mutation'
+import {
+  SendSMSRequest,
+  SMSTestResponse,
+  SMSVerifyRequest,
+} from '@yaksok/api/userType'
+import { smsCodeRegex } from '@/validation/zod'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
-  const { register } = methods
+  const { register, getValues } = methods
   const [signNumber, setSignNumber] = useState<null | string>(null)
   const [isShow, setIsShow] = useState(false)
   const [confirm, setConfirm] = useState(false)
+
+  const sendSmsMutation = useHttpMutation<SendSMSRequest, SMSTestResponse>(
+    '/api/sms/test/code',
+    'post'
+  )
+
+  const verifySmsMutation = useHttpMutation<SMSVerifyRequest>(
+    '/api/sms/verify',
+    'post'
+  )
+
+  const onVerify = async () => {
+    const phoneNumber = getValues('phoneNumber')
+    const data = await sendSmsMutation.mutateAsync({
+      smsType: 'SIGN_UP',
+      phone: phoneNumber,
+    })
+    console.log(data)
+    setSignNumber(data.response)
+    setIsShow(true)
+    return true
+  }
 
   return (
     <div>
@@ -26,12 +55,7 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
           }}
           regex={/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/}
           onFormat={slicePhoneNumber}
-          onVerify={() => {
-            // 인증하기 api 요청 기능 추가
-            setSignNumber('123456')
-            setIsShow(true)
-            return true
-          }}
+          onVerify={onVerify}
           {...register('phoneNumber')}
           inputMode="numeric"
         />
@@ -43,7 +67,7 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
             message={{
               regexError: '인증번호 6자리를 입력해 주세요.',
             }}
-            regex={/^[0-9]{6}$/}
+            regex={smsCodeRegex}
             onCondition={value => {
               if (value === signNumber) {
                 setConfirm(true)

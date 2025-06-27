@@ -9,7 +9,7 @@ const users = [
   '/api/user/check/id',
 ] as const
 
-const sms = ['/api/sms/verify', '/api/sms/test/code', '/api/sms/code']
+const sms = ['/api/sms/verify', '/api/sms/test/code', '/api/sms/code'] as const
 
 const comments = [
   '/api/comment/{postId}',

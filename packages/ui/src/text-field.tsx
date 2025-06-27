@@ -22,7 +22,7 @@ export interface TextFieldProps
   label: string
   message: Message
   regex: RegExp
-  onVerify?: (value: string) => boolean
+  onVerify?: (value: string) => boolean | void | Promise<boolean>
   onFormat?: (value: string) => string
   onCondition?: (value: string) => boolean
 }
@@ -82,8 +82,8 @@ export const TextField = React.forwardRef(function TextField(
     setStatus(regex.test(newValue) ? 'regexSuccess' : 'regexError')
   }
 
-  const handleVerify = () => {
-    const isVerified = onVerify?.(value as string)
+  const handleVerify = async () => {
+    const isVerified = await onVerify?.(value as string)
     setStatus(isVerified ? 'success' : 'verificationError')
   }
 
