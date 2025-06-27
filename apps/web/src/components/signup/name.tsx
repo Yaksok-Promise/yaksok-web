@@ -1,4 +1,4 @@
-import { nameRegex } from '@/validation/zod'
+import { nameRegex, SignupRequest } from '@/validation/zod'
 import { Button } from '@yaksok/ui/button'
 import { TextField } from '@yaksok/ui/text-field'
 import { useWatch } from 'react-hook-form'
@@ -7,13 +7,19 @@ import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
 
 function Name({ methods, title, onNext }: WithFormContext) {
+  const { control, register, handleSubmit } = methods
   const nameValue = useWatch({
-    control: methods.control,
+    control: control,
     name: 'name',
     defaultValue: '',
   })
 
   const isDisabled = nameRegex.test(nameValue)
+
+  const handleDone = handleSubmit((data: SignupRequest) => {
+    console.log('✅ SUBMIT CALLED', data)
+    onNext()
+  })
 
   return (
     <div>
@@ -26,10 +32,10 @@ function Name({ methods, title, onNext }: WithFormContext) {
           regexError: '2글자 이상 한글로 입력해주세요',
         }}
         regex={nameRegex}
-        {...methods.register('name')}
+        {...register('name')}
       />
       <div className="mt-25">
-        <Button disabled={!isDisabled} onClick={onNext}>
+        <Button disabled={!isDisabled} onClick={handleDone}>
           다음
         </Button>
       </div>

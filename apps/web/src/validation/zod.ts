@@ -7,8 +7,6 @@ export const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 
 export const nameRegex = /^(?:[가-힣]{2,})$/
 
-export const nicknameRegex = /^[A-Za-z0-9가-힣]{2,6}$/
-
 export const smsCodeRegex = /^[0-9]{6}$/
 
 export const SignupSchema = z
@@ -33,7 +31,6 @@ export const SignupSchema = z
     gender: z.enum(['MALE', 'FEMALE']),
     birthDate: z.string(),
     name: z.string().min(2, '이름은 필수입니다.'),
-    nickname: z.string().min(2, '닉네임은 필수입니다.'),
     agreedMarketing: z.boolean(),
     agreedAlarm: z.boolean(),
   })
