@@ -24,6 +24,7 @@ const post = async <BODY, RES>(
   { params, query, body, ...props }: RequestOption<BODY>
 ): Promise<RES> => {
   const url = makePath(path, { params, query })
+  console.log(body, url, { ...props })
 
   const result = await instance.post<RES>(url, body, { ...props })
 

@@ -35,7 +35,7 @@ export default function SignupPage() {
   ] as const
 
   const { Funnel, Step, setStep, currentStep } =
-    useFunnel<(typeof Steps)[number]>('done')
+    useFunnel<(typeof Steps)[number]>('phoneNumber')
 
   const trackingSteps = Steps.slice(1, -1)
   const currentTrackingIdx = trackingSteps.findIndex(

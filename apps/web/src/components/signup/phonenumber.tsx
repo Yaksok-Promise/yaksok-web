@@ -11,21 +11,18 @@ import {
   SMSTestResponse,
   SMSVerifyRequest,
 } from '@yaksok/api/userType'
-import { smsCodeRegex } from '@/validation/zod'
+import { SignupRequest, smsCodeRegex } from '@/validation/zod'
+import { useFormContext } from 'react-hook-form'
+import { useDebounce } from '@/hooks/use-debounce'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
   const { register, getValues } = methods
-  const [signNumber, setSignNumber] = useState<null | string>(null)
+  const [signNumber, setSignNumber] = useState<string>('')
   const [isShow, setIsShow] = useState(false)
   const [confirm, setConfirm] = useState(false)
 
   const sendSmsMutation = useHttpMutation<SendSMSRequest, SMSTestResponse>(
     '/api/sms/test/code',
-    'post'
-  )
-
-  const verifySmsMutation = useHttpMutation<SMSVerifyRequest>(
-    '/api/sms/verify',
     'post'
   )
 
@@ -39,6 +36,13 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
     setSignNumber(data.response)
     setIsShow(true)
     return true
+  }
+
+  const onCheckSms = (isCheck: true) => {
+    if (isCheck) {
+      setConfirm(isCheck)
+      onNext()
+    }
   }
 
   return (
@@ -60,24 +64,7 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
           inputMode="numeric"
         />
         {isShow && (
-          <TextField
-            label="인증번호"
-            placeholder="인증번호 6자리를 입력해 주세요."
-            type="tel"
-            message={{
-              regexError: '인증번호 6자리를 입력해 주세요.',
-            }}
-            regex={smsCodeRegex}
-            onCondition={value => {
-              if (value === signNumber) {
-                setConfirm(true)
-              } else {
-                setConfirm(false)
-              }
-              return value === signNumber
-            }}
-            inputMode="numeric"
-          />
+          <SmsCodeInput signNumber={signNumber} setConfirm={onCheckSms} />
         )}
       </div>
 
@@ -87,6 +74,54 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
         </Button>
       </div>
     </div>
+  )
+}
+
+interface SmsCodeInputProps {
+  signNumber: string
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  setConfirm: (...args: any[]) => void
+}
+
+function SmsCodeInput({ signNumber, setConfirm }: SmsCodeInputProps) {
+  const { getValues } = useFormContext<SignupRequest>()
+
+  const verifySmsMutation = useHttpMutation<SMSVerifyRequest>(
+    '/api/sms/verify',
+    'post'
+  )
+
+  const debounce = useDebounce()
+
+  const debouncedVerify = debounce((code: string) => {
+    const phone = getValues('phoneNumber')
+    verifySmsMutation.mutate({ code, phone, smsType: 'SIGN_UP' })
+  }, 1000)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    const isValid = smsCodeRegex.test(value) && value === signNumber
+    setConfirm(isValid)
+
+    if (isValid) {
+      debouncedVerify(value)
+    }
+  }
+
+  return (
+    <TextField
+      label="인증번호"
+      placeholder="인증번호 6자리를 입력해 주세요."
+      type="tel"
+      inputMode="numeric"
+      message={{
+        regexError: '인증번호 6자리를 입력해 주세요.',
+      }}
+      regex={smsCodeRegex}
+      maxLength={6}
+      onChange={handleChange}
+    />
   )
 }
 
