@@ -1,12 +1,15 @@
 import AgreementPage from '@/components/signup/agreement'
 import BirthDate from '@/components/signup/birthdate'
 import { ITEM_LIST } from '@/components/signup/constant'
-import Id from '@/components/signup/id'
-import Name from '@/components/signup/name'
-import Password from '@/components/signup/password'
-import Phonenumber from '@/components/signup/phonenumber'
-import Sex from '@/components/signup/sex'
-import SignupDonePage from '@/components/signup/signup-done'
+import {
+  Id,
+  Name,
+  Password,
+  PhoneNumber,
+  Sex,
+  SignupDone,
+} from '@/components/signup'
+
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { DevTool } from '@hookform/devtools'
@@ -14,9 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
 import { useAgreement } from '@yaksok/ui/agreement'
-import { Header } from '@yaksok/ui/header'
-import { If } from '@yaksok/ui/if'
-import { PageSpy } from '@yaksok/ui/page-spy'
+import { Header, If, PageSpy } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -110,7 +111,7 @@ export default function SignupPage() {
                   />
                 </Step>
                 <Step name="phoneNumber">
-                  <Phonenumber
+                  <PhoneNumber
                     title="전화번호를 입력해주세요."
                     onNext={handleNext}
                   />
@@ -128,7 +129,7 @@ export default function SignupPage() {
                   <Name title="이름을 입력해 주세요" onNext={handleNext} />
                 </Step>
                 <Step name="done">
-                  <SignupDonePage />
+                  <SignupDone />
                 </Step>
               </Funnel>
             </form>

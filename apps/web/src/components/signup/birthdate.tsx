@@ -1,6 +1,5 @@
 import { isValidDate } from '@/utils/is-valid-date'
-import { Button } from '@yaksok/ui/button'
-import { TextField } from '@yaksok/ui/text-field'
+import { Button, TextField } from '@yaksok/ui'
 import { useWatch } from 'react-hook-form'
 import SignupTitle from './signup-title'
 import { WithFormContext } from './type'

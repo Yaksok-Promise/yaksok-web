@@ -1,5 +1,4 @@
-import { Button } from '@yaksok/ui/button'
-import { TextField } from '@yaksok/ui/text-field'
+import { Button, TextField } from '@yaksok/ui'
 import { emailRegex } from '@/validation/zod'
 import { useWatch } from 'react-hook-form'
 import SignupTitle from './signup-title'

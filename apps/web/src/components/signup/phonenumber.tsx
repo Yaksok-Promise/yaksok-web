@@ -1,6 +1,5 @@
 import { slicePhoneNumber } from '@/utils/slice-phone-number'
-import { Button } from '@yaksok/ui/button'
-import TextField from '@yaksok/ui/text-field'
+import { Button, TextField } from '@yaksok/ui'
 import { useState } from 'react'
 import SignupTitle from './signup-title'
 import { WithFormContext } from './type'

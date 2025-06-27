@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx",
+    ".": "./src/index.ts",
     "./carousel": "./src/carousel/index.ts",
     "./agreement": "./src/agreement/index.tsx",
     "./styles.css": "./dist/styles.css"

@@ -4,7 +4,7 @@ import {
   AgreementItemContent,
   useAgreement,
 } from '@yaksok/ui/agreement'
-import { Button } from '@yaksok/ui/button'
+import { Button } from '@yaksok/ui'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { AgreementItemId, StepPageProps } from './type'

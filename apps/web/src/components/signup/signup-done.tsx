@@ -1,5 +1,5 @@
 import { useFlow } from '@/utils/stackflow'
-import { Button } from '@yaksok/ui/button'
+import { Button } from '@yaksok/ui'
 import SignupTitle from './signup-title'
 import SignupDone from '@assets/signup-done.png'
 

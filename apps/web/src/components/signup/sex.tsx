@@ -1,4 +1,4 @@
-import { Button } from '@yaksok/ui/button'
+import { Button } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
 import { forwardRef } from 'react'
 import { useWatch } from 'react-hook-form'

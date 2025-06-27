@@ -127,5 +127,3 @@ export const TextField = React.forwardRef(function TextField(
     </div>
   )
 })
-
-export default TextField
