@@ -1,10 +1,10 @@
-import { TextField } from '@yaksok/ui/text-field'
-import { WithFormContext } from './type'
-import { useWatch } from 'react-hook-form'
+import { SignupRequest, nicknameRegex } from '@/validation/zod'
 import { Button } from '@yaksok/ui/button'
-import { withFormContext } from './with-form-context'
-import { nicknameRegex, SignupRequest } from '@/validation/zod'
+import { TextField } from '@yaksok/ui/text-field'
+import { useWatch } from 'react-hook-form'
 import SignupTitle from './signup-title'
+import { WithFormContext } from './type'
+import { withFormContext } from './with-form-context'
 
 function NickName({ methods, title, onNext }: WithFormContext) {
   const { control, register, handleSubmit } = methods

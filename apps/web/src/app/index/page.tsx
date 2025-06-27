@@ -18,7 +18,7 @@ export default function MainPage() {
   }
 
   return (
-    <div>
+    <AppScreen>
       <TopBar />
       <div className="mt-10 h-[calc(100vh-64px)] bg-bgColor px-10">
         <button
@@ -36,6 +36,6 @@ export default function MainPage() {
         </button>
         <div className="text-2xl">안녕하세요</div>
       </div>
-    </div>
+    </AppScreen>
   )
 }

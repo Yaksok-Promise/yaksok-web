@@ -2,9 +2,9 @@ import { slicePhoneNumber } from '@/utils/slice-phone-number'
 import { Button } from '@yaksok/ui/button'
 import TextField from '@yaksok/ui/text-field'
 import { useState } from 'react'
+import SignupTitle from './signup-title'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
-import SignupTitle from './signup-title'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
   const { register } = methods

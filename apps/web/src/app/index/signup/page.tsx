@@ -7,8 +7,10 @@ import NickName from '@/components/signup/nickname'
 import Password from '@/components/signup/password'
 import Phonenumber from '@/components/signup/phonenumber'
 import Sex from '@/components/signup/sex'
+import SignupDonePage from '@/components/signup/signup-done'
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
@@ -18,7 +20,6 @@ import { If } from '@yaksok/ui/if'
 import { PageSpy } from '@yaksok/ui/page-spy'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
-import { DevTool } from '@hookform/devtools'
 
 export default function SignupPage() {
   const Steps = [
@@ -33,9 +34,8 @@ export default function SignupPage() {
     'done',
   ] as const
 
-  const { Funnel, Step, setStep, currentStep } = useFunnel<
-    (typeof Steps)[number]
-  >(Steps[0])
+  const { Funnel, Step, setStep, currentStep } =
+    useFunnel<(typeof Steps)[number]>('done')
 
   const trackingSteps = Steps.slice(1, -1)
   const currentTrackingIdx = trackingSteps.findIndex(
@@ -55,6 +55,7 @@ export default function SignupPage() {
   }
 
   const ifCondition = currentStep !== 'agreement' && currentStep !== 'done'
+  const isDone = currentStep === 'done'
 
   const methods = useForm<SignupRequest>({
     resolver: zodResolver(SignupSchema),
@@ -87,7 +88,7 @@ export default function SignupPage() {
             totalLength={trackingSteps.length}
           />
         </If>
-        <main className="px-4 pt-10">
+        <main className={cn('px-4 pt-10', { 'pt-0': isDone })}>
           <DevTool control={methods.control} />
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -134,7 +135,9 @@ export default function SignupPage() {
                     onNext={handleNext}
                   />
                 </Step>
-                <Step name="done">완료</Step>
+                <Step name="done">
+                  <SignupDonePage />
+                </Step>
               </Funnel>
             </form>
           </FormProvider>

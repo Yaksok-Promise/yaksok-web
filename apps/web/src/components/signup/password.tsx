@@ -2,9 +2,9 @@ import { passwordRegex } from '@/validation/zod'
 import { Button } from '@yaksok/ui/button'
 import TextField from '@yaksok/ui/text-field'
 import { useWatch } from 'react-hook-form'
+import SignupTitle from './signup-title'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
-import SignupTitle from './signup-title'
 
 function Password({ onNext, methods, title }: WithFormContext) {
   const { register, control } = methods
