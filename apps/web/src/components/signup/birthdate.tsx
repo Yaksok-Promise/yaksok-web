@@ -4,6 +4,7 @@ import { useWatch } from 'react-hook-form'
 import { isValidDate } from '@/utils/is-valid-date'
 import { Button } from '@yaksok/ui/button'
 import { withFormContext } from './with-form-context'
+import SignupTitle from './signup-title'
 
 function BirthDate({ methods, title, onNext }: WithFormContext) {
   const birthDateValue = useWatch({
@@ -15,7 +16,7 @@ function BirthDate({ methods, title, onNext }: WithFormContext) {
   const isPossible = isValidDate(birthDateValue)
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <TextField
         label="생년월일"
         placeholder="생년월일 8자리 (YYYYMMDD)"

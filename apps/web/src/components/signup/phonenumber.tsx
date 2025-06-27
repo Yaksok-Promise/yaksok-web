@@ -4,6 +4,7 @@ import TextField from '@yaksok/ui/text-field'
 import { useState } from 'react'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
+import SignupTitle from './signup-title'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
   const { register } = methods
@@ -13,7 +14,7 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <div className="flex flex-col gap-4">
         <TextField
           label="휴대폰번호"

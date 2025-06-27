@@ -4,6 +4,7 @@ import { useWatch } from 'react-hook-form'
 import { Button } from '@yaksok/ui/button'
 import { withFormContext } from './with-form-context'
 import { nicknameRegex, SignupRequest } from '@/validation/zod'
+import SignupTitle from './signup-title'
 
 function NickName({ methods, title, onNext }: WithFormContext) {
   const { control, register, handleSubmit } = methods
@@ -24,7 +25,7 @@ function NickName({ methods, title, onNext }: WithFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <TextField
         label="닉네임"
         placeholder="2자 이상 6자 이하 입력해 주세요"

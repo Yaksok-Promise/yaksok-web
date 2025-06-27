@@ -5,6 +5,7 @@ import { emailRegex } from '@/validation/zod'
 import { useWatch } from 'react-hook-form'
 import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
+import SignupTitle from './signup-title'
 
 function Id({ onNext, methods, title }: WithFormContext) {
   const loginIdValue = useWatch({
@@ -17,7 +18,7 @@ function Id({ onNext, methods, title }: WithFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <TextField
         label="아이디"
         placeholder="아이디를 입력해 주세요"

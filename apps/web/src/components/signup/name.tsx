@@ -4,6 +4,7 @@ import { useWatch } from 'react-hook-form'
 import { Button } from '@yaksok/ui/button'
 import { withFormContext } from './with-form-context'
 import { nameRegex } from '@/validation/zod'
+import SignupTitle from './signup-title'
 
 function Name({ methods, title, onNext }: WithFormContext) {
   const nameValue = useWatch({
@@ -16,7 +17,7 @@ function Name({ methods, title, onNext }: WithFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <TextField
         label="이름"
         placeholder="김약속"

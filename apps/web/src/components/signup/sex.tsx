@@ -4,6 +4,7 @@ import { WithFormContext } from './type'
 import { withFormContext } from './with-form-context'
 import { forwardRef } from 'react'
 import { cn } from '@yaksok/utils'
+import SignupTitle from './signup-title'
 
 interface RadioOptionProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
@@ -38,7 +39,7 @@ function Sex({ onNext, methods, title }: WithFormContext) {
 
   return (
     <div>
-      <h1 className="mb-10 text-head5">{title}</h1>
+      <SignupTitle>{title}</SignupTitle>
       <div className="flex gap-5">
         <RadioOption
           id="female"
