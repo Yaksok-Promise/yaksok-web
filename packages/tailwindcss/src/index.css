@@ -199,6 +199,14 @@ html {
   background-color: #f4f4f4;
 }
 
+input:-webkit-autofill {
+  background-color: white !important;
+  /* 또는 원하는 배경색으로 설정 */
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 @keyframes slide {
   from {
     transform: scaleX(0);
