@@ -7,7 +7,7 @@ import {
 import { Button } from '@yaksok/ui'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { AgreementItemId, StepPageProps } from './type'
+import { AgreementItemId, StepPageProps } from '@components/signup'
 
 type AgreementPageProps = Omit<StepPageProps, 'title'> & {
   itemList: AgreementItemContent<AgreementItemId>[]

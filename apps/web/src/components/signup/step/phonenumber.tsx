@@ -1,9 +1,11 @@
 import { slicePhoneNumber } from '@/utils/slice-phone-number'
 import { Button, TextField } from '@yaksok/ui'
 import { useState } from 'react'
-import SignupTitle from './signup-title'
-import { WithFormContext } from './type'
-import { withFormContext } from './with-form-context'
+import {
+  SignupTitle,
+  withFormContext,
+  type WithFormContext,
+} from '@components/signup'
 import { useHttpMutation } from '@/hooks/use-http-mutation'
 import {
   SendSMSRequest,

@@ -1,6 +1,6 @@
 import { useFlow } from '@/utils/stackflow'
 import { Button } from '@yaksok/ui'
-import SignupTitle from './signup-title'
+import { SignupTitle } from '@components/signup'
 import SignupDone from '@assets/signup-done.png'
 
 export default function SignupDonePage() {

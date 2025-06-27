@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-export default function SignupTitle({
+export function SignupTitle({
   children,
   ...props
 }: ComponentPropsWithoutRef<'h1'>) {

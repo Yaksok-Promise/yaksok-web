@@ -1,40 +1,30 @@
-import AgreementPage from '@/components/signup/agreement'
-import BirthDate from '@/components/signup/birthdate'
-import { ITEM_LIST } from '@/components/signup/constant'
-import {
-  Id,
-  Name,
-  Password,
-  PhoneNumber,
-  Sex,
-  SignupDone,
-} from '@/components/signup'
-
+import SignupSteps from '@/components/signup/signup-steps'
 import { useFunnel } from '@/hooks/use-funnel'
 import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
-import { useAgreement } from '@yaksok/ui/agreement'
 import { Header, If, PageSpy } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
 
-export default function SignupPage() {
-  const Steps = [
-    'agreement',
-    'id',
-    'password',
-    'phoneNumber',
-    'sex',
-    'birthDate',
-    'name',
-    'done',
-  ] as const
+const Steps = [
+  'agreement',
+  'id',
+  'password',
+  'phoneNumber',
+  'sex',
+  'birthDate',
+  'name',
+  'done',
+] as const
 
+export type StepsType = (typeof Steps)[number]
+
+export default function SignupPage() {
   const { Funnel, Step, setStep, currentStep } =
-    useFunnel<(typeof Steps)[number]>('phoneNumber')
+    useFunnel<StepsType>('agreement')
 
   const trackingSteps = Steps.slice(1, -1)
   const currentTrackingIdx = trackingSteps.findIndex(
@@ -63,8 +53,6 @@ export default function SignupPage() {
 
   const onSubmit = (data: SignupRequest) => console.log(data)
 
-  const agreementHook = useAgreement(ITEM_LIST)
-
   return (
     <AppScreen>
       <If condition={ifCondition}>
@@ -91,47 +79,7 @@ export default function SignupPage() {
           <DevTool control={methods.control} />
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <Funnel>
-                <Step name="agreement">
-                  <AgreementPage
-                    onNext={handleNext}
-                    agreementHook={
-                      agreementHook as ReturnType<typeof useAgreement>
-                    }
-                    itemList={ITEM_LIST}
-                  />
-                </Step>
-                <Step name="id">
-                  <Id onNext={handleNext} title="아이디를 입력해주세요." />
-                </Step>
-                <Step name="password">
-                  <Password
-                    onNext={handleNext}
-                    title="비밀번호를 입력해주세요"
-                  />
-                </Step>
-                <Step name="phoneNumber">
-                  <PhoneNumber
-                    title="전화번호를 입력해주세요."
-                    onNext={handleNext}
-                  />
-                </Step>
-                <Step name="sex">
-                  <Sex title="성별을 입력해주세요" onNext={handleNext} />
-                </Step>
-                <Step name="birthDate">
-                  <BirthDate
-                    title="생년월일을 입력해 주세요"
-                    onNext={handleNext}
-                  />
-                </Step>
-                <Step name="name">
-                  <Name title="이름을 입력해 주세요" onNext={handleNext} />
-                </Step>
-                <Step name="done">
-                  <SignupDone />
-                </Step>
-              </Funnel>
+              <SignupSteps Funnel={Funnel} Step={Step} onNext={handleNext} />
             </form>
           </FormProvider>
         </main>
