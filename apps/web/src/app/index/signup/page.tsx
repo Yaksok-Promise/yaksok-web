@@ -2,6 +2,7 @@ import AgreementPage from '@/components/signup/agreement'
 import BirthDate from '@/components/signup/birthdate'
 import { ITEM_LIST } from '@/components/signup/constant'
 import Id from '@/components/signup/id'
+import Name from '@/components/signup/name'
 import Password from '@/components/signup/password'
 import Phonenumber from '@/components/signup/phonenumber'
 import Sex from '@/components/signup/sex'
@@ -121,7 +122,9 @@ export default function SignupPage() {
                     onNext={handleNext}
                   />
                 </Step>
-                <Step name="name">이름 기입</Step>
+                <Step name="name">
+                  <Name title="이름을 입력해 주세요" onNext={handleNext} />
+                </Step>
                 <Step name="nickname">닉네임 기입</Step>
                 <Step name="done">완료</Step>
               </Funnel>

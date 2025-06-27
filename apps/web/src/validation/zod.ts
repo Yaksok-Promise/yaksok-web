@@ -5,6 +5,8 @@ export const passwordRegex =
 
 export const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 
+export const nameRegex = /^(?:[가-힣]{2,})$/
+
 export const SignupSchema = z
   .object({
     loginId: z.string().email('이메일 형식이 올바르지 않습니다.'),
