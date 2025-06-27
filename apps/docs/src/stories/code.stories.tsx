@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Code } from '@yaksok/ui/code'
+import { Code } from '@yaksok/ui'
 
 const meta: Meta<typeof Code> = {
   component: Code,
