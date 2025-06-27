@@ -6,6 +6,8 @@ import {
   withFormContext,
   type WithFormContext,
 } from '@components/signup'
+import { useHttpMutation } from '@/hooks/use-http-mutation'
+import { SignupRequest as SignupHttpRequest } from '@yaksok/api/userType'
 
 function Name({ methods, title, onNext }: WithFormContext) {
   const { control, register, handleSubmit } = methods
@@ -17,8 +19,14 @@ function Name({ methods, title, onNext }: WithFormContext) {
 
   const isDisabled = nameRegex.test(nameValue)
 
-  const handleDone = handleSubmit((data: SignupRequest) => {
+  const mutation = useHttpMutation<SignupHttpRequest>(
+    '/api/user/signup',
+    'post'
+  )
+
+  const handleDone = handleSubmit(async (data: SignupRequest) => {
     console.log('✅ SUBMIT CALLED', data)
+    await mutation.mutateAsync(data)
     onNext()
   })
 

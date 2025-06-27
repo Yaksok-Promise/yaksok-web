@@ -9,7 +9,6 @@ export type SignupRequest = {
   gender: Gender
   birthDate: string
   name: string
-  nickname: string
   agreedMarketing: boolean
   agreedAlarm: boolean
 }
