@@ -3,17 +3,24 @@ import { WithFormContext } from './type'
 import { useWatch } from 'react-hook-form'
 import { Button } from '@yaksok/ui/button'
 import { withFormContext } from './with-form-context'
-import { nicknameRegex } from '@/validation/zod'
+import { nicknameRegex, SignupRequest } from '@/validation/zod'
 
 function NickName({ methods, title, onNext }: WithFormContext) {
+  const { control, register, handleSubmit } = methods
+
   // 욕설 비하 등 부적절한 단어 필터링 기능이 없음
   const nicknameValue = useWatch({
-    control: methods.control,
+    control: control,
     name: 'nickname',
     defaultValue: '',
   })
 
   const isDisabled = nicknameRegex.test(nicknameValue)
+
+  const handleDone = handleSubmit((data: SignupRequest) => {
+    console.log('✅ SUBMIT CALLED', data)
+    onNext()
+  })
 
   return (
     <div>
@@ -26,10 +33,10 @@ function NickName({ methods, title, onNext }: WithFormContext) {
           regexError: '2자 이상 6자 이하로 입력해 주세요',
         }}
         regex={nicknameRegex}
-        {...methods.register('nickname')}
+        {...register('nickname')}
       />
       <div className="mt-25">
-        <Button disabled={!isDisabled} onClick={onNext}>
+        <Button disabled={!isDisabled} onClick={handleDone}>
           다음
         </Button>
       </div>

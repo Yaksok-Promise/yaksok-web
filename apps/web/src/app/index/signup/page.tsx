@@ -18,6 +18,7 @@ import { If } from '@yaksok/ui/if'
 import { PageSpy } from '@yaksok/ui/page-spy'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
+import { DevTool } from '@hookform/devtools'
 
 export default function SignupPage() {
   const Steps = [
@@ -87,6 +88,7 @@ export default function SignupPage() {
           />
         </If>
         <main className="px-4 pt-10">
+          <DevTool control={methods.control} />
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <Funnel>
