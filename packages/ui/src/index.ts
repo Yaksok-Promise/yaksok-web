@@ -1,4 +1,4 @@
-export * from './If'
+export * from './if-component'
 export * from './button'
 export * from './card'
 export * from './checkbox'
