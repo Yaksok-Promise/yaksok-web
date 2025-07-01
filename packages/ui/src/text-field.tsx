@@ -1,8 +1,7 @@
-import * as React from 'react'
-
 import { Check } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
+import * as React from 'react'
 import { useState } from 'react'
 
 export const textFieldVariants = cva(
@@ -15,7 +14,6 @@ export const textFieldVariants = cva(
 type ErrorStatus = 'regexError' | 'verificationError'
 type SuccessStatus = 'regexSuccess' | 'success'
 type Status = undefined | ErrorStatus | SuccessStatus
-
 type Message = Partial<Record<ErrorStatus, string>> // 에러에 관한 메세지
 
 export interface TextFieldProps
@@ -24,49 +22,68 @@ export interface TextFieldProps
   label: string
   message: Message
   regex: RegExp
-  onVerify?: (value: string) => boolean
+  onVerify?: (value: string) => boolean | void | Promise<boolean>
   onFormat?: (value: string) => string
+  onCondition?: (value: string) => boolean
 }
 
 export const TextField = React.forwardRef(function TextField(
-  { type = 'text', className, ...props }: TextFieldProps,
+  {
+    type = 'text',
+    className,
+    value,
+    onChange,
+    onBlur,
+    regex,
+    onVerify,
+    onFormat,
+    label,
+    message,
+    onCondition,
+    ...rest
+  }: TextFieldProps,
   ref: React.Ref<HTMLInputElement>
 ) {
-  const [value, setValue] = useState('')
   const [status, setStatus] = useState<Status>(undefined)
+  const [inputValue, setInputValue] = useState(value)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
+    let newValue = e.target.value
 
-    // input value 값 업데이트
-    if (props.onFormat) {
-      setValue(props.onFormat(value))
-    } else {
-      setValue(value)
+    // 포맷 함수 적용
+    if (onFormat) {
+      newValue = onFormat(newValue)
     }
 
-    if (value.length === 0) {
+    // 외부 onChange 전달
+    onChange?.(e)
+    setInputValue(newValue)
+
+    if (newValue.length === 0) {
       setStatus(undefined)
       return
     }
 
-    // 인증 완료 후 입력 시 상태 초기화
     if (status === 'success') {
       setStatus(undefined)
     }
 
-    // 정규식 검사만 필요한 경우
-    if (!props.onVerify) {
-      setStatus(props.regex.test(value) ? 'success' : 'regexError')
+    if (onCondition) {
+      const isTrue = onCondition(e.target.value as string)
+      setStatus(isTrue ? 'success' : 'regexError')
       return
     }
 
-    //정규식 + 인증 검사 필요한 경우
-    setStatus(props.regex.test(value) ? 'regexSuccess' : 'regexError')
+    if (!onVerify) {
+      setStatus(regex.test(newValue) ? 'success' : 'regexError')
+      return
+    }
+
+    setStatus(regex.test(newValue) ? 'regexSuccess' : 'regexError')
   }
 
-  const handleVerify = () => {
-    const isVerified = props.onVerify!(props.value as string)
+  const handleVerify = async () => {
+    const isVerified = await onVerify?.(value as string)
     setStatus(isVerified ? 'success' : 'verificationError')
   }
 
@@ -74,11 +91,9 @@ export const TextField = React.forwardRef(function TextField(
     <div className="flex w-full flex-col">
       <label className="text-caption1">
         {status?.includes('Error') ? (
-          <span className="text-red01">
-            {props.message[status as ErrorStatus]}
-          </span>
+          <span className="text-red01">{message[status as ErrorStatus]}</span>
         ) : (
-          props.label
+          label
         )}
       </label>
       <div className="flex items-center gap-[16px]">
@@ -87,18 +102,19 @@ export const TextField = React.forwardRef(function TextField(
             ref={ref}
             type={type}
             data-slot="input"
-            value={value}
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={onBlur}
             className={cn(
               textFieldVariants({
                 className,
               })
             )}
-            onChange={handleInputChange}
-            {...props}
+            {...rest}
           />
           {status === 'success' && <Check />}
         </div>
-        {props.onVerify && (
+        {onVerify && (
           <button
             className="h-[25px] w-[66px] rounded-full bg-black01 text-caption1 text-white01 disabled:bg-gray06 disabled:text-gray05"
             disabled={status === 'regexError' || status === undefined}
@@ -111,5 +127,3 @@ export const TextField = React.forwardRef(function TextField(
     </div>
   )
 })
-
-export default TextField

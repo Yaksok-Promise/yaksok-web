@@ -165,7 +165,7 @@
   --text-head5--line-height: 34px;
   --text-head5--letter-spacing: -0.6px;
   --text-head5--font-weight: 700;
-  --text-head6: 80px;
+  --text-head6: 20px;
   --text-head6--line-height: 28px;
   --text-head6--letter-spacing: -0.6px;
   --text-head6--font-weight: 700;
@@ -197,6 +197,14 @@
 
 html {
   background-color: #f4f4f4;
+}
+
+input:-webkit-autofill {
+  background-color: white !important;
+  /* 또는 원하는 배경색으로 설정 */
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 @keyframes slide {

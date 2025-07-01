@@ -1,6 +1,7 @@
 export { default as Bell } from './Bell'
 export { default as Check } from './Check'
 export { default as ChevronLeft } from './ChevronLeft'
+export { default as Close } from './Close'
 export { default as Hamburger } from './Hamburger'
 export { default as LogoWithColor } from './LogoWithColor'
 export { default as Pause } from './Pause'

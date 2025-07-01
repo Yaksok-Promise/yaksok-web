@@ -9,6 +9,7 @@ const config = mergeConfig(
   defineProject({
     test: {
       setupFiles: ['./setup.ts'],
+      globals: true,
     },
   })
 )

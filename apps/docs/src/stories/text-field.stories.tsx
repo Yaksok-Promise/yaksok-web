@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import TextField, { TextFieldProps } from '@yaksok/ui/text-field'
+import { TextField, TextFieldProps } from '@yaksok/ui'
 
 const meta: Meta<TextFieldProps> = {
   title: 'stories/text-field',

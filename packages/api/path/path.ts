@@ -9,6 +9,8 @@ const users = [
   '/api/user/check/id',
 ] as const
 
+const sms = ['/api/sms/verify', '/api/sms/test/code', '/api/sms/code'] as const
+
 const comments = [
   '/api/comment/{postId}',
   '/api/comment/{parentCommentId}/reply',
@@ -16,6 +18,6 @@ const comments = [
   '/api/comment/list',
 ] as const
 
-export const pathList = [...users, ...comments]
+export const pathList = [...users, ...comments, ...sms]
 
 export type PathType = (typeof pathList)[number]

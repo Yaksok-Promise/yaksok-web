@@ -1,4 +1,5 @@
 export type Gender = 'MALE' | 'FEMALE'
+export type SMSType = 'SIGN_UP' | 'FIND_ID' | 'FIND_PWD' | 'CHANGE_PHONE'
 
 // user api request type
 export type SignupRequest = {
@@ -8,7 +9,6 @@ export type SignupRequest = {
   gender: Gender
   birthDate: string
   name: string
-  nickname: string
   agreedMarketing: boolean
   agreedAlarm: boolean
 }
@@ -35,6 +35,17 @@ export type ChangePasswordRequest = {
   newPassword: string
 }
 
+export type SMSVerifyRequest = {
+  code: string
+  phone: string
+  smsType: SMSType
+}
+
+export type SendSMSRequest = {
+  phone: string
+  smsType: SMSType
+}
+
 // user api response type
 export type UserInfoResponse = {
   name: string
@@ -47,4 +58,8 @@ export type UserInfoResponse = {
 
 export type CheckResultResponse = {
   result: boolean
+}
+
+export type SMSTestResponse = {
+  response: string
 }

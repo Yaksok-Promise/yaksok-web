@@ -15,9 +15,9 @@ export const useHttpMutation = <
   return useMutation<Res, unknown, Body, Context>({
     mutationFn: async (body: Body) => {
       if (method === 'post') {
-        return http.post<Body, Res>(path, { ...baseOption, data: body })
+        return http.post<Body, Res>(path, { ...baseOption, body })
       } else {
-        return http.delete<Body, Res>(path, { ...baseOption, data: body })
+        return http.delete<Body, Res>(path, { ...baseOption, body })
       }
     },
     ...mutationOptions,
