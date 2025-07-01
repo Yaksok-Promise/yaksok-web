@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { If, IfProps } from './If'
+import { If, IfProps } from './if-component'
 
 describe('If', () => {
   afterEach(() => {
