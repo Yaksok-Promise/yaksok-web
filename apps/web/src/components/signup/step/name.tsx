@@ -1,13 +1,13 @@
-import { nameRegex, SignupRequest } from '@/validation/zod'
-import { Button, TextField } from '@yaksok/ui'
-import { useWatch } from 'react-hook-form'
+import { useHttpMutation } from '@/hooks/use-http-mutation'
+import { SignupRequest, nameRegex } from '@/validation/zod'
 import {
   SignupTitle,
-  withFormContext,
   type WithFormContext,
+  withFormContext,
 } from '@components/signup'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
 import { SignupRequest as SignupHttpRequest } from '@yaksok/api/userType'
+import { Button, TextField } from '@yaksok/ui'
+import { useWatch } from 'react-hook-form'
 
 function Name({ methods, title, onNext }: WithFormContext) {
   const { control, register, handleSubmit } = methods

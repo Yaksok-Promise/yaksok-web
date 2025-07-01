@@ -1,11 +1,11 @@
 import { passwordRegex } from '@/validation/zod'
-import { Button, TextField } from '@yaksok/ui'
-import { useWatch } from 'react-hook-form'
 import {
   SignupTitle,
-  withFormContext,
   type WithFormContext,
+  withFormContext,
 } from '@components/signup'
+import { Button, TextField } from '@yaksok/ui'
+import { useWatch } from 'react-hook-form'
 
 function Password({ onNext, methods, title }: WithFormContext) {
   const { register, control } = methods

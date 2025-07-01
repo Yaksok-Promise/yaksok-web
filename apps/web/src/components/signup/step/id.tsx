@@ -1,11 +1,11 @@
-import { Button, TextField } from '@yaksok/ui'
 import { emailRegex } from '@/validation/zod'
-import { useWatch } from 'react-hook-form'
 import {
   SignupTitle,
-  withFormContext,
   type WithFormContext,
+  withFormContext,
 } from '@components/signup'
+import { Button, TextField } from '@yaksok/ui'
+import { useWatch } from 'react-hook-form'
 
 function Id({ onNext, methods, title }: WithFormContext) {
   const loginIdValue = useWatch({

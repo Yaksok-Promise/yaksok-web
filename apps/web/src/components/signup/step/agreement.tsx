@@ -1,13 +1,13 @@
 import { SignupRequest } from '@/validation/zod'
+import { AgreementItemId, StepPageProps } from '@components/signup'
+import { Button } from '@yaksok/ui'
 import {
   Agreement,
   AgreementItemContent,
   useAgreement,
 } from '@yaksok/ui/agreement'
-import { Button } from '@yaksok/ui'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { AgreementItemId, StepPageProps } from '@components/signup'
 
 type AgreementPageProps = Omit<StepPageProps, 'title'> & {
   itemList: AgreementItemContent<AgreementItemId>[]

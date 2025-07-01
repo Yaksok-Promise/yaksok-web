@@ -1,12 +1,12 @@
+import {
+  SignupTitle,
+  type WithFormContext,
+  withFormContext,
+} from '@components/signup'
 import { Button } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
 import { forwardRef } from 'react'
 import { useWatch } from 'react-hook-form'
-import {
-  SignupTitle,
-  withFormContext,
-  type WithFormContext,
-} from '@components/signup'
 
 interface RadioOptionProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string

@@ -1,18 +1,18 @@
-import { FunnelProps, StepProps } from '@/hooks/use-funnel'
-import { ComponentType } from 'react'
+import { StepsType } from '@/app/index/signup/page'
 import {
+  Agreement,
+  Birthdate,
   Id,
   Name,
   Password,
   PhoneNumber,
   Sex,
   SignupDone,
-  Agreement,
-  Birthdate,
 } from '@/components/signup'
 import { ITEM_LIST } from '@/components/signup/constant'
+import { FunnelProps, StepProps } from '@/hooks/use-funnel'
 import { useAgreement } from '@yaksok/ui/agreement'
-import { StepsType } from '@/app/index/signup/page'
+import { ComponentType } from 'react'
 
 export type SignupStepsProps = {
   Funnel: ComponentType<FunnelProps<StepsType>>

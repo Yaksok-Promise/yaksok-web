@@ -1,6 +1,6 @@
-import { useCallback, useRef } from 'react'
-import debounce from 'lodash.debounce'
 import type { DebouncedFunc } from 'lodash' // ✅ 타입만 lodash에서 import
+import debounce from 'lodash.debounce'
+import { useCallback, useRef } from 'react'
 
 export const useDebounce = () => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
