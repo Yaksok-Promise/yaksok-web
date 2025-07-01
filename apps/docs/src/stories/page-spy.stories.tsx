@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { PageSpy, PageSpyProps } from '@yaksok/ui/page-spy'
+import { PageSpy, PageSpyProps } from '@yaksok/ui'
 
 const meta: Meta<PageSpyProps> = {
   component: PageSpy,

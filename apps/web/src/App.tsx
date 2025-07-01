@@ -23,7 +23,6 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ErrorProvider>
         <Suspense fallback={<div>LOADING</div>}>
-          <Router />
           <Stack />
         </Suspense>
       </ErrorProvider>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Card } from '@yaksok/ui/card'
+import { Card } from '@yaksok/ui'
 
 const meta: Meta<typeof Card> = {
   component: Card,
