@@ -17,6 +17,12 @@ export default function MainPage() {
     })
   }
 
+  const goSignin = () => {
+    push('Signin', {
+      title: '로그인',
+    })
+  }
+
   return (
     <AppScreen>
       <TopBar />
@@ -27,13 +33,19 @@ export default function MainPage() {
         >
           의약품 및 건강기능식품 성분 비교하기
         </button>
-
         <button
           onClick={goSignup}
           className="my-10 w-full bg-black01 text-center text-white01"
         >
           회원가입
         </button>
+        <button
+          onClick={goSignin}
+          className="my-10 w-full bg-black01 text-center text-white01"
+        >
+          로그인
+        </button>
+
         <div className="text-2xl">안녕하세요</div>
       </div>
     </AppScreen>

@@ -47,6 +47,7 @@ const generateIndexFile = async () => {
     .map(name => `export { default as ${name} } from './${name}'`)
     .join('\n')
 
+  exports.concat(`export * from './type'`)
   await writeFile(path.join(SRC_DIR, 'index.ts'), exports, 'utf-8')
 }
 

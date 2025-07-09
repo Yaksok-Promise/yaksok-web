@@ -1,5 +1,6 @@
 import ComparePage from '@/app/index/compare/page'
 import MainPage from '@/app/index/page'
+import Signin from '@/app/index/signin/page'
 import SignupPage from '@/app/index/signup/page'
 import { basicUIPlugin } from '@stackflow/plugin-basic-ui'
 import { basicRendererPlugin } from '@stackflow/plugin-renderer-basic'
@@ -17,6 +18,7 @@ export const { Stack, useFlow } = stackflow({
     MainPage,
     ComparePage,
     SignupPage,
+    Signin,
   },
   initialActivity: () => 'MainPage',
 })
