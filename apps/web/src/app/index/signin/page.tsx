@@ -9,7 +9,7 @@ import {
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { LoginRequest } from '@yaksok/api/userType'
+import { LoginRequest, LoginResponse } from '@yaksok/api/userType'
 import { Button, OauthButton, TextField } from '@yaksok/ui'
 import { useForm } from 'react-hook-form'
 
@@ -21,12 +21,28 @@ export default function Signin() {
     })
   }
 
+  const goHome = () => {
+    push('MainPage', {})
+  }
+
   const { handleSubmit, register, control } = useForm<SigninRequest>({
     resolver: zodResolver(SigninSchema),
     mode: 'onChange',
   })
 
-  const mutation = useHttpMutation<LoginRequest>('/api/user/login', 'post')
+  const mutation = useHttpMutation<LoginRequest, LoginResponse>(
+    '/api/user/login',
+    'post',
+    undefined,
+    {
+      onSuccess: data => {
+        goHome()
+      },
+      onSettled: (data, error, variables, context) => {
+        console.log('로그인 실패', data, error, variables, context)
+      },
+    }
+  )
   const onSubmit = async (data: SigninRequest) => {
     await mutation.mutateAsync(data)
   }

@@ -13,14 +13,15 @@ import {
   SendSMSRequest,
 } from '@yaksok/api/userType'
 import { Button, TextField } from '@yaksok/ui'
+import { Modal, useModal } from '@yaksok/ui/modal'
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 function PhoneNumber({ onNext, methods, title }: WithFormContext) {
   const { register, getValues } = methods
-  const [signNumber, setSignNumber] = useState<string>('')
+
   const [isShow, setIsShow] = useState(false)
-  const [confirm, setConfirm] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const sendSmsMutation = useHttpMutation<SendSMSRequest, SMSTestResponse>(
     '/api/sms/test/code',
@@ -34,16 +35,9 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
       phone: phoneNumber,
     })
     console.log(data)
-    setSignNumber(data.response)
+
     setIsShow(true)
     return true
-  }
-
-  const onCheckSms = (isCheck: true) => {
-    if (isCheck) {
-      setConfirm(isCheck)
-      onNext()
-    }
   }
 
   return (
@@ -65,12 +59,16 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
           inputMode="numeric"
         />
         {isShow && (
-          <SmsCodeInput signNumber={signNumber} setConfirm={onCheckSms} />
+          <SmsCodeInput
+            onNext={onNext}
+            setSuccess={setSuccess}
+            success={success}
+          />
         )}
       </div>
 
       <div className="mt-25">
-        <Button disabled={!confirm} onClick={onNext}>
+        <Button disabled={!success} onClick={onNext}>
           다음
         </Button>
       </div>
@@ -79,50 +77,100 @@ function PhoneNumber({ onNext, methods, title }: WithFormContext) {
 }
 
 interface SmsCodeInputProps {
-  signNumber: string
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  setConfirm: (...args: any[]) => void
+  success: boolean
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>
+  onNext: () => void
 }
 
-function SmsCodeInput({ signNumber, setConfirm }: SmsCodeInputProps) {
+function SmsCodeInput({ onNext, success, setSuccess }: SmsCodeInputProps) {
+  const { openModal, opened, closeModal } = useModal()
+
   const { getValues } = useFormContext<SignupRequest>()
 
   const verifySmsMutation = useHttpMutation<SMSVerifyRequest>(
     '/api/sms/verify',
-    'post'
+    'post',
+    undefined,
+    {
+      onError: error => {
+        console.log(error)
+        setSuccess(false)
+        openModal()
+      },
+      onSuccess: () => {
+        setSuccess(true)
+        openModal()
+      },
+    }
   )
 
   const debounce = useDebounce()
 
-  const debouncedVerify = debounce((code: string) => {
+  const debouncedVerify = debounce(async (code: string) => {
     const phone = getValues('phoneNumber')
-    verifySmsMutation.mutate({ code, phone, smsType: 'SIGN_UP' })
+
+    await verifySmsMutation.mutateAsync({
+      code,
+      phone,
+      smsType: 'SIGN_UP',
+    })
   }, 1000)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
-    const isValid = smsCodeRegex.test(value) && value === signNumber
-    setConfirm(isValid)
-
-    if (isValid) {
-      debouncedVerify(value)
+    if (value.length === 6) {
+      await debouncedVerify(value)
     }
   }
 
+  const closeModalNext = () => {
+    closeModal()
+    onNext()
+  }
+
   return (
-    <TextField
-      label="인증번호"
-      placeholder="인증번호 6자리를 입력해 주세요."
-      type="tel"
-      inputMode="numeric"
-      message={{
-        regexError: '인증번호 6자리를 입력해 주세요.',
-      }}
-      regex={smsCodeRegex}
-      maxLength={6}
-      onChange={handleChange}
-    />
+    <>
+      <TextField
+        label="인증번호"
+        placeholder="인증번호 6자리를 입력해 주세요."
+        type="tel"
+        inputMode="numeric"
+        message={{
+          regexError: '인증번호 6자리를 입력해 주세요.',
+        }}
+        regex={smsCodeRegex}
+        maxLength={6}
+        onChange={handleChange}
+      />
+      <PhoneNumberModal
+        opened={opened}
+        closeModal={success ? closeModalNext : closeModal}
+        title={success ? '인증 완료되었습니다' : '인증번호가 일치하지 않습니다'}
+      />
+    </>
+  )
+}
+
+type PhoneNumberModalProps = {
+  closeModal: () => void
+  opened: boolean
+  title: string
+}
+const PhoneNumberModal = ({
+  closeModal,
+  opened,
+  title,
+}: PhoneNumberModalProps) => {
+  return (
+    <Modal opened={opened} hide={closeModal}>
+      <Modal.Content>
+        <h1 className="mb-[35px] text-body1">{title}</h1>
+        <Button onClick={closeModal} size="full">
+          확인
+        </Button>
+      </Modal.Content>
+    </Modal>
   )
 }
 

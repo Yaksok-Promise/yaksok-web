@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
 import { Header, If, PageSpy } from '@yaksok/ui'
+import { ModalRoot } from '@yaksok/ui/modal'
 import { cn } from '@yaksok/utils'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -84,6 +85,7 @@ export default function SignupPage() {
           </FormProvider>
         </main>
       </div>
+      <ModalRoot />
     </AppScreen>
   )
 }
