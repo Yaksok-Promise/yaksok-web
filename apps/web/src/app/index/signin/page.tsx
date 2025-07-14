@@ -35,7 +35,7 @@ export default function Signin() {
     'post',
     undefined,
     {
-      onSuccess: data => {
+      onSuccess: () => {
         goHome()
       },
       onSettled: (data, error, variables, context) => {
