@@ -43,11 +43,11 @@ const getSrcFileNames = async (): Promise<string[]> => {
 const generateIndexFile = async () => {
   const files = await getSrcFileNames()
 
-  const exports = files
+  let exports = files
     .map(name => `export { default as ${name} } from './${name}'`)
     .join('\n')
 
-  exports.concat(`export * from './type'`)
+  exports += `\nexport * from './type'`
   await writeFile(path.join(SRC_DIR, 'index.ts'), exports, 'utf-8')
 }
 
