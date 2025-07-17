@@ -1,8 +1,8 @@
+import { ChevronRight } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { ReactElement, ReactNode, useEffect, useState } from 'react'
 import { useCarousel } from './carousel-context'
 import { DivWihoutRefAndChildren } from './carousel-root'
-import { ChevronRight } from '@yaksok/icons'
 
 export const CarouselTrack: React.FC<
   {
