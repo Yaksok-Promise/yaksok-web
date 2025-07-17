@@ -27,18 +27,6 @@ export const Primary: Story = {
 
 export const MultipleTile = {
   render: () => {
-    const _data = [
-      {
-        miniTitle: '하루 20명 선착순',
-        title: '약사 복약 상담',
-        description: '약에 대한 고민,\n 전문 약사와 상담해 보세요',
-      },
-      {
-        miniTitle: 'Beta',
-        title: 'AI 복약 상담',
-        description: '간단한 복약 고민,\n AI와 상담해 보세요',
-      },
-    ]
     return (
       <div className="flex flex-col rounded-2xl bg-white01 px-5 py-4 shadow-basic2">
         <Tile
