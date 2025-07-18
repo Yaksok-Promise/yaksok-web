@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@stackflow/core": "^1.2.0",
     "@stackflow/plugin-basic-ui": "^1.13.1",
+    "@stackflow/plugin-history-sync": "^1.7.1",
     "@stackflow/plugin-renderer-basic": "^1.1.13",
     "@stackflow/react": "^1.5.1",
     "@tailwindcss/vite": "^4.0.17",
