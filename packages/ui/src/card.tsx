@@ -10,7 +10,7 @@ export type CardProps = ComponentPropsWithoutRef<'div'> & {
   title: string
   brand: string
   description: string
-  classification: string
+  classification?: string
   imgClassName?: string
   wrapperClassName?: string
 }
@@ -32,12 +32,12 @@ export function Card({
   return (
     <div
       className={cn(
-        'flex max-h-[378px] min-h-[378px] min-w-[314px] max-w-[314px] flex-col rounded-[16px] bg-white01 shadow-card-ui',
+        'flex max-h-[378px] min-h-[378px] min-w-[314px] max-w-[314px] flex-col overflow-hidden rounded-[16px] bg-white01 shadow-card-ui',
         className
       )}
       {...props}
     >
-      <div className="relative h-full min-h-[236px] w-full min-w-[314px]">
+      <div className="relative flex h-full min-h-[236px] w-full min-w-[314px] items-center justify-center bg-gray06">
         <Fallbackimg
           src={imgSrc}
           alt={imgAlt}
@@ -45,9 +45,11 @@ export function Card({
           imgClassName={cn('w-full h-full', imgClassName)}
           wrapperClassName={wrapperClassName}
         />
-        <div className="absolute top-2 right-2 rounded-[20px] bg-[#2c2c2e]/60 px-2 py-0.5 text-center text-caption1 text-white01">
-          {classification}
-        </div>
+        {classification && (
+          <div className="absolute top-2 right-2 rounded-[20px] bg-[#2c2c2e]/60 px-2 py-0.5 text-center text-caption1 text-white01">
+            {classification}
+          </div>
+        )}
       </div>
       <div className="flex flex-col gap-1 px-5 py-6">
         <span className=" text-caption1 text-gray04">{brand}</span>

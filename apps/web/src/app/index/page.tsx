@@ -1,5 +1,6 @@
 import BellIcon from '@/assets/icons/bell-icon'
 import LogoIcon from '@/assets/icons/logo-icon'
+import { MainLounge } from '@/components/main/main-lounge'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Search } from '@yaksok/ui'
@@ -47,6 +48,7 @@ export default function MainPage() {
     >
       <div className="h-full bg-bgColor px-4 py-6">
         <Search />
+        <MainLounge />
       </div>
     </AppScreen>
   )

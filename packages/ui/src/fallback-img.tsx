@@ -16,7 +16,12 @@ export default function Fallbackimg({
   wrapperClassName,
 }: FallbackImgProps) {
   return (
-    <div className={cn('w-full', wrapperClassName)}>
+    <div
+      className={cn(
+        'flex w-full items-center justify-center',
+        wrapperClassName
+      )}
+    >
       <img
         src={src}
         alt={alt}

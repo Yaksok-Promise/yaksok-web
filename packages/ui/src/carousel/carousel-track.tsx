@@ -15,7 +15,7 @@ export const CarouselTrack: React.FC<
     <div className="overflow-hidden" ref={emblaRef}>
       <div
         className={cn(
-          'ml-[-1rem] flex min-w-0 flex-[0_0_98%] transform-gpu touch-pan-y gap-4 pl-4',
+          'ml-[-1rem] flex min-w-0 flex-[0_0_98%] transform-gpu touch-pan-y gap-5 py-1 pl-5',
           className
         )}
         {...props}
