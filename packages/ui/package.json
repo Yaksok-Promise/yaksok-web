@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-tabs": "^1.1.12",
     "@tailwindcss/cli": "^4.0.12",
     "@yaksok/icons": "workspace:*",
     "@yaksok/utils": "workspace:*",
