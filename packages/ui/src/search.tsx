@@ -3,7 +3,9 @@ import { cn } from '@yaksok/utils'
 import * as React from 'react'
 import { useState } from 'react'
 
-export interface SearchProps extends React.ComponentProps<'input'> {}
+export interface SearchProps extends React.ComponentProps<'input'> {
+  wrapperClassName?: string
+}
 
 export const Search = React.forwardRef(function Search(
   {
@@ -12,6 +14,7 @@ export const Search = React.forwardRef(function Search(
     value,
     onChange,
     placeholder = '내 주변 약국 찾기',
+    wrapperClassName,
     ...rest
   }: SearchProps,
   ref: React.Ref<HTMLInputElement>
@@ -35,7 +38,10 @@ export const Search = React.forwardRef(function Search(
   return (
     <div
       onClick={onClick}
-      className="relative min-h-[48px] w-full rounded-2xl bg-white01 px-15 py-3 shadow-basic2"
+      className={cn(
+        'relative min-h-[48px] w-full rounded-2xl bg-white01 px-15 py-3 shadow-basic2',
+        wrapperClassName
+      )}
     >
       <input
         ref={ref}
@@ -43,7 +49,7 @@ export const Search = React.forwardRef(function Search(
         data-slot="input"
         value={inputValue}
         onChange={handleInputChange}
-        className={cn('text-body2 focus:outline-none')}
+        className={cn('text-body2 focus:outline-none', className)}
         placeholder={placeholder}
         {...rest}
       />

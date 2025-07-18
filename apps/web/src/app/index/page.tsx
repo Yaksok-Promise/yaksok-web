@@ -1,6 +1,8 @@
-import TopBar from '@/components/common/TopBar'
+import BellIcon from '@/assets/icons/bell-icon'
+import LogoIcon from '@/assets/icons/logo-icon'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { Search } from '@yaksok/ui'
 
 export default function MainPage() {
   const { push } = useFlow()
@@ -24,9 +26,28 @@ export default function MainPage() {
   }
 
   return (
-    <AppScreen>
-      <TopBar />
-      <div className="mt-10 h-[calc(100vh-64px)] bg-bgColor px-10"></div>
+    <AppScreen
+      appBar={{
+        title: '',
+        renderLeft: () => (
+          <div>
+            <LogoIcon />
+          </div>
+        ),
+        backgroundColor: '#fafafa',
+        border: false,
+        renderRight: () => {
+          return (
+            <div className="flex gap-[10px]">
+              <BellIcon />
+            </div>
+          )
+        },
+      }}
+    >
+      <div className="h-full bg-bgColor px-4 py-6">
+        <Search />
+      </div>
     </AppScreen>
   )
 }
