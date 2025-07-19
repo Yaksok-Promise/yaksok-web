@@ -1,6 +1,6 @@
 import { CardProps, Tabs, TabsProps } from '@yaksok/ui'
 import { NotEmptyArray } from '@yaksok/utils'
-import { MainSwiper } from './main-swiper'
+import { MainCarousel } from './main-carousel'
 
 export type MainTabsProps = {
   philData?: NotEmptyArray<CardProps>
@@ -17,17 +17,17 @@ export default function MainTabs({
     {
       value: 'recommend',
       label: '추천 제품',
-      content: <MainSwiper />,
+      content: <MainCarousel />,
     },
     {
       value: 'pharmacy',
       label: '내 주변 약국 인기 제품',
-      content: <MainSwiper data={pharmacyData} />,
+      content: <MainCarousel data={pharmacyData} />,
     },
     {
       value: 'event',
       label: '이벤트',
-      content: <MainSwiper data={eventData} />,
+      content: <MainCarousel data={eventData} />,
     },
   ]
   return <Tabs tabInfo={TabsData} />

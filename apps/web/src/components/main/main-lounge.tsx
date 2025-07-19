@@ -49,7 +49,7 @@ export function MainLounge() {
   const pharmacyData: NotEmptyArray<CardProps> = [...philData]
   const eventData: NotEmptyArray<CardProps> = [...philData]
   return (
-    <div className="mt-14.5 flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-4">
       <h1 className="text-head6">김약속님을 위한 약속 Lounge</h1>
       <MainTabs
         philData={philData}

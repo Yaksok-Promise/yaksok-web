@@ -93,7 +93,9 @@ export const CardCarousel: Story = {
       <Carousel.Root {...props}>
         <Carousel.Track>
           {data.map((data, index) => (
-            <Card key={index} {...data} />
+            <Carousel.Slide key={index}>
+              <Card key={index} {...data} />
+            </Carousel.Slide>
           ))}
         </Carousel.Track>
         <Carousel.Dots />

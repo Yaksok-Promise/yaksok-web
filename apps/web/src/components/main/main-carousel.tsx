@@ -1,19 +1,21 @@
 import AddPlus from '@/assets/Add_Plus_Circle.png'
 import { Card, CardProps, Carousel } from '@yaksok/ui'
 
-export type PhilSwiperProps = {
+export type MainCarouselProps = {
   data?: CardProps[]
 }
-export function MainSwiper({ data }: PhilSwiperProps) {
+export function MainCarousel({ data }: MainCarouselProps) {
   return (
     <div>
       {data && (
         <Carousel.Root>
-          <Carousel.Track>
-            {data.map((data, index) => (
-              <Card {...data} key={index} />
-            ))}
-          </Carousel.Track>
+          <Carousel.Slide>
+            <Carousel.Track>
+              {data.map((data, index) => (
+                <Card {...data} key={index} />
+              ))}
+            </Carousel.Track>
+          </Carousel.Slide>
           <div className="mt-2 flex items-center justify-center">
             <Carousel.Controller />
           </div>

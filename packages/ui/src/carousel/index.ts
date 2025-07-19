@@ -1,6 +1,7 @@
 import { CarouselController } from './carousel-controller'
 import { CarouselDotButton } from './carousel-dots'
 import { CarouselRoot } from './carousel-root'
+import { CarouselSlide } from './carousel-slide'
 import { CarouselBackground, CarouselTrack } from './carousel-track'
 
 export const Carousel = {
@@ -9,6 +10,7 @@ export const Carousel = {
   Background: CarouselBackground,
   Dots: CarouselDotButton,
   Controller: CarouselController,
+  Slide: CarouselSlide,
 }
 
 export { type EmblaOptionsType as CarouselOptionsType } from 'embla-carousel'

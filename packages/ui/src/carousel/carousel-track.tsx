@@ -15,7 +15,7 @@ export const CarouselTrack: React.FC<
     <div className="overflow-hidden" ref={emblaRef}>
       <div
         className={cn(
-          'ml-[-1rem] flex min-w-0 flex-[0_0_98%] transform-gpu touch-pan-y gap-5 py-1 pl-5',
+          'ml-[-1rem] flex transform-gpu touch-pan-y gap-5 pl-5',
           className
         )}
         {...props}
@@ -72,7 +72,7 @@ export const CarouselBackground = <T,>({
       />
 
       {/* 실제 콘텐츠 (텍스트 등) */}
-      <div className="relative z-10 p-6">
+      <div className="relative z-10 w-screen p-6">
         {children}
         <div className="flex items-center justify-between">
           <h2 className="font-bold text-head5 text-white">Magazine</h2>

@@ -1,9 +1,12 @@
 import BellIcon from '@/assets/icons/bell-icon'
 import LogoIcon from '@/assets/icons/logo-icon'
+import Counsel from '@/components/main/counsel'
+import MagazineCarousel from '@/components/main/magazine-carousel'
+import { MainCheck } from '@/components/main/main-check'
 import { MainLounge } from '@/components/main/main-lounge'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { Search } from '@yaksok/ui'
+import { Footer, Search } from '@yaksok/ui'
 
 export default function MainPage() {
   const { push } = useFlow()
@@ -46,10 +49,14 @@ export default function MainPage() {
         },
       }}
     >
-      <div className="h-full bg-bgColor px-4 py-6">
-        <Search />
+      <div className="flex flex-col gap-14 bg-bgColor py-6">
+        <Search containerClassName="px-3" />
         <MainLounge />
+        <MainCheck />
+        <Counsel />
+        <MagazineCarousel />
       </div>
+      <Footer />
     </AppScreen>
   )
 }
