@@ -1,0 +1,27 @@
+import * as React from 'react'
+import type { SVGProps } from 'react'
+const SvgKakao = React.forwardRef<
+  SVGSVGElement,
+  SVGProps<SVGSVGElement> & {
+    size?: number | string
+  }
+>(({ size = 24, ...props }, ref) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 20 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M10 0C4.47731 0 0 3.38534 0 7.56144C0 10.1705 1.74838 12.472 4.40751 13.8304L3.25661 17.5492C3.16021 17.8624 3.5192 18.1209 3.8009 17.9405L8.36962 15.0142C8.90145 15.0802 9.44324 15.1229 10 15.1229C15.5227 15.1229 20 11.7376 20 7.56144C20 3.38534 15.5227 0 10 0Z"
+      fill="currentColor"
+    />
+  </svg>
+))
+SvgKakao.displayName = 'SvgKakao'
+export default SvgKakao

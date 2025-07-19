@@ -1,41 +1,62 @@
-import TopBar from '@/components/common/TopBar'
+import BellIcon from '@/assets/icons/bell-icon'
+import LogoIcon from '@/assets/icons/logo-icon'
+import Counsel from '@/components/main/counsel'
+import MagazineCarousel from '@/components/main/magazine-carousel'
+import { MainCheck } from '@/components/main/main-check'
+import { MainLounge } from '@/components/main/main-lounge'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { Footer, Search } from '@yaksok/ui'
 
 export default function MainPage() {
   const { push } = useFlow()
 
-  const onClick = () => {
+  const _onClick = () => {
     push('ComparePage', {
       title: '성분 비교하기',
     })
   }
 
-  const goSignup = () => {
+  const _goSignup = () => {
     push('SignupPage', {
       title: '회원가입',
     })
   }
 
-  return (
-    <AppScreen>
-      <TopBar />
-      <div className="mt-10 h-[calc(100vh-64px)] bg-bgColor px-10">
-        <button
-          onClick={onClick}
-          className="my-10 w-full bg-black01 text-center text-white01"
-        >
-          의약품 및 건강기능식품 성분 비교하기
-        </button>
+  const _goSignin = () => {
+    push('Signin', {
+      title: '로그인',
+    })
+  }
 
-        <button
-          onClick={goSignup}
-          className="my-10 w-full bg-black01 text-center text-white01"
-        >
-          회원가입
-        </button>
-        <div className="text-2xl">안녕하세요</div>
+  return (
+    <AppScreen
+      appBar={{
+        title: '',
+        renderLeft: () => (
+          <div>
+            <LogoIcon />
+          </div>
+        ),
+        backgroundColor: '#fafafa',
+        border: false,
+        renderRight: () => {
+          return (
+            <div className="flex gap-[10px]">
+              <BellIcon />
+            </div>
+          )
+        },
+      }}
+    >
+      <div className="flex flex-col gap-14 bg-bgColor py-6">
+        <Search containerClassName="px-3" />
+        <MainLounge />
+        <MainCheck />
+        <Counsel />
+        <MagazineCarousel />
       </div>
+      <Footer />
     </AppScreen>
   )
 }

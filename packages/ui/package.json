@@ -35,15 +35,21 @@
     "vitest": "^3.1.3"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-tabs": "^1.1.12",
     "@tailwindcss/cli": "^4.0.12",
     "@yaksok/icons": "workspace:*",
     "@yaksok/utils": "workspace:*",
+    "clsx": "^2.1.1",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "lucide-react": "^0.485.0",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.1.4"
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.1.4",
+    "tw-animate-css": "^1.3.5"
   }
 }

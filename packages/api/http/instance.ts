@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse, isAxiosError } from 'axios'
 
 import { CustomError } from '../type'
 
-const BASE_API_URL = 'http://localhost:8101'
+const BASE_API_URL = 'http://localhost:8080'
 
 export const instance = axios.create({
   baseURL: BASE_API_URL,

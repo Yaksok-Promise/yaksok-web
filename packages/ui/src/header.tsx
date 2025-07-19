@@ -8,7 +8,7 @@ import {
 } from 'react'
 
 const headerVariants = cva(
-  'fixed top-0 left-0 z-50 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
+  'fixed top-0 left-0 grid h-13 w-full grid-cols-[auto_1fr_auto] items-center px-5',
   {
     variants: {
       theme: {

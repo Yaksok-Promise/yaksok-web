@@ -63,3 +63,10 @@ export type CheckResultResponse = {
 export type SMSTestResponse = {
   response: string
 }
+
+export type LoginResponse = {
+  accessToken: string
+  refreshToken: string
+  userRole: string
+  userStatus: string
+}

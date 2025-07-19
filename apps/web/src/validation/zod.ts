@@ -40,3 +40,10 @@ export const SignupSchema = z
   })
 
 export type SignupRequest = z.infer<typeof SignupSchema>
+
+export const SigninSchema = z.object({
+  loginId: z.string().email('이메일 형식이 올바르지 않습니다.'),
+  password: z.string(),
+})
+
+export type SigninRequest = z.infer<typeof SigninSchema>

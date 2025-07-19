@@ -72,6 +72,12 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@font-face {
+  font-family: "SUIT";
+  font-weight: 100 900;
+  src: url("./font/SUIT-Variable.woff2") format("woff2-variations");
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -108,6 +114,13 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --shadow-card-ui: 0px 3px 10px 0px #00000026;
+  --shadow-card-ui2: 2px 4px 8px 0px #00000014;
+  --shadow-basic: 0px 2px 20px 0px #0000001a;
+  --shadow-basic2: 1px 1px 4px 0px #0000001a;
+  --shadow-floating-button: 0px 8px 24px 0px #00000026;
+  --shadow-floating-button2: 0px 8px 24px 0px #00000033;
+  --shadow-profile-ui: 0px 0px 1px 0px #00000033;
 }
 
 @layer base {
@@ -197,6 +210,14 @@
 
 html {
   background-color: #f4f4f4;
+  font-family: "SUIT";
+}
+
+input:-webkit-autofill {
+  background-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 input:-webkit-autofill {
