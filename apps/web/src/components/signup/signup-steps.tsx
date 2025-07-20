@@ -2,12 +2,12 @@ import { StepsType } from '@/app/index/signup/page'
 import {
   Agreement,
   SignupBirthdate,
+  SignupDone,
   SignupId,
   SignupName,
   SignupPassword,
   SignupPhoneNumber,
   SignupSex,
-  SignupDone,
 } from '@/components/signup'
 import { ITEM_LIST } from '@/components/signup/constant'
 import { FunnelProps, StepProps } from '@/hooks/use-funnel'

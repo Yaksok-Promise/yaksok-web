@@ -54,7 +54,9 @@ export function Card({
       <div className="flex flex-col gap-1 px-5 py-6">
         <span className=" text-caption1 text-gray04">{brand}</span>
         <h2 className="text-head6">{title}</h2>
-        <p className="text-body2 text-gray02">{description}</p>
+        <p className="whitespace-pre-line text-body2 text-gray02">
+          {description}
+        </p>
       </div>
     </div>
   )

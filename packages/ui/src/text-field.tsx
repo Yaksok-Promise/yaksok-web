@@ -140,9 +140,10 @@ export const TextField = React.forwardRef(function TextField(
         value={inputValue}
         onChange={handleInputChange}
         onBlur={onBlur}
-        className={
-          'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none'
-        }
+        className={cn(
+          'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none',
+          className
+        )}
         {...rest}
       />
       <label className="text-caption1">

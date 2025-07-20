@@ -1,3 +1,4 @@
+import FindId from '@/components/find-id-password/find-id'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
 
@@ -15,7 +16,9 @@ export default function FindIdPassword() {
         ),
       }}
     >
-      <div></div>
+      <div className="h-screen bg-bgColor px-4 pt-7.5">
+        <FindId />
+      </div>
     </AppScreen>
   )
 }

@@ -1,6 +1,6 @@
+import { nameRegex } from '@/validation/zod'
 import { TextField } from '@yaksok/ui'
 import { InputProps } from '.'
-import { nameRegex } from '@/validation/zod'
 
 export function Name({ methods }: InputProps) {
   return (

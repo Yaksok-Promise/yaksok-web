@@ -1,45 +1,27 @@
-import { useState } from 'react'
-import { Button } from '@yaksok/ui'
-import { useModal } from '@yaksok/ui/modal'
-import {
-  SignupTitle,
-  type WithFormContext,
-  withFormContext,
-} from '@components/signup'
 import {
   PhoneNumber,
   PhoneNumberModal,
   SmsCodeInput,
 } from '@/components/common'
+import useSmscodeInput from '@/hooks/use-smscode-input'
+import {
+  SignupTitle,
+  type WithFormContext,
+  withFormContext,
+} from '@components/signup'
+import { Button } from '@yaksok/ui'
 
 function SignupPhoneNumberStep({ onNext, methods, title }: WithFormContext) {
-  const [isShowCodeInput, setIsShowCodeInput] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-
-  const { openModal, closeModal, opened } = useModal()
-
-  const handleVerifySent = () => {
-    setIsShowCodeInput(true)
-  }
-
-  const handleVerifySuccess = () => {
-    setIsSuccess(true)
-    openModal()
-  }
-
-  const handleVerifyError = () => {
-    setIsSuccess(false)
-    openModal()
-  }
-
-  const handleCloseModal = () => {
-    if (isSuccess) {
-      closeModal()
-      onNext()
-    } else {
-      closeModal()
-    }
-  }
+  const {
+    isShowCodeInput,
+    isSuccess,
+    setIsSuccess,
+    handleVerifySent,
+    handleVerifySuccess,
+    handleVerifyError,
+    handleCloseModal,
+    opened,
+  } = useSmscodeInput()
 
   return (
     <div>
@@ -59,6 +41,7 @@ function SignupPhoneNumberStep({ onNext, methods, title }: WithFormContext) {
             setSuccess={setIsSuccess}
             mutationSuccess={handleVerifySuccess}
             mutationError={handleVerifyError}
+            smsType="SIGN_UP"
           />
         </div>
       )}

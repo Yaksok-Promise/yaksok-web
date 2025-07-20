@@ -1,15 +1,15 @@
+import { useDebounce } from '@/hooks/use-debounce'
 import { useHttpMutation } from '@/hooks/use-http-mutation'
 import { slicePhoneNumber } from '@/utils/slice-phone-number'
 import { smsCodeRegex } from '@/validation/zod'
-import { TextField } from '@yaksok/ui'
-import { InputProps } from '.'
 import {
-  SendSMSRequest,
   SMSTestResponse,
   SMSType,
   SMSVerifyRequest,
+  SendSMSRequest,
 } from '@yaksok/api/userType'
-import { useDebounce } from '@/hooks/use-debounce'
+import { TextField } from '@yaksok/ui'
+import { InputProps } from '.'
 
 export type PhoneNumberProps = InputProps & {
   smsType: SMSType
@@ -61,9 +61,11 @@ export type SmsCodeInputProps = InputProps & {
   setSuccess: React.Dispatch<React.SetStateAction<boolean>>
   mutationSuccess?: () => void
   mutationError?: (error: unknown) => void
+  smsType: SMSType
 }
 
 export function SmsCodeInput({
+  smsType,
   setSuccess,
   methods,
   mutationSuccess,
@@ -94,7 +96,7 @@ export function SmsCodeInput({
     await verifySmsMutation.mutateAsync({
       code,
       phone,
-      smsType: 'SIGN_UP',
+      smsType: smsType,
     })
   }, 500)
 

@@ -25,11 +25,16 @@ const buttonVariants = cva(
         full: 'w-full',
         fit: 'w-fit px-[12px] py-[3.5px]',
       },
+      mode: {
+        line: 'border border-black01 text-black01 bg-white',
+        fill: 'bg-black01 text-subhead1 text-white disabled:bg-gray06 disabled:text-gray05',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'full',
       rounded: 'md',
+      mode: 'fill',
     },
   }
 )
@@ -40,11 +45,14 @@ function Button({
   size,
   children,
   rounded,
+  mode,
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={cn(buttonVariants({ variant, size, className, rounded }))}
+      className={cn(
+        buttonVariants({ variant, size, className, rounded, mode })
+      )}
       {...props}
     >
       {children}

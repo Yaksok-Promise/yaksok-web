@@ -1,11 +1,11 @@
 import { Button } from '@yaksok/ui'
 import { Modal } from '@yaksok/ui/modal'
+import { ModalProps } from '.'
 
-export type PhoneNumberModalProps = {
-  closeModal: () => void
-  opened: boolean
+export type PhoneNumberModalProps = ModalProps & {
   title: string
 }
+
 export const PhoneNumberModal = ({
   closeModal,
   opened,

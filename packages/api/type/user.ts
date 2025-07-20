@@ -70,3 +70,7 @@ export type LoginResponse = {
   userRole: string
   userStatus: string
 }
+
+export type FindIdResponse = {
+  loginId: string
+}

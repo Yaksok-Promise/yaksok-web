@@ -27,7 +27,9 @@ export function Tile({
         </div>
         <div>
           <h3 className="text-gray01 text-subhead1">{title}</h3>
-          <p className="text-body2 text-gray02">{description}</p>
+          <p className="whitespace-pre-line text-body2 text-gray02">
+            {description}
+          </p>
         </div>
       </div>
     </div>
