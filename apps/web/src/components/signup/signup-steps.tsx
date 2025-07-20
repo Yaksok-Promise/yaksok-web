@@ -1,12 +1,12 @@
 import { StepsType } from '@/app/index/signup/page'
 import {
   Agreement,
-  Birthdate,
-  Id,
-  Name,
-  Password,
-  PhoneNumber,
-  Sex,
+  SignupBirthdate,
+  SignupId,
+  SignupName,
+  SignupPassword,
+  SignupPhoneNumber,
+  SignupSex,
   SignupDone,
 } from '@/components/signup'
 import { ITEM_LIST } from '@/components/signup/constant'
@@ -36,22 +36,22 @@ export default function SignupSteps({
         />
       </Step>
       <Step name="id">
-        <Id onNext={onNext} title="아이디를 입력해주세요." />
+        <SignupId onNext={onNext} title="아이디를 입력해주세요." />
       </Step>
       <Step name="password">
-        <Password onNext={onNext} title="비밀번호를 입력해주세요" />
+        <SignupPassword onNext={onNext} title="비밀번호를 입력해주세요" />
       </Step>
       <Step name="phoneNumber">
-        <PhoneNumber title="전화번호를 입력해주세요." onNext={onNext} />
+        <SignupPhoneNumber title="전화번호를 입력해주세요." onNext={onNext} />
       </Step>
       <Step name="sex">
-        <Sex title="성별을 입력해주세요" onNext={onNext} />
+        <SignupSex title="성별을 입력해주세요" onNext={onNext} />
       </Step>
       <Step name="birthDate">
-        <Birthdate title="생년월일을 입력해 주세요" onNext={onNext} />
+        <SignupBirthdate title="생년월일을 입력해 주세요" onNext={onNext} />
       </Step>
       <Step name="name">
-        <Name title="이름을 입력해 주세요" onNext={onNext} />
+        <SignupName title="이름을 입력해 주세요" onNext={onNext} />
       </Step>
       <Step name="done">
         <SignupDone />

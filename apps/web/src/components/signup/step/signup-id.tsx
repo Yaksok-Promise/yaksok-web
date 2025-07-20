@@ -1,13 +1,14 @@
+import { Id } from '@/components/common'
 import { emailRegex } from '@/validation/zod'
 import {
   SignupTitle,
   type WithFormContext,
   withFormContext,
 } from '@components/signup'
-import { Button, TextField } from '@yaksok/ui'
+import { Button } from '@yaksok/ui'
 import { useWatch } from 'react-hook-form'
 
-function Id({ onNext, methods, title }: WithFormContext) {
+export function SignupId({ onNext, methods, title }: WithFormContext) {
   const loginIdValue = useWatch({
     control: methods.control,
     name: 'loginId',
@@ -19,17 +20,7 @@ function Id({ onNext, methods, title }: WithFormContext) {
   return (
     <div>
       <SignupTitle>{title}</SignupTitle>
-      <TextField
-        label="아이디"
-        placeholder="아이디를 입력해 주세요"
-        type="text"
-        message={{
-          regexError: '이메일 형식이 올바르지 않습니다.',
-          verificationError: '이메일 인증에 실패했습니다.',
-        }}
-        regex={emailRegex}
-        {...methods.register('loginId')}
-      />
+      <Id methods={methods} />
       <div className="mt-25">
         <Button disabled={isDisabled} onClick={onNext}>
           다음
@@ -39,4 +30,4 @@ function Id({ onNext, methods, title }: WithFormContext) {
   )
 }
 
-export default withFormContext(Id)
+export default withFormContext(SignupId)
