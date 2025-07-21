@@ -153,9 +153,7 @@ const DoneStep = ({ findId }: { findId: string | null }) => {
   const { push } = useFlow()
   const handleFindPassword = () => {
     push('FindIdPassword', {
-      params: {
-        mode: 'password',
-      },
+      mode: 'password',
     })
   }
   const handleSignin = () => {

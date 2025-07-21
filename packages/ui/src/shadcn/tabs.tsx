@@ -7,7 +7,7 @@ import { cn } from '@yaksok/utils'
 import { type VariantProps, cva } from 'class-variance-authority'
 
 export const tabsTriggerVariants = cva(
-  'transition-colors transition-[color,box-shadow] focus:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'transition-colors transition-[color,box-shadow] focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-body1',
   {
     variants: {
       variant: {
@@ -20,7 +20,7 @@ export const tabsTriggerVariants = cva(
         ],
         box: [
           'inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full',
-          'px-3 py-1.5 text-sm font-medium text-black',
+          'px-7.5 py-1 text-sm font-medium text-black',
           'data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:z-10',
         ],
       },
@@ -90,7 +90,7 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn('flex-1 outline-none', className)}
+      className={cn('w-full flex-1 outline-none', className)}
       {...props}
     />
   )

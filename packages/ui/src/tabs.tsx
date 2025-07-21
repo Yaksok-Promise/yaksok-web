@@ -10,15 +10,21 @@ export type TabsProps = {
   variant?: 'dot' | 'box'
   orientation?: 'horizontal' | 'vertical'
   defaultValue?: string
+  wrapperClassName?: string
 }
 export function Tabs({
   tabInfo,
+  wrapperClassName,
   orientation = 'horizontal',
   defaultValue = tabInfo[0].value,
   variant = 'dot',
 }: TabsProps) {
   return (
-    <Tab defaultValue={defaultValue} orientation={orientation}>
+    <Tab
+      defaultValue={defaultValue}
+      orientation={orientation}
+      className={wrapperClassName}
+    >
       <TabsList
         className={cn(variant === 'box' && 'rounded-full bg-[#e3e3e3]/70')}
       >
