@@ -2,7 +2,7 @@ import { passwordRegex } from '@/validation/zod'
 import { TextField } from '@yaksok/ui'
 import { InputProps } from '.'
 
-export function Password({ methods }: InputProps) {
+export function Password({ methods, mode = 'line' }: InputProps) {
   return (
     <TextField
       label="비밀번호"
@@ -12,6 +12,7 @@ export function Password({ methods }: InputProps) {
         regexError: '유효한 비밀번호 형식이 아닙니다.',
       }}
       regex={passwordRegex}
+      mode={mode}
       {...methods.register('password')}
     />
   )

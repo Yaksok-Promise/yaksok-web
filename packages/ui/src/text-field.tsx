@@ -1,4 +1,4 @@
-import { Check } from '@yaksok/icons'
+import { Check, Show } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
@@ -49,6 +49,7 @@ export const TextField = React.forwardRef(function TextField(
 ) {
   const [status, setStatus] = useState<Status>(undefined)
   const [inputValue, setInputValue] = useState(value)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value
@@ -89,6 +90,11 @@ export const TextField = React.forwardRef(function TextField(
     const isVerified = await onVerify?.(value as string)
     setStatus(isVerified ? 'success' : 'verificationError')
   }
+
+  const handleShowPassword = () => {
+    setShowPassword(prev => !prev)
+  }
+
   if (mode === 'line') {
     return (
       <div className="flex w-full flex-col">
@@ -103,7 +109,7 @@ export const TextField = React.forwardRef(function TextField(
           <div className="flex w-full flex-1 items-center justify-between border-black01 border-b-[2px]">
             <input
               ref={ref}
-              type={type}
+              type={showPassword ? 'text' : type}
               data-slot="input"
               value={inputValue}
               onChange={handleInputChange}
@@ -133,26 +139,46 @@ export const TextField = React.forwardRef(function TextField(
 
   return (
     <div className="flex w-full flex-col">
-      <input
-        ref={ref}
-        type={type}
-        data-slot="input"
-        value={inputValue}
-        onChange={handleInputChange}
-        onBlur={onBlur}
-        className={cn(
-          'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none',
-          className
-        )}
-        {...rest}
-      />
+      <div className="relative">
+        <input
+          ref={ref}
+          type={showPassword ? 'text' : type}
+          data-slot="input"
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={onBlur}
+          className={cn(
+            'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none',
+            className
+          )}
+          {...rest}
+        />
+        <HideAndShowPassword
+          showPassword={showPassword}
+          handleShowPassword={handleShowPassword}
+        />
+      </div>
+
       <label className="text-caption1">
         {status?.includes('Error') ? (
           <span className="text-red01">{message[status as ErrorStatus]}</span>
-        ) : (
-          label
-        )}
+        ) : null}
       </label>
     </div>
   )
 })
+
+type HideAndShowPasswordProps = {
+  showPassword: boolean
+  handleShowPassword: () => void
+}
+const HideAndShowPassword = ({
+  showPassword,
+  handleShowPassword,
+}: HideAndShowPasswordProps) => {
+  return (
+    <button onClick={handleShowPassword} className="absolute top-3 right-4">
+      <Show size={24} />
+    </button>
+  )
+}

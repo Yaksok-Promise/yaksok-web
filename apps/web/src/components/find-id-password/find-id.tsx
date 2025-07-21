@@ -35,7 +35,7 @@ export default function FindId() {
 
   const onSubmit = (data: FindIdRequest) => console.log(data)
   return (
-    <main className="h-full">
+    <main className="h-full overflow-y-hidden">
       <FormProvider {...methods}>
         <form className="h-full" onSubmit={methods.handleSubmit(onSubmit)}>
           <Funnel>
@@ -162,7 +162,7 @@ const DoneStep = ({ findId }: { findId: string | null }) => {
     push('Signin', {})
   }
   return (
-    <div className="flex h-full flex-col justify-between pt-7.5 pb-20">
+    <div className="flex h-full flex-col justify-between overflow-y-hidden pt-7.5 pb-20">
       <div className="flex flex-col gap-10">
         <h1 className="text-black01 text-head6">홍길동님의 아이디에요</h1>
         <TextField

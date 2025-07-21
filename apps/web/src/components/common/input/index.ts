@@ -10,4 +10,5 @@ export * from './confirm-password'
 export type InputProps = {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   methods: UseFormReturn<any>
+  mode?: 'box' | 'line'
 }
