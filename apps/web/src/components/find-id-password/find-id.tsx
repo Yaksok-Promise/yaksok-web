@@ -25,15 +25,8 @@ const IdSteps = ['id', 'done']
 export type IdStepsType = (typeof IdSteps)[number]
 
 export default function FindId() {
-  const { Funnel, Step, setStep, currentStep } = useFunnel<IdStepsType>('id')
+  const { Funnel, Step, handleNext } = useFunnel<IdStepsType>(IdSteps, 'id')
   const [findId, setFindId] = useState<string | null>(null)
-
-  const currentIdx = IdSteps.findIndex(step => step === currentStep)
-
-  const handleNext = () => {
-    if (currentIdx !== -1 && currentIdx < IdSteps.length)
-      setStep(IdSteps[currentIdx + 1])
-  }
 
   const methods = useForm<FindIdRequest>({
     resolver: zodResolver(FindIdSchema),
