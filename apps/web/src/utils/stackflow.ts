@@ -1,4 +1,5 @@
 import ComparePage from '@/app/index/compare/page'
+import FindIdPassword from '@/app/index/find-id-password/page'
 import MainPage from '@/app/index/page'
 import Signin from '@/app/index/signin/page'
 import SignupPage from '@/app/index/signup/page'
@@ -20,6 +21,7 @@ export const { Stack, useFlow } = stackflow({
         ComparePage: '/compare',
         SignupPage: '/signup',
         Signin: '/signin',
+        FindIdPassword: '/find-id-password',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -29,6 +31,7 @@ export const { Stack, useFlow } = stackflow({
     ComparePage,
     SignupPage,
     Signin,
+    FindIdPassword,
   },
   initialActivity: () => 'MainPage',
 })

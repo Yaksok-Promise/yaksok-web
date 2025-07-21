@@ -19,30 +19,18 @@ const Steps = [
   'birthDate',
   'name',
   'done',
-] as const
+]
 
 export type StepsType = (typeof Steps)[number]
 
 export default function SignupPage() {
-  const { Funnel, Step, setStep, currentStep } =
-    useFunnel<StepsType>('agreement')
+  const { Funnel, Step, handleNext, handlePrev, currentStep } =
+    useFunnel<StepsType>(Steps, 'agreement')
 
   const trackingSteps = Steps.slice(1, -1)
   const currentTrackingIdx = trackingSteps.findIndex(
     step => step === currentStep
   )
-
-  const currentIdx = Steps.findIndex(step => step === currentStep)
-
-  const handleNext = () => {
-    if (currentIdx !== -1 && currentIdx < Steps.length)
-      setStep(Steps[currentIdx + 1])
-  }
-
-  const handlePrev = () => {
-    if (currentIdx < Steps.length && currentIdx > 0)
-      setStep(Steps[currentIdx - 1])
-  }
 
   const ifCondition = currentStep !== 'agreement' && currentStep !== 'done'
   const isDone = currentStep === 'done'

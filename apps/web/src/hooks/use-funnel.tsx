@@ -1,27 +1,46 @@
-import { ReactElement, ReactNode, useState } from 'react'
+import { ReactElement, ReactNode, useMemo, useState } from 'react'
 
 export type StepProps<T extends string> = {
   name: T
   children: ReactNode
 }
+
 export type FunnelProps<T extends string> = {
   children: ReactElement<StepProps<T>>[]
 }
 
-export const useFunnel = <T extends string>(defaultStep: string) => {
-  const [step, setStep] = useState<string>(defaultStep)
+export function useFunnel<T extends string>(steps: T[], defaultStep: T) {
+  const [currentStep, setStep] = useState<T>(defaultStep)
 
-  // fragment 사용 이유는 JSX 반환 구조를 명시저으로 하기 위해 사용
-  const Step = ({ children }: StepProps<T>) => {
-    return <>{children}</>
+  const currentIdx = useMemo(
+    () => steps.findIndex(step => step === currentStep),
+    [steps, currentStep]
+  )
+
+  const handleNext = () => {
+    if (currentIdx !== -1 && currentIdx < steps.length - 1) {
+      setStep(steps[currentIdx + 1])
+    }
   }
 
+  const handlePrev = () => {
+    if (currentIdx > 0) {
+      setStep(steps[currentIdx - 1])
+    }
+  }
+
+  const Step = ({ children }: StepProps<T>) => <>{children}</>
+
   const Funnel = ({ children }: FunnelProps<T>) => {
-    const targetStep = children.find(
-      childStep => childStep.props?.name === step
-    )
+    const targetStep = children.find(child => child.props.name === currentStep)
     return <>{targetStep}</>
   }
 
-  return { Funnel, Step, setStep, currentStep: step }
+  return {
+    Funnel,
+    Step,
+    currentStep,
+    handleNext,
+    handlePrev,
+  }
 }

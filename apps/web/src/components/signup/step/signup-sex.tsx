@@ -29,7 +29,7 @@ const RadioOption = forwardRef<HTMLInputElement, RadioOptionProps>(
   }
 )
 
-function Sex({ onNext, methods, title }: WithFormContext) {
+export function Sex({ onNext, methods, title }: WithFormContext) {
   const { register, control } = methods
 
   const gender = useWatch({

@@ -14,7 +14,7 @@ import { Button, OauthButton, TextField } from '@yaksok/ui'
 import { useForm } from 'react-hook-form'
 
 export default function Signin() {
-  const { push } = useFlow()
+  const { push, replace } = useFlow()
   const goSignup = () => {
     push('SignupPage', {
       title: '회원가입',
@@ -22,7 +22,7 @@ export default function Signin() {
   }
 
   const goHome = () => {
-    push('MainPage', {})
+    replace('MainPage', {})
   }
 
   const { handleSubmit, register, control } = useForm<SigninRequest>({

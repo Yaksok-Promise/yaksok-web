@@ -38,11 +38,18 @@ const meta: Meta<ButtonProps> = {
         type: 'radio',
       },
     },
+    mode: {
+      options: ['fill', 'line'],
+      control: {
+        type: 'radio',
+      },
+    },
   },
   args: {
     children: 'Button',
     variant: 'default',
     rounded: 'md',
+    mode: 'fill',
   },
 } satisfies Meta<ButtonProps>
 export default meta

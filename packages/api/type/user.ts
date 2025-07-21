@@ -1,5 +1,5 @@
 export type Gender = 'MALE' | 'FEMALE'
-export type SMSType = 'SIGN_UP' | 'FIND_ID' | 'FIND_PWD' | 'CHANGE_PHONE'
+export type SMSType = 'SIGN_UP' | 'FIND_ID' | 'RESET_PWD' | 'CHANGE_PHONE'
 
 // user api request type
 export type SignupRequest = {
@@ -69,4 +69,8 @@ export type LoginResponse = {
   refreshToken: string
   userRole: string
   userStatus: string
+}
+
+export type FindIdResponse = {
+  loginId: string
 }

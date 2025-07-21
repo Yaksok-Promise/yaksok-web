@@ -22,6 +22,12 @@ const meta: Meta<TabsProps> = {
         type: 'radio',
       },
     },
+    variant: {
+      options: ['dot', 'box'],
+      control: {
+        type: 'radio',
+      },
+    },
   },
   args: {
     orientation: 'horizontal',
@@ -42,6 +48,7 @@ const meta: Meta<TabsProps> = {
         content: <div>이벤트</div>,
       },
     ],
+    variant: 'dot',
   },
 } satisfies Meta<TabsProps>
 export default meta

@@ -1,5 +1,6 @@
 import { SignupRequest } from '@/validation/zod'
 import { UseFormReturn, useFormContext } from 'react-hook-form'
+import { StepPageProps } from './type'
 
 interface InjectedFormProps {
   methods: UseFormReturn<SignupRequest>
@@ -13,4 +14,8 @@ export function withFormContext<P extends InjectedFormProps>(
 
     return <Component {...(props as P)} methods={methods} />
   }
+}
+
+export interface WithFormContext extends StepPageProps {
+  methods: UseFormReturn<SignupRequest>
 }
