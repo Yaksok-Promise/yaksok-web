@@ -26,7 +26,6 @@ function SignupName({ methods, title, onNext }: WithFormContext) {
   )
 
   const handleDone = handleSubmit(async (data: SignupRequest) => {
-    console.log('✅ SUBMIT CALLED', data)
     const { confirmPassword, ...rest } = data
     await mutation.mutateAsync(rest)
     onNext()

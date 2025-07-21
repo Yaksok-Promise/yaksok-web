@@ -1,9 +1,18 @@
 import { TextField } from '@yaksok/ui'
 import { InputProps } from '.'
 
-export function ConfirmPassword({ methods, mode = 'line' }: InputProps) {
+type ConfirmPasswordProps = InputProps & {
+  confirmName?: string
+  isShownIcon?: boolean
+}
+export function ConfirmPassword({
+  methods,
+  mode = 'line',
+  confirmName = 'password',
+  isShownIcon = false,
+}: ConfirmPasswordProps) {
   const onCondition = (value: string) => {
-    const password = methods.getValues('password')
+    const password = methods.getValues(confirmName)
     return value === password
   }
   return (
@@ -17,6 +26,7 @@ export function ConfirmPassword({ methods, mode = 'line' }: InputProps) {
       regex={/\*/}
       onCondition={onCondition}
       mode={mode}
+      isShownIcon={isShownIcon}
       {...methods.register('confirmPassword')}
     />
   )

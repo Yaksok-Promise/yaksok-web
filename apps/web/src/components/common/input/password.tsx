@@ -2,7 +2,17 @@ import { passwordRegex } from '@/validation/zod'
 import { TextField } from '@yaksok/ui'
 import { InputProps } from '.'
 
-export function Password({ methods, mode = 'line' }: InputProps) {
+type PasswordProps = InputProps & {
+  type?: string
+  isShownIcon?: boolean
+}
+
+export function Password({
+  methods,
+  type = 'password',
+  mode = 'line',
+  isShownIcon = false,
+}: PasswordProps) {
   return (
     <TextField
       label="비밀번호"
@@ -13,7 +23,8 @@ export function Password({ methods, mode = 'line' }: InputProps) {
       }}
       regex={passwordRegex}
       mode={mode}
-      {...methods.register('password')}
+      isShownIcon={isShownIcon}
+      {...methods.register(type)}
     />
   )
 }

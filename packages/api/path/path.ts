@@ -7,6 +7,7 @@ const users = [
   '/api/user/info',
   '/api/user/check/nickname',
   '/api/user/check/id',
+  '/api/user/reset/password',
 ] as const
 
 const sms = ['/api/sms/verify', '/api/sms/test/code', '/api/sms/code'] as const

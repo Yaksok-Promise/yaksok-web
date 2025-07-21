@@ -23,6 +23,7 @@ export interface TextFieldProps
   label: string
   message: Message
   regex: RegExp
+  isShownIcon?: boolean
   mode?: TextMode
   onVerify?: (value: string) => boolean | void | Promise<boolean>
   onFormat?: (value: string) => string
@@ -43,6 +44,7 @@ export const TextField = React.forwardRef(function TextField(
     message,
     onCondition,
     mode = 'line',
+    isShownIcon = false,
     ...rest
   }: TextFieldProps,
   ref: React.Ref<HTMLInputElement>
@@ -153,10 +155,12 @@ export const TextField = React.forwardRef(function TextField(
           )}
           {...rest}
         />
-        <HideAndShowPassword
-          showPassword={showPassword}
-          handleShowPassword={handleShowPassword}
-        />
+        {isShownIcon && (
+          <HideAndShowPassword
+            showPassword={showPassword}
+            handleShowPassword={handleShowPassword}
+          />
+        )}
       </div>
 
       <label className="text-caption1">

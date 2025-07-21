@@ -67,22 +67,17 @@ export const FindIdSchema = z.object({
 
 export type FindIdRequest = z.infer<typeof FindIdSchema>
 
-export const FindPasswordSchema = z.object({
-  loginId,
-  name,
-  phoneNumber,
-})
-
-export type FindPasswordRequest = z.infer<typeof FindPasswordSchema>
-
-export const ChangePasswordSchema = z
+export const ResetPasswordSchema = z
   .object({
-    password,
+    loginId,
+    name,
+    phoneNumber,
+    newPassword: password,
     confirmPassword: password,
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine(data => data.newPassword === data.confirmPassword, {
     path: ['confirmPassword'],
     message: '비밀번호가 일치하지 않습니다.',
   })
 
-export type ChangePasswordRequest = z.infer<typeof ChangePasswordSchema>
+export type ResetPasswordRequest = z.infer<typeof ResetPasswordSchema>

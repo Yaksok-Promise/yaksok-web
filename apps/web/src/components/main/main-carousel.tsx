@@ -10,7 +10,7 @@ export function MainCarousel({ data }: MainCarouselProps) {
       {data && (
         <Carousel.Root>
           <Carousel.Slide>
-            <Carousel.Track>
+            <Carousel.Track className="pb-2">
               {data.map((data, index) => (
                 <Card {...data} key={index} />
               ))}
