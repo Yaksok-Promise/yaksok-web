@@ -4,6 +4,34 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
 
 import { cn } from '@yaksok/utils'
+import { type VariantProps, cva } from 'class-variance-authority'
+
+export const tabsTriggerVariants = cva(
+  'transition-colors transition-[color,box-shadow] focus:outline-none disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        dot: [
+          'relative px-2 py-1 text-sm font-normal text-[#D0D0D0]',
+          'data-[state=active]:text-black data-[state=active]:font-bold',
+          'after:absolute after:top-1 after:left-0.5 after:h-1.5 after:w-1.5 after:rounded-full after:bg-[#018381]',
+          'after:content-[""] after:hidden data-[state=active]:after:block',
+          'after:-translate-y-1/2 after:-translate-x-full',
+        ],
+        box: [
+          'inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full',
+          'px-3 py-1.5 text-sm font-medium text-black',
+          'data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:z-10',
+        ],
+      },
+    },
+    defaultVariants: {
+      variant: 'dot',
+    },
+  }
+)
+
+type TabsTriggerVariantProps = VariantProps<typeof tabsTriggerVariants>
 
 function Tabs({
   className,
@@ -34,29 +62,26 @@ function TabsList({
   )
 }
 
-function TabsTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+type TabsTriggerProps = React.ComponentPropsWithoutRef<
+  typeof TabsPrimitive.Trigger
+> &
+  TabsTriggerVariantProps
+
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  TabsTriggerProps
+>(({ className, variant, ...props }, ref) => {
   return (
     <TabsPrimitive.Trigger
+      ref={ref}
       data-slot="tabs-trigger"
-      className={cn(
-        'relative px-2 py-1 font-normal text-[#D0D0D0] text-sm transition-colors',
-        'data-[state=active]:font-bold data-[state=active]:text-black',
-        'focus:outline-none',
-        'after:-translate-y-1/2 after:-translate-x-full after:absolute after:top-1 after:left-0.5',
-        'after:h-1.5 after:w-1.5 after:rounded-full after:bg-[#018381]',
-        'after:hidden after:content-[""] data-[state=active]:after:block',
-        className
-      )}
+      className={cn(tabsTriggerVariants({ variant }), className)}
       {...props}
-    >
-      {children}
-    </TabsPrimitive.Trigger>
+    />
   )
-}
+})
+
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 function TabsContent({
   className,

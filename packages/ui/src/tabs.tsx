@@ -1,3 +1,4 @@
+import { cn } from '@yaksok/utils'
 import { Tabs as Tab, TabsContent, TabsList, TabsTrigger } from './shadcn/tabs'
 
 export type TabsProps = {
@@ -6,6 +7,7 @@ export type TabsProps = {
     label: string
     content: React.ReactNode
   }[]
+  variant?: 'dot' | 'box'
   orientation?: 'horizontal' | 'vertical'
   defaultValue?: string
 }
@@ -13,12 +15,15 @@ export function Tabs({
   tabInfo,
   orientation = 'horizontal',
   defaultValue = tabInfo[0].value,
+  variant = 'dot',
 }: TabsProps) {
   return (
     <Tab defaultValue={defaultValue} orientation={orientation}>
-      <TabsList>
+      <TabsList
+        className={cn(variant === 'box' && 'rounded-full bg-[#e3e3e3]/70')}
+      >
         {tabInfo.map(data => (
-          <TabsTrigger key={data.value} value={data.value}>
+          <TabsTrigger key={data.value} value={data.value} variant={variant}>
             {data.label}
           </TabsTrigger>
         ))}
