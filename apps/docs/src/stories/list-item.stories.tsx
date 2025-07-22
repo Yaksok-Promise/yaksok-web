@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Bell } from '@yaksok/icons'
-import { ListItemProps, ListItem } from '@yaksok/ui'
+import { ListItem, ListItemProps } from '@yaksok/ui'
 
 const meta: Meta<ListItemProps> = {
   component: ListItem,

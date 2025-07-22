@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { SvgIconElement, ChevronRight } from '@yaksok/icons'
+import { ChevronRight, SvgIconElement } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
+import { type VariantProps, cva } from 'class-variance-authority'
+import React, { ReactNode } from 'react'
 
 export type ListItemProps = React.ComponentProps<'div'> &
   VariantProps<typeof listItemVariants> & {
