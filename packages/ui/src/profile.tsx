@@ -40,10 +40,11 @@ export function Profile({
         console.warn('잘못된 브릿지 메시지 형식', e)
       }
     }
-
-    window.addEventListener('message', handleMessage)
+    if (isCamera) {
+      window.addEventListener('message', handleMessage)
+    }
     return () => window.removeEventListener('message', handleMessage)
-  }, [])
+  }, [isCamera])
 
   return (
     <div
