@@ -1,7 +1,6 @@
-import { SvgComponent } from '@yaksok/icons'
-import { ComponentPropsWithoutRef, ReactElement, SVGProps } from 'react'
+import { SvgIconElement } from '@yaksok/icons'
+import { ComponentPropsWithoutRef } from 'react'
 
-type SvgIconElement = ReactElement<SVGProps<SvgComponent>>
 export type TileProps = {
   icon: SvgIconElement
   title: string
