@@ -157,7 +157,7 @@ const DoneStep = ({ findId }: { findId: string | null }) => {
     })
   }
   const handleSignin = () => {
-    replace('Signin', {})
+    replace('SigninPage', {})
   }
   return (
     <div className="flex h-full flex-col justify-between overflow-y-hidden pt-7.5 pb-20">

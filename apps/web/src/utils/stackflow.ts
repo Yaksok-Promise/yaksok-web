@@ -1,7 +1,8 @@
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
+import Mypage from '@/app/index/mypage/page'
 import MainPage from '@/app/index/page'
-import Signin from '@/app/index/signin/page'
+import SigninPage from '@/app/index/signin/page'
 import SignupPage from '@/app/index/signup/page'
 import { basicUIPlugin } from '@stackflow/plugin-basic-ui'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
@@ -20,8 +21,9 @@ export const { Stack, useFlow } = stackflow({
         MainPage: '/',
         ComparePage: '/compare',
         SignupPage: '/signup',
-        Signin: '/signin',
+        SigninPage: '/signin',
         FindIdPassword: '/find-id-password',
+        Mypage: '/mypage',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -30,8 +32,9 @@ export const { Stack, useFlow } = stackflow({
     MainPage,
     ComparePage,
     SignupPage,
-    Signin,
+    SigninPage,
     FindIdPassword,
+    Mypage,
   },
   initialActivity: () => 'MainPage',
 })

@@ -1,5 +1,5 @@
-import BellIcon from '@/assets/icons/bell-icon'
 import LogoIcon from '@/assets/icons/logo-icon'
+import { Notification } from '@/components/common'
 import Counsel from '@/components/main/counsel'
 import MagazineCarousel from '@/components/main/magazine-carousel'
 import { MainCheck } from '@/components/main/main-check'
@@ -24,7 +24,7 @@ export default function MainPage() {
   }
 
   const _goSignin = () => {
-    push('Signin', {
+    push('SigninPage', {
       title: '로그인',
     })
   }
@@ -41,11 +41,7 @@ export default function MainPage() {
         backgroundColor: '#fafafa',
         border: false,
         renderRight: () => {
-          return (
-            <div className="flex gap-[10px]">
-              <BellIcon />
-            </div>
-          )
+          return <Notification wrapperClassName="flex gap-2.5" />
         },
       }}
     >

@@ -1,4 +1,5 @@
 import { useFunnel } from '@/hooks/use-funnel'
+import { useHttpMutation } from '@/hooks/use-http-mutation'
 import useSmscodeInput from '@/hooks/use-smscode-input'
 import { useFlow } from '@/utils/stackflow'
 import {
@@ -6,7 +7,9 @@ import {
   ResetPasswordSchema,
   passwordRegex,
 } from '@/validation/zod'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ResetPasswordRequest as ResetPasswordHttpRequest } from '@yaksok/api/userType'
 import { Button } from '@yaksok/ui'
 import { ModalRoot, useModal } from '@yaksok/ui/modal'
 import {
@@ -25,9 +28,6 @@ import {
   ResetPasswordModal,
   SmsCodeInput,
 } from '../common'
-import { DevTool } from '@hookform/devtools'
-import { ResetPasswordRequest as ResetPasswordHttpRequest } from '@yaksok/api/userType'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
 
 const PasswordSteps = ['certification', 'changePassword', 'done']
 
@@ -192,8 +192,8 @@ const ChangeasswordStep = ({ onNext }: StepProps) => {
 
 const DoneStep = () => {
   const { push } = useFlow()
-  const goSignup = () => {
-    push('SignupPage', {})
+  const goSignin = () => {
+    push('SigninPage', {})
   }
   return (
     <div className="flex h-screen flex-col justify-between overflow-y-hidden pb-40">
@@ -205,7 +205,7 @@ const DoneStep = () => {
         </h1>
       </div>
 
-      <Button onClick={goSignup}>로그인하러 가기</Button>
+      <Button onClick={goSignin}>로그인하러 가기</Button>
     </div>
   )
 }
