@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { LoginRequest, LoginResponse } from '@yaksok/api/userType'
 import { Button, OauthButton, TextField } from '@yaksok/ui'
+import { LOCAL_STORAGE_KEY, setItem } from '@yaksok/utils'
 import { useForm } from 'react-hook-form'
 
 export default function Signin() {
@@ -35,7 +36,9 @@ export default function Signin() {
     'post',
     undefined,
     {
-      onSuccess: () => {
+      onSuccess: async data => {
+        setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, data.accessToken)
+        setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, data.refreshToken)
         goHome()
       },
       onSettled: (data, error, variables, context) => {

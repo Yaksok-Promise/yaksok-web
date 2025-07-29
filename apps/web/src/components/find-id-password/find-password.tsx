@@ -146,7 +146,8 @@ const ChangeasswordStep = ({ onNext }: StepProps) => {
       onSuccess: () => {
         onNext()
       },
-      onError: () => {
+      onError: e => {
+        console.log(e)
         openModal()
       },
     }

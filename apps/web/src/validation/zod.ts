@@ -81,3 +81,22 @@ export const ResetPasswordSchema = z
   })
 
 export type ResetPasswordRequest = z.infer<typeof ResetPasswordSchema>
+
+export const ChangeNicknameSchema = z.object({
+  nickname: z.string().min(2, '닉네임은 필수입니다.'),
+})
+
+export type ChangeNicknameSchemaRequest = z.infer<typeof ChangeNicknameSchema>
+
+export const ChangePasswordSchema = z
+  .object({
+    oldPassword: password,
+    newPassword: password,
+    confirmPassword: password,
+  })
+  .refine(data => data.newPassword === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: '비밀번호가 일치하지 않습니다.',
+  })
+
+export type ChangePasswordSchemaRequest = z.infer<typeof ChangePasswordSchema>

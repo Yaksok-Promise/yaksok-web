@@ -31,11 +31,12 @@ export function Profile({
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       try {
-        const { type, data } = JSON.parse(event.data)
-        if (type === 'SELECTED_IMAGE') {
-          // TODO: data.url을 서버로 업로드
-          console.log('선택된 이미지 URL:', data.url)
-        }
+        console.log(event.data)
+
+        // if (type === 'SELECTED_IMAGE') {
+        //   // TODO: data.url을 서버로 업로드
+        //   console.log('선택된 이미지 URL:', data.url)
+        // }
       } catch (e) {
         console.warn('잘못된 브릿지 메시지 형식', e)
       }

@@ -4,6 +4,7 @@ const users = [
   '/api/user/login',
   '/api/user/find/id',
   '/api/user/change/password',
+  '/api/user/change/nickname',
   '/api/user/info',
   '/api/user/check/nickname',
   '/api/user/check/id',

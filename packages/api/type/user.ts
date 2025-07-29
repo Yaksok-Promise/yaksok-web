@@ -46,6 +46,10 @@ export type SendSMSRequest = {
   smsType: SMSType
 }
 
+export type ChangeNicknameRequest = {
+  nickname: string
+}
+
 // user api response type
 export type UserInfoResponse = {
   name: string
