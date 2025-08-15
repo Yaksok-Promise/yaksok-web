@@ -1,18 +1,15 @@
 {
-  "name": "@yaksok/api",
+  "name": "@yaksok/store",
   "version": "1.0.0",
   "private": true,
   "exports": {
-    ".": "./index.ts",
-    "./userType": "./type/user.ts",
-    "./commentType": "./type/comment.ts"
+    ".": "./index.ts"
   },
   "scripts": {
     "test": "vitest run"
   },
   "dependencies": {
-    "axios": "^1.10.0",
-    "@yaksok/store": "workspace:*"
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@vitest/coverage-istanbul": "^3.0.7",

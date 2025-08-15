@@ -10,12 +10,14 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { LoginRequest, LoginResponse } from '@yaksok/api/userType'
+import { useLoginStore } from '@yaksok/store'
 import { Button, OauthButton, TextField } from '@yaksok/ui'
 import { LOCAL_STORAGE_KEY, setItem } from '@yaksok/utils'
 import { useForm } from 'react-hook-form'
 
 export default function Signin() {
   const { push, replace } = useFlow()
+  const { saveToken } = useLoginStore()
   const goSignup = () => {
     push('SignupPage', {
       title: '회원가입',
@@ -39,10 +41,24 @@ export default function Signin() {
       onSuccess: async data => {
         setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, data.accessToken)
         setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, data.refreshToken)
-        goHome()
+        saveToken(data.accessToken)
+
+        if (typeof window !== 'undefined' && window.ReactNativeWebView) {
+          window.ReactNativeWebView.postMessage(
+            JSON.stringify({
+              type: 'LOGIN_SUCCESS',
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
+            })
+          )
+        }
+
+        if (!window.ReactNativeWebView) {
+          goHome()
+        }
       },
-      onSettled: (data, error, variables, context) => {
-        console.log('로그인 실패', data, error, variables, context)
+      onError: error => {
+        console.log('로그인 실패', error)
       },
     }
   )

@@ -1,15 +1,19 @@
 import { Notification } from '@/components/common'
 import { UserInfo } from '@/components/mypage'
 import ListTitle from '@/components/mypage/main/list-title'
+import { useGetToken } from '@/hooks/use-get-token'
 import { useHttpQuery } from '@/hooks/use-http-query'
 import { QUERY_KEY } from '@/utils/query-key'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { UserInfoResponse } from '@yaksok/api/userType'
+import { useLoginStore } from '@yaksok/store'
 import { ListItem } from '@yaksok/ui'
 import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export default function Mypage() {
+  useGetToken()
+  const { token } = useLoginStore()
   const { push } = useFlow()
 
   const goToEditProfile = () => {
@@ -21,7 +25,7 @@ export default function Mypage() {
     '/api/user/info',
     {
       headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${window.ReactNativeWebView ? token : getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
       },
     }
   )
