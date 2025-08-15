@@ -344,6 +344,9 @@ importers:
       '@yaksok/store':
         specifier: workspace:*
         version: link:../store
+      '@yaksok/utils':
+        specifier: workspace:*
+        version: link:../utils
       axios:
         specifier: ^1.10.0
         version: 1.10.0
@@ -400,6 +403,9 @@ importers:
 
   packages/store:
     dependencies:
+      '@yaksok/utils':
+        specifier: workspace:*
+        version: link:../utils
       zustand:
         specifier: ^5.0.7
         version: 5.0.7(@types/react@19.1.0)(react@19.1.0)

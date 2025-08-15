@@ -9,7 +9,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "zustand": "^5.0.7"
+    "zustand": "^5.0.7",
+    "@yaksok/utils": "workspace:*"
   },
   "devDependencies": {
     "@vitest/coverage-istanbul": "^3.0.7",

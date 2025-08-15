@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form'
 
 export default function Signin() {
   const { push, replace } = useFlow()
-  const { saveToken } = useLoginStore()
+  const { saveAccessToken, saveRefreshToken } = useLoginStore()
   const goSignup = () => {
     push('SignupPage', {
       title: '회원가입',
@@ -41,12 +41,13 @@ export default function Signin() {
       onSuccess: async data => {
         setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, data.accessToken)
         setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, data.refreshToken)
-        saveToken(data.accessToken)
+        saveAccessToken(data.accessToken)
+        saveRefreshToken(data.refreshToken)
 
         if (typeof window !== 'undefined' && window.ReactNativeWebView) {
           window.ReactNativeWebView.postMessage(
             JSON.stringify({
-              type: 'LOGIN_SUCCESS',
+              type: 'LOGIN',
               accessToken: data.accessToken,
               refreshToken: data.refreshToken,
             })

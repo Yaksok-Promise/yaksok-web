@@ -20,12 +20,12 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: '0.0.0.0',
-    proxy: {
-      '/api': {
-        target: 'http://192.168.0.164:8080', // 실제 백엔드
-        changeOrigin: true,
-      },
-    },
+    // host: '0.0.0.0',
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://http://127.0.0.1:8080', // 실제 백엔드
+    //     changeOrigin: true,
+    //   },
+    // },
   },
 })

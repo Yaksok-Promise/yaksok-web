@@ -50,6 +50,10 @@ export type ChangeNicknameRequest = {
   nickname: string
 }
 
+export type ReissueRequest = {
+  refreshToken: string
+}
+
 // user api response type
 export type UserInfoResponse = {
   name: string
@@ -78,3 +82,5 @@ export type LoginResponse = {
 export type FindIdResponse = {
   loginId: string
 }
+
+export type ReissueResponse = LoginResponse

@@ -13,8 +13,15 @@ import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export default function Mypage() {
   useGetToken()
-  const { token } = useLoginStore()
+  const { accessToken } = useLoginStore()
   const { push } = useFlow()
+
+  console.log('inmemory accesstoken', accessToken)
+  console.log(
+    'localstorage accesstoken',
+    getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)
+  )
+  console.log('react native bridge', window.ReactNativeWebView)
 
   const goToEditProfile = () => {
     push('ProfilePage', {})
@@ -25,7 +32,7 @@ export default function Mypage() {
     '/api/user/info',
     {
       headers: {
-        Authorization: `Bearer ${window.ReactNativeWebView ? token : getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${window.ReactNativeWebView ? accessToken : getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
       },
     }
   )
