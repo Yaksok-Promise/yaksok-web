@@ -95,6 +95,7 @@ export const TextField = React.forwardRef(function TextField(
   const handleVerify = async () => {
     const isVerified = await onVerify?.(value as string)
     setStatus(isVerified ? 'success' : 'verificationError')
+    console.log('Verification', isVerified)
   }
 
   const handleShowPassword = () => {
