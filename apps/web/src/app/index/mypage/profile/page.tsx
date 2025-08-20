@@ -6,7 +6,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { UserInfoResponse } from '@yaksok/api/userType'
 import { Profile, TextField } from '@yaksok/ui'
 import { ModalRoot } from '@yaksok/ui/modal'
-import { getItem, LOCAL_STORAGE_KEY } from '@yaksok/utils'
+import { getItem, LOCAL_STORAGE_KEY, removeItem } from '@yaksok/utils'
 
 export default function ProfilePage() {
   const { data } = useHttpQuery<undefined, UserInfoResponse>(
@@ -18,6 +18,18 @@ export default function ProfilePage() {
       },
     }
   )
+
+  const logout = () => {
+    removeItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)
+    removeItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN)
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'LOGOUT',
+        })
+      )
+    }
+  }
   return (
     <AppScreen
       appBar={{
@@ -76,7 +88,9 @@ export default function ProfilePage() {
         </div>
         {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
         <div className=" mt-10 flex w-full items-center justify-center divide-x divide-[rgba(99,99, 102, 0.20)]">
-          <button className="px-6 text-body2 text-gray05">로그아웃</button>
+          <button className="px-6 text-body2 text-gray05" onClick={logout}>
+            로그아웃
+          </button>
           <button className="px-6 text-body2 text-red01">회원탈퇴</button>
         </div>
       </main>
