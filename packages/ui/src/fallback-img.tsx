@@ -8,7 +8,7 @@ export type FallbackImgProps = {
   wrapperClassName?: string
 }
 
-export default function Fallbackimg({
+export function Fallbackimg({
   src,
   alt,
   fallbackSrc,

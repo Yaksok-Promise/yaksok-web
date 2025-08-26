@@ -1,7 +1,7 @@
 import { MagazineLogo } from '@yaksok/icons'
 import { changeNumberToString, cn } from '@yaksok/utils'
 import { ComponentPropsWithoutRef, type JSX } from 'react'
-import Fallbackimg from './fallback-img'
+import { Fallbackimg } from './fallback-img'
 
 export type CardProps = ComponentPropsWithoutRef<'div'> & {
   imgSrc: string
