@@ -5,11 +5,11 @@ import axios, {
   isAxiosError,
 } from 'axios'
 
-import { CustomError } from '../type'
 import { loginStore } from '@yaksok/store'
+import { LOCAL_STORAGE_KEY, getItem, setItem } from '@yaksok/utils'
 import { http } from '.'
+import { CustomError } from '../type'
 import { ReissueRequest, ReissueResponse } from '../type/user'
-import { setItem } from '@yaksok/utils'
 
 const isRNWebView =
   typeof window !== 'undefined' &&
@@ -33,6 +33,10 @@ const useCallbackError = async (error: AxiosError<CustomError>) => {
   console.log(error, 'instance error')
   console.log(error?.response, 'instance error response')
   console.log(error?.config, 'instance error config')
+
+  const RefreshToken = window.ReactNativeWebView
+    ? refreshToken
+    : getItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN)
   if (isAxiosError(error)) {
     // 토큰이 만료된 경우 토큰 갱신
     // 본래 요청에 대한 정보는 error.config에 담겨져 있습니다.
@@ -44,7 +48,7 @@ const useCallbackError = async (error: AxiosError<CustomError>) => {
       //  토큰 reissue 요청
       const data = await http.post<ReissueRequest, ReissueResponse>(
         '/api/user/reissue',
-        { body: { refreshToken: refreshToken as string } }
+        { body: { refreshToken: RefreshToken as string } }
       )
 
       if (data?.accessToken && data?.refreshToken) {

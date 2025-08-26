@@ -1,3 +1,4 @@
+import { LogoutModal, QuitModal } from '@/components/common'
 import ChangeNickname from '@/components/mypage/user-info/change-nickname'
 import ChangePassword from '@/components/mypage/user-info/change-password'
 import { useHttpQuery } from '@/hooks/use-http-query'
@@ -5,10 +6,22 @@ import { QUERY_KEY } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { UserInfoResponse } from '@yaksok/api/userType'
 import { Profile, TextField } from '@yaksok/ui'
-import { ModalRoot } from '@yaksok/ui/modal'
-import { getItem, LOCAL_STORAGE_KEY, removeItem } from '@yaksok/utils'
+import { ModalRoot, useModal } from '@yaksok/ui/modal'
+import { LOCAL_STORAGE_KEY, getItem, removeItem } from '@yaksok/utils'
 
 export default function ProfilePage() {
+  const {
+    openModal: openLogoutModal,
+    closeModal: closeLogoutModal,
+    opened: openedLogoutModal,
+  } = useModal()
+
+  const {
+    openModal: openQuitModal,
+    closeModal: closeQuitModal,
+    opened: openedQuitModal,
+  } = useModal()
+
   const { data } = useHttpQuery<undefined, UserInfoResponse>(
     [QUERY_KEY.MY_INFO],
     '/api/user/info',
@@ -20,15 +33,11 @@ export default function ProfilePage() {
   )
 
   const logout = () => {
-    removeItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)
-    removeItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN)
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          type: 'LOGOUT',
-        })
-      )
-    }
+    openLogoutModal()
+  }
+
+  const quit = () => {
+    openQuitModal()
   }
   return (
     <AppScreen
@@ -91,9 +100,13 @@ export default function ProfilePage() {
           <button className="px-6 text-body2 text-gray05" onClick={logout}>
             로그아웃
           </button>
-          <button className="px-6 text-body2 text-red01">회원탈퇴</button>
+          <button className="px-6 text-body2 text-red01" onClick={quit}>
+            회원탈퇴
+          </button>
         </div>
       </main>
+      <LogoutModal opened={openedLogoutModal} closeModal={closeLogoutModal} />
+      <QuitModal opened={openedQuitModal} closeModal={closeQuitModal} />
       <ModalRoot />
     </AppScreen>
   )

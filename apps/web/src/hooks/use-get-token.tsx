@@ -1,6 +1,6 @@
+import { useLoginStore } from '@yaksok/store'
 // context/TokenContext.tsx
 import { useEffect } from 'react'
-import { useLoginStore } from '@yaksok/store'
 
 export const useGetToken = () => {
   const { saveAccessToken, saveRefreshToken } = useLoginStore()
