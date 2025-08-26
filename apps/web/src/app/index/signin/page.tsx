@@ -24,6 +24,17 @@ export default function Signin() {
     })
   }
 
+  const goFindId = () => {
+    push('FindIdPassword', {
+      mode: 'id',
+    })
+  }
+  const goFindPassword = () => {
+    push('FindIdPassword', {
+      mode: 'password',
+    })
+  }
+
   const goHome = () => {
     replace('MainPage', {})
   }
@@ -101,6 +112,18 @@ export default function Signin() {
             로그인
           </Button>
         </form>
+        {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
+        <div className="mb-6 flex w-full items-center justify-end divide-x-1 divide-[rgb(99, 99, 102)]">
+          <button className="px-2 text-gray03 text-subhead3" onClick={goFindId}>
+            아이디 찾기
+          </button>
+          <button
+            className="px-2 text-gray03 text-subhead3"
+            onClick={goFindPassword}
+          >
+            비밀번호 찾기
+          </button>
+        </div>
         <button
           onClick={goSignup}
           className="w-full text-center text-black01 text-body2 underline underline-offset-1"

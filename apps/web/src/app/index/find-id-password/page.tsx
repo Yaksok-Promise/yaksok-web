@@ -31,11 +31,6 @@ export default function FindIdPassword({
         title: '아이디 비밀번호 찾기',
         backgroundColor: '#fafafa',
         border: false,
-        renderLeft: () => (
-          <button>
-            <ChevronLeft />
-          </button>
-        ),
       }}
     >
       <div className="h-screen overflow-y-hidden bg-bgColor px-4 pt-7.5">

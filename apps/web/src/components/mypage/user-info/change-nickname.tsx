@@ -1,6 +1,8 @@
 import { useDebounce } from '@/hooks/use-debounce'
 import { useHttpMutation } from '@/hooks/use-http-mutation'
 
+import { QUERY_KEY } from '@/utils/query-key'
+import { useQueryClient } from '@tanstack/react-query'
 import {
   ChangeNicknameRequest,
   CheckNicknameRequest,
@@ -9,8 +11,6 @@ import {
 import { Button, TextField } from '@yaksok/ui'
 import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/utils/query-key'
 
 export type ChangeNicknameProps = {
   nickname: string
