@@ -1,7 +1,6 @@
 import FindId from '@/components/find-id-password/find-id'
 import { FindPassword } from '@/components/find-id-password/find-password'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { ChevronLeft } from '@yaksok/icons'
 import { Tabs, TabsProps } from '@yaksok/ui'
 
 type FindIdPasswordProps = {
