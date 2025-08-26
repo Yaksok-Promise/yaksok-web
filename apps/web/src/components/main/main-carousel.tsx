@@ -1,14 +1,15 @@
 import NotSolution from '@/assets/notSolution@2.png'
-import { Card, CardProps, Carousel } from '@yaksok/ui'
 import { useActions } from '@stackflow/react'
+import { Card, CardProps, Carousel } from '@yaksok/ui'
 
 export type MainCarouselProps = {
   data?: CardProps[]
+  className?: string
 }
-export function MainCarousel({ data }: MainCarouselProps) {
+export function MainCarousel({ data, className }: MainCarouselProps) {
   const { push } = useActions()
   return (
-    <div>
+    <div className={className}>
       {data && (
         <Carousel.Root>
           <Carousel.Slide>
@@ -37,8 +38,6 @@ export function MainCarousel({ data }: MainCarouselProps) {
               }
               imgClassName="w-40 h-40"
               className="cursor-pointer"
-              // onClick={() => setOpen(true)}
-              onClick={() => push('SurveyBottomSheetActivity', {})}
             />
           </div>
         </div>

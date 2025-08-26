@@ -1,6 +1,6 @@
 import { BottomSheet } from '@stackflow/plugin-basic-ui'
 
-export const SurveyBottomSheetActivity = () => {
+export const PaymentBottomSheetActivity = () => {
   return (
     <BottomSheet dimBackgroundColor="rgba(0,0,0,0.4)" borderRadius="16px">
       <div className="p-4">

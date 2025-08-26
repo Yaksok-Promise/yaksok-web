@@ -77,6 +77,7 @@ export function Badge({
   className,
   contentClassName,
   lineBackground = false,
+  onClick,
   ...props
 }: BadgeProps) {
   const isPromo = variant === 'promo'
@@ -85,6 +86,7 @@ export function Badge({
     <button
       type="button"
       className={cn(containerVariants({ variant }), className)}
+      onClick={onClick}
       {...props}
     >
       {lineBackground && <DecorativeArcs />}

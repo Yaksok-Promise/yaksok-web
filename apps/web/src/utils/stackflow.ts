@@ -1,11 +1,12 @@
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
+import LoungePage from '@/app/index/lounge/page'
 import Mypage from '@/app/index/mypage/page'
 import ProfilePage from '@/app/index/mypage/profile/page'
 import MainPage from '@/app/index/page'
 import SigninPage from '@/app/index/signin/page'
 import SignupPage from '@/app/index/signup/page'
-import { SurveyBottomSheetActivity } from '@/components/common/bottomsheet'
+import { PaymentBottomSheetActivity } from '@/components/common/bottomsheet'
 import { basicUIPlugin } from '@stackflow/plugin-basic-ui'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import { basicRendererPlugin } from '@stackflow/plugin-renderer-basic'
@@ -27,7 +28,8 @@ export const { Stack, useFlow } = stackflow({
         FindIdPassword: '/find-id-password',
         Mypage: '/mypage',
         ProfilePage: '/mypage/profile',
-        SurveyBottomSheetActivity: '/survey-bottom-sheet',
+        PaymentBottomSheetActivity: '/payment-bottom-sheet',
+        LoungePage: '/lounge',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -40,7 +42,8 @@ export const { Stack, useFlow } = stackflow({
     FindIdPassword,
     Mypage,
     ProfilePage,
-    SurveyBottomSheetActivity,
+    PaymentBottomSheetActivity,
+    LoungePage,
   },
   initialActivity: () => 'MainPage',
 })

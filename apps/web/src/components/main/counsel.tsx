@@ -1,8 +1,10 @@
+import { useFlow } from '@/utils/stackflow'
 import { MiniQr } from '@yaksok/icons'
 import { Badge, BadgeProps } from '@yaksok/ui'
 import { NotEmptyArray } from '@yaksok/utils'
 
 export default function Counsel() {
+  const { push } = useFlow()
   const data: NotEmptyArray<BadgeProps> = [
     {
       variant: 'card',
@@ -17,7 +19,9 @@ export default function Counsel() {
       title: '현장 결제',
       description: '약국에서 간편하게 결제',
       lineBackground: true,
-      onClick: () => alert('AI 복약 상담'),
+      onClick: () => {
+        push('PaymentBottomSheetActivity', {})
+      },
     },
   ]
   return (
