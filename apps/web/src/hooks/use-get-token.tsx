@@ -8,6 +8,7 @@ export const useGetToken = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleTokenMessage = (event: MessageEvent) => {
+      if (!window.ReactNativeWebView) return
       const { type, payload } = JSON.parse(event.data as string)
       console.log(type, payload)
 

@@ -5,12 +5,12 @@ import MagazineCarousel from '@/components/main/magazine-carousel'
 import { MainCheck } from '@/components/main/main-check'
 import { MainLounge } from '@/components/main/main-lounge'
 import { useGetToken } from '@/hooks/use-get-token'
-
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Footer, Search } from '@yaksok/ui'
 
 export default function MainPage() {
   useGetToken()
+
   return (
     <AppScreen
       appBar={{

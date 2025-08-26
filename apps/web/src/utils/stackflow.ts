@@ -5,6 +5,7 @@ import ProfilePage from '@/app/index/mypage/profile/page'
 import MainPage from '@/app/index/page'
 import SigninPage from '@/app/index/signin/page'
 import SignupPage from '@/app/index/signup/page'
+import { SurveyBottomSheetActivity } from '@/components/common/bottomsheet'
 import { basicUIPlugin } from '@stackflow/plugin-basic-ui'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import { basicRendererPlugin } from '@stackflow/plugin-renderer-basic'
@@ -26,6 +27,7 @@ export const { Stack, useFlow } = stackflow({
         FindIdPassword: '/find-id-password',
         Mypage: '/mypage',
         ProfilePage: '/mypage/profile',
+        SurveyBottomSheetActivity: '/survey-bottom-sheet',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -38,6 +40,7 @@ export const { Stack, useFlow } = stackflow({
     FindIdPassword,
     Mypage,
     ProfilePage,
+    SurveyBottomSheetActivity,
   },
   initialActivity: () => 'MainPage',
 })
