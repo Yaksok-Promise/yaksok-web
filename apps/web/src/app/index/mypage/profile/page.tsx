@@ -7,7 +7,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { UserInfoResponse } from '@yaksok/api/userType'
 import { Profile, TextField } from '@yaksok/ui'
 import { ModalRoot, useModal } from '@yaksok/ui/modal'
-import { LOCAL_STORAGE_KEY, getItem, removeItem } from '@yaksok/utils'
+import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export default function ProfilePage() {
   const {

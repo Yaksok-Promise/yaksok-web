@@ -9,6 +9,8 @@ import {
 import { Button, TextField } from '@yaksok/ui'
 import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { QUERY_KEY } from '@/utils/query-key'
 
 export type ChangeNicknameProps = {
   nickname: string
@@ -16,8 +18,10 @@ export type ChangeNicknameProps = {
 
 export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isDirty, setIsDirty] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [newNickname, setNewNickname] = useState('')
+  const queryClient = useQueryClient()
 
   const changeNicknameMutation = useHttpMutation<ChangeNicknameRequest, void>(
     '/api/user/change/nickname',
@@ -30,6 +34,10 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
     {
       onSuccess: () => {
         setIsSuccess(false)
+        setIsDirty(false)
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEY.MY_INFO],
+        })
         // api/user/info 데이터 갱신 필요
       },
       onMutate: () => {
@@ -55,11 +63,19 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
     },
     {
       onSuccess: data => {
-        if (data.result) {
+        if (data.result === false) {
+          console.log('data', data)
           setIsSuccess(true)
         } else {
           setIsSuccess(false)
         }
+      },
+      onError: error => {
+        console.error(error)
+        setIsSuccess(false)
+      },
+      onSettled: () => {
+        setIsDirty(true)
       },
     }
   )
@@ -68,10 +84,11 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
 
   const debouncedVerify = debounce(async (nickname: string) => {
     const data = await checkNicknameMutation.mutateAsync({ nickname })
-    if (data.result) {
+
+    if (data.result === false) {
       setNewNickname(nickname)
     }
-  }, 1000)
+  }, 400)
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newNickNmae = e.target.value
@@ -85,21 +102,26 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
   return (
     <div>
       <form>
-        <TextField
-          mode="box"
-          label="닉네임"
-          regex={/\*/}
-          message={{
-            regexError: '이미 사용중이에요',
-          }}
-          value={nickname}
-          onCondition={() => {
-            return isSuccess
-          }}
-          onChange={handleNicknameChange}
-        />
+        <div className="mb-2 flex flex-col gap-1">
+          <TextField
+            mode="box"
+            label="닉네임"
+            regex={/\*/}
+            message={{}}
+            value={nickname}
+            onChange={handleNicknameChange}
+          />
+          {!isSuccess && isDirty && (
+            <span className="text-caption1 text-red01">이미 사용중이에요</span>
+          )}
+        </div>
+
         {isSuccess && (
-          <Button onClick={changeNickname} disabled={isDisabled}>
+          <Button
+            onClick={changeNickname}
+            disabled={isDisabled}
+            className="mt-3"
+          >
             변경하기
           </Button>
         )}

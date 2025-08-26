@@ -80,6 +80,8 @@ export const TextField = React.forwardRef(function TextField(
 
     if (onCondition) {
       const isTrue = onCondition(e.target.value as string)
+      console.log('isTrue', isTrue)
+      console.log(e.target.value)
       setStatus(isTrue ? 'success' : 'regexError')
       return
     }

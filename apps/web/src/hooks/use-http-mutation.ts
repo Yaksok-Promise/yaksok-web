@@ -16,6 +16,8 @@ export const useHttpMutation = <
     mutationFn: async (body: Body) => {
       if (method === 'post') {
         return http.post<Body, Res>(path, { ...baseOption, body })
+      } else if (method === 'patch') {
+        return http.patch<Body, Res>(path, { ...baseOption, body })
       } else {
         return http.delete<Body, Res>(path, { ...baseOption, body })
       }
