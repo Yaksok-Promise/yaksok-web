@@ -88,7 +88,6 @@ const SvgQa = React.forwardRef<
     </g>
     <foreignObject x={7.9707} y={2.76465} width={57.7656} height={57.7646}>
       <div
-        xmlns="http://www.w3.org/1999/xhtml"
         style={{
           backdropFilter: 'blur(7.5px)',
           clipPath: 'url(#bgblur_0_2878_31355_clip_path)',
@@ -105,7 +104,6 @@ const SvgQa = React.forwardRef<
     </g>
     <foreignObject x={12.9707} y={7.93164} width={47.5977} height={47.5977}>
       <div
-        xmlns="http://www.w3.org/1999/xhtml"
         style={{
           backdropFilter: 'blur(5px)',
           clipPath: 'url(#bgblur_1_2878_31355_clip_path)',
