@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Badge, BadgeProps } from '@yaksok/ui'
 import { MiniQr, Pill, Qa } from '@yaksok/icons'
+import { Badge, BadgeProps } from '@yaksok/ui'
 
 const meta: Meta<BadgeProps> = {
   title: 'stories/badge',
