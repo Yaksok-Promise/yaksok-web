@@ -1,50 +1,27 @@
 import { Notification } from '@/components/common'
 import { UserInfo } from '@/components/mypage'
 import ListTitle from '@/components/mypage/main/list-title'
-import { useGetToken } from '@/hooks/use-get-token'
-import { useHttpQuery } from '@/hooks/use-http-query'
-import { QUERY_KEY } from '@/utils/query-key'
+import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { UserInfoResponse } from '@yaksok/api/userType'
-import { useLoginStore } from '@yaksok/store'
 import { ListItem } from '@yaksok/ui'
-import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export default function Mypage() {
-  useGetToken()
-  const { accessToken } = useLoginStore()
-  const { push } = useFlow()
+  const myInfo = useGetMyInfo()
 
-  console.log('inmemory accesstoken', accessToken)
-  console.log(
-    'localstorage accesstoken',
-    getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)
-  )
-  console.log('react native bridge', window.ReactNativeWebView)
+  const { push } = useFlow()
 
   const goToEditProfile = () => {
     push('ProfilePage', {})
   }
 
-  const userinfo = useHttpQuery<undefined, UserInfoResponse>(
-    [QUERY_KEY.MY_INFO],
-    '/api/user/info',
-    {
-      headers: {
-        Authorization: `Bearer ${window.ReactNativeWebView ? accessToken : getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
-      },
-    }
-  )
-
-  console.log(userinfo.data)
   return (
     <AppScreen>
       <main className="flex flex-col bg-bgColor px-4 pb-40">
         <Notification wrapperClassName="flex h-16.5 items-center justify-end" />
         <UserInfo
-          email={userinfo.data?.loginId}
-          name={userinfo.data?.name}
+          email={myInfo.data.loginId}
+          name={myInfo.data.name}
           profileUrl={'https://via.placeholder.com/150'}
         />
         <div className="flex flex-col gap-10 pt-18">

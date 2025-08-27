@@ -1,13 +1,10 @@
 import { LogoutModal, QuitModal } from '@/components/common'
 import ChangeNickname from '@/components/mypage/user-info/change-nickname'
 import ChangePassword from '@/components/mypage/user-info/change-password'
-import { useHttpQuery } from '@/hooks/use-http-query'
-import { QUERY_KEY } from '@/utils/query-key'
+import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { UserInfoResponse } from '@yaksok/api/userType'
 import { Profile, TextField } from '@yaksok/ui'
 import { ModalRoot, useModal } from '@yaksok/ui/modal'
-import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export default function ProfilePage() {
   const {
@@ -22,15 +19,7 @@ export default function ProfilePage() {
     opened: openedQuitModal,
   } = useModal()
 
-  const { data } = useHttpQuery<undefined, UserInfoResponse>(
-    [QUERY_KEY.MY_INFO],
-    '/api/user/info',
-    {
-      headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
-      },
-    }
-  )
+  const myInfo = useGetMyInfo()
 
   const logout = () => {
     openLogoutModal()
@@ -54,16 +43,16 @@ export default function ProfilePage() {
         <div className="flex flex-col gap-5">
           <TextField
             label="이름"
-            value={data?.name}
+            value={myInfo.data.name}
             disabled
             message={{}}
             regex={/\*/}
             mode="box"
           />
-          <ChangeNickname nickname={data?.nickname} />
+          <ChangeNickname nickname={myInfo.data.nickname} />
           <TextField
             label="아이디"
-            value={data?.loginId}
+            value={myInfo.data.loginId}
             disabled
             message={{}}
             regex={/\*/}
@@ -72,7 +61,7 @@ export default function ProfilePage() {
           <ChangePassword />
           <TextField
             label="휴대폰 번호"
-            value={data?.phoneNumber}
+            value={myInfo.data.phoneNumber}
             disabled
             message={{}}
             regex={/\*/}
@@ -80,7 +69,7 @@ export default function ProfilePage() {
           />
           <TextField
             label="성별"
-            value={data?.gender}
+            value={myInfo.data.gender}
             disabled
             message={{}}
             regex={/\*/}
@@ -88,7 +77,7 @@ export default function ProfilePage() {
           />
           <TextField
             label="생년월일"
-            value={data?.birthDate}
+            value={myInfo.data.birthDate}
             disabled
             message={{}}
             regex={/\*/}
