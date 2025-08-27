@@ -7,7 +7,7 @@ export type TabsProps = {
     label: string
     content: React.ReactNode
   }[]
-  variant?: 'dot' | 'box'
+  variant?: 'dot' | 'box' | 'line'
   orientation?: 'horizontal' | 'vertical'
   defaultValue?: string
   wrapperClassName?: string

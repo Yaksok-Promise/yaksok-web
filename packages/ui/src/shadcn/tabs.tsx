@@ -23,6 +23,10 @@ export const tabsTriggerVariants = cva(
           'px-7.5 py-1 text-sm font-medium text-black',
           'data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:z-10',
         ],
+        line: [
+          'text-subhead2 text-gray05',
+          'data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-black',
+        ],
       },
     },
     defaultVariants: {
