@@ -1,5 +1,6 @@
 import { SideDrawer } from '@/components/common/side-drawer'
 import { LoungeTitle } from '@/components/lounge/lounge-magazine-title'
+import { useHttpInfiniteQuery } from '@/hooks/tanstak/use-http-infinity-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useFlow } from '@/utils/stackflow'
@@ -10,6 +11,12 @@ export default function MagazinePage() {
   useGetToken()
   const { push } = useFlow()
   const { portalRef, isOpen, setIsOpen } = usePortal()
+
+  const result = useHttpInfiniteQuery(['magazine'], '/api/post/magazine/list', {
+    params: { size: 10 },
+  })
+
+  console.log(result)
 
   return (
     <>

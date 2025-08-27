@@ -5,7 +5,8 @@
   "exports": {
     ".": "./index.ts",
     "./userType": "./type/user.ts",
-    "./commentType": "./type/comment.ts"
+    "./commentType": "./type/comment.ts",
+    "./paginationType": "./type/pagination.ts"
   },
   "scripts": {
     "test": "vitest run"

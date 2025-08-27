@@ -1,5 +1,5 @@
 import { Name } from '@/components/common'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { SignupRequest, nameRegex } from '@/validation/zod'
 import {
   SignupTitle,

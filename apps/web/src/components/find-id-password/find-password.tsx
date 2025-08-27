@@ -1,5 +1,5 @@
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useFunnel } from '@/hooks/use-funnel'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
 import useSmscodeInput from '@/hooks/use-smscode-input'
 import { useFlow } from '@/utils/stackflow'
 import {
@@ -166,7 +166,13 @@ const ChangeasswordStep = ({ onNext }: StepProps) => {
         <h1 className="mb-10 text-black01 text-head6">
           새 비밀번호를 입력해 주세요
         </h1>
-        <Password methods={methods} mode="box" type="newPassword" isShownIcon />
+        <Password
+          methods={methods}
+          label=""
+          mode="box"
+          type="newPassword"
+          isShownIcon
+        />
         <ConfirmPassword
           methods={methods}
           mode="box"

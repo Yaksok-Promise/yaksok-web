@@ -3,7 +3,7 @@ import { UserInfoResponse } from '@yaksok/api/userType'
 import { useLoginStore } from '@yaksok/store'
 import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useGetToken } from '../use-get-token'
-import { useHttpQuery } from '../use-http-query'
+import { useHttpQuery } from './use-http-query'
 
 export default function useGetMyInfo() {
   useGetToken()

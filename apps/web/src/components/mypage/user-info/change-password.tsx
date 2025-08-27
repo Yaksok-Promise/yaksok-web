@@ -1,5 +1,5 @@
 import { ConfirmPassword, Password } from '@/components/common'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import {
   ChangePasswordSchema,
   ChangePasswordSchemaRequest,
