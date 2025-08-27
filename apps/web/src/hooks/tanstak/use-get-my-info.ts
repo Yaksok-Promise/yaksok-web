@@ -1,9 +1,9 @@
+import { QUERY_KEY } from '@/utils/query-key'
+import { UserInfoResponse } from '@yaksok/api/userType'
 import { useLoginStore } from '@yaksok/store'
+import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useGetToken } from '../use-get-token'
 import { useHttpQuery } from '../use-http-query'
-import { UserInfoResponse } from '@yaksok/api/userType'
-import { QUERY_KEY } from '@/utils/query-key'
-import { getItem, LOCAL_STORAGE_KEY } from '@yaksok/utils'
 
 export default function useGetMyInfo() {
   useGetToken()

@@ -1,28 +1,28 @@
 import * as React from 'react'
 import type { SVGProps } from 'react'
-const SvgHamburger = React.forwardRef<
+const SvgInfo = React.forwardRef<
   SVGSVGElement,
   SVGProps<SVGSVGElement> & {
     size?: number | string
   }
->(({ size = 24, stroke, ...props }, ref) => (
+>(({ size = 24, ...props }, ref) => (
   <svg
     width={size}
     height={size}
-    viewBox="0 0 24 25"
+    viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     ref={ref}
     {...props}
   >
     <path
-      d="M5 17.751H19M5 12.751H19M5 7.75098H19"
-      stroke={stroke ? stroke : 'currentColor'}
+      d="M9 8.25V12M9 15.75C5.27208 15.75 2.25 12.7279 2.25 9C2.25 5.27208 5.27208 2.25 9 2.25C12.7279 2.25 15.75 5.27208 15.75 9C15.75 12.7279 12.7279 15.75 9 15.75ZM9.03735 6V6.075L8.96265 6.07515V6H9.03735Z"
+      stroke="#959598"
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 ))
-SvgHamburger.displayName = 'SvgHamburger'
-export default SvgHamburger
+SvgInfo.displayName = 'SvgInfo'
+export default SvgInfo

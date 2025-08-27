@@ -1,8 +1,8 @@
 import ExImg from '@/assets/ex.png'
+import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
 import { CardProps } from '@yaksok/ui'
 import { NotEmptyArray } from '@yaksok/utils'
 import MainTabs from './main-tabs'
-import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
 
 export function MainLounge() {
   const myInfo = useGetMyInfo()

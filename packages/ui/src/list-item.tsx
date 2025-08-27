@@ -39,6 +39,7 @@ export function ListItem({
     <div
       className={cn(listItemVariants({ mode, color }), className)}
       onClick={navigate}
+      role="button"
       {...props}
     >
       {icon ? (

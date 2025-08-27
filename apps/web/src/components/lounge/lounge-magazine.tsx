@@ -20,8 +20,7 @@ const MagazineCard = () => {
   const { push } = useFlow()
 
   const goLoungeDetail = () => {
-    // 약속 메거진 상세 페이지로 이동
-    console.log('goLoungeDetail')
+    push('MagazinePage', {})
   }
   return (
     <div

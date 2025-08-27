@@ -1,5 +1,6 @@
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
+import MagazinePage from '@/app/index/lounge/magazine/page'
 import LoungePage from '@/app/index/lounge/page'
 import Mypage from '@/app/index/mypage/page'
 import ProfilePage from '@/app/index/mypage/profile/page'
@@ -30,6 +31,7 @@ export const { Stack, useFlow } = stackflow({
         ProfilePage: '/mypage/profile',
         PaymentBottomSheetActivity: '/payment-bottom-sheet',
         LoungePage: '/lounge',
+        MagazinePage: '/lounge/magazine',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -44,6 +46,7 @@ export const { Stack, useFlow } = stackflow({
     ProfilePage,
     PaymentBottomSheetActivity,
     LoungePage,
+    MagazinePage,
   },
   initialActivity: () => 'MainPage',
 })
