@@ -14,7 +14,7 @@ export type Comment = {
   replies: Reply[]
 }
 
-type MimeImage =
+export type MimeImage =
   | 'image/apng'
   | 'image/avif'
   | 'image/gif'
