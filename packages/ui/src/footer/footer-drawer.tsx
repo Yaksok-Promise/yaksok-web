@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '../shadcn/accordion'
+} from '../accordion'
 
 export function FooterDrawer() {
   const mail = 'yaksokkr@gmail.com'

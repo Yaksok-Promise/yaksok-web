@@ -1,22 +1,15 @@
+import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { LoungeTitle } from '@/components/lounge/lounge-magazine-title'
-import { useHttpInfiniteQuery } from '@/hooks/tanstak/use-http-infinity-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
-import { useFlow } from '@/utils/stackflow'
+import { MagazineCategoryKey } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { cn } from '@yaksok/utils'
 
 export default function MagazinePage() {
   useGetToken()
-  const { push } = useFlow()
   const { portalRef, isOpen, setIsOpen } = usePortal()
-
-  const result = useHttpInfiniteQuery(['magazine'], '/api/post/magazine/list', {
-    params: { size: 10 },
-  })
-
-  console.log(result)
 
   return (
     <>
@@ -38,20 +31,12 @@ export default function MagazinePage() {
       >
         <div className="relative h-screen overflow-auto">
           <MagazineHeader />
-          <div>
-            <div className="sticky top-0 h-10 w-full bg-gray bg-white">
-              Tab구간
-            </div>
-            <div className="flex flex-col bg-bgColor px-4 pb-10">
-              {/* 콘텐츠들… */}
-
-              {Array.from({ length: 100 }).map((_, index) => (
-                <div key={index} className="h-[100px] bg-red-500">
-                  {index}
-                </div>
-              ))}
-            </div>
-          </div>
+          <LoungeAndMagazineTab<MagazineCategoryKey>
+            tab="All"
+            tabList={['All', 'MEDICINE', 'LIFE']}
+            url="/api/post/magazine/list"
+            queryKey="magazine"
+          />
         </div>
       </AppScreen>
 

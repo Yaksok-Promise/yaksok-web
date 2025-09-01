@@ -1,8 +1,8 @@
-import { QueryKey, InfiniteData } from '@tanstack/react-query'
+import { InfiniteData, QueryKey } from '@tanstack/react-query'
 import {
   UseSuspenseInfiniteQueryOptions,
-  useSuspenseInfiniteQuery,
   UseSuspenseInfiniteQueryResult,
+  useSuspenseInfiniteQuery,
 } from '@tanstack/react-query'
 import { http, PathType, RequestOption } from '@yaksok/api'
 import { Pagination } from '@yaksok/api/paginationType'

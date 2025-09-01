@@ -1,5 +1,5 @@
 import { cn } from '@yaksok/utils'
-import { Tabs as Tab, TabsContent, TabsList, TabsTrigger } from './shadcn/tabs'
+import { Tabs as Tab, TabsContent, TabsList, TabsTrigger } from './tabs/index'
 
 export type TabsProps = {
   tabInfo: {

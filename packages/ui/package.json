@@ -8,6 +8,9 @@
     "./agreement": "./src/agreement/index.tsx",
     "./modal": "./src/modal/index.ts",
     "./drawer": "./src/drawer/index.tsx",
+    "./tabs": "./src/tabs/index.tsx",
+    "./select": "./src/select/index.tsx",
+    "./dropdown-menu": "./src/dropdown-menu/index.tsx",
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
@@ -38,6 +41,8 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.12",
     "@tailwindcss/cli": "^4.0.12",
