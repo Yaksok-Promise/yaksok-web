@@ -19,7 +19,7 @@ export const LOUNGE_CATEGORY = {
   All: '전체',
   QUESTION: '질문',
   REVIEW: '후기',
-  DILY: '잡담·일상',
+  DIALY: '잡담·일상',
 }
 
 export type LoungeCategory =

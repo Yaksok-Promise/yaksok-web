@@ -41,16 +41,16 @@ export function LoungeAndMagazineTab<T extends string>({
       orientation="horizontal"
       value={category}
       onValueChange={changeCategory}
-      className="bg-white px-5 py-4"
+      className="bg-white px-5"
     >
-      <TabsList className="sticky top-0 flex w-full justify-between gap-4 rounded-none bg-white pb-4">
+      <TabsList className="sticky top-0 flex w-full justify-between rounded-none bg-white">
         <div>
           {tabList.map(tab => (
             <TabsTrigger
               key={tab}
               value={tab}
               variant={'line'}
-              className="ml-2"
+              className="mt-4 mb-4 not-first:ml-2.5"
             >
               {isMagazine(queryKey)
                 ? MAGAZINE_CATEGORY[tab as MagazineCategoryKey]
@@ -92,7 +92,7 @@ function LoungeAndMagazineListItem({
     // sort,
   }
 
-  const result = useHttpInfiniteQuery([queryKey, category, sort], url, {
+  const _result = useHttpInfiniteQuery([queryKey, category, sort], url, {
     params: params,
   })
 

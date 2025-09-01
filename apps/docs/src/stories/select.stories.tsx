@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { ChevronDown } from '@yaksok/icons'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,7 +7,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@yaksok/ui/dropdown-menu'
-import { ChevronDown } from '@yaksok/icons'
 import { useState } from 'react'
 
 const meta: Meta<typeof DropdownMenu> = {

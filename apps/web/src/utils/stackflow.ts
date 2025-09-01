@@ -1,3 +1,4 @@
+import CommunityPage from '@/app/index/community/page'
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
 import MagazinePage from '@/app/index/lounge/magazine/page'
@@ -32,6 +33,7 @@ export const { Stack, useFlow } = stackflow({
         PaymentBottomSheetActivity: '/payment-bottom-sheet',
         LoungePage: '/lounge',
         MagazinePage: '/lounge/magazine',
+        CommunityPage: '/community',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -47,6 +49,7 @@ export const { Stack, useFlow } = stackflow({
     PaymentBottomSheetActivity,
     LoungePage,
     MagazinePage,
+    CommunityPage,
   },
   initialActivity: () => 'MainPage',
 })
