@@ -3,10 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-[data-stackflow-activity][aria-hidden="true"] {
-  display: block; /* 혹은 visibility: hidden 등 */
-}
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -125,6 +121,7 @@
   --shadow-floating-button: 0px 8px 24px 0px #00000026;
   --shadow-floating-button2: 0px 8px 24px 0px #00000033;
   --shadow-profile-ui: 0px 0px 1px 0px #00000033;
+  --shadow-box: 0 8px 24px 0 rgba(0, 0, 0, 0.15);
 }
 
 @layer base {

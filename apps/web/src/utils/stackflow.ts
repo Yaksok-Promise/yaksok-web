@@ -1,4 +1,5 @@
 import CommunityPage from '@/app/index/community/page'
+import CommunityWritePage from '@/app/index/community/write/page'
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
 import MagazinePage from '@/app/index/lounge/magazine/page'
@@ -34,6 +35,7 @@ export const { Stack, useFlow } = stackflow({
         LoungePage: '/lounge',
         MagazinePage: '/lounge/magazine',
         CommunityPage: '/community',
+        CommunityWritePage: '/community/write',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -50,6 +52,7 @@ export const { Stack, useFlow } = stackflow({
     LoungePage,
     MagazinePage,
     CommunityPage,
+    CommunityWritePage,
   },
   initialActivity: () => 'MainPage',
 })
