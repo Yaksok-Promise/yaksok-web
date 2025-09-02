@@ -29,7 +29,7 @@ export function LoungeAndMagazineTab<T extends string>({
 }: LoungeAndMagazineTabProps<T>) {
   const queryClient = useQueryClient()
   const [category, setCategory] = useState<T>(tab)
-  const [sort, setSort] = useState<string>('new')
+  const [sort, setSort] = useState<'LATEST' | 'POPULAR'>('LATEST')
 
   const changeCategory = (category: string) => {
     setCategory(category as T)
@@ -89,7 +89,7 @@ function LoungeAndMagazineListItem({
   const params = {
     size: 10,
     category: category === 'All' ? undefined : category,
-    // sort,
+    sortBy: sort,
   }
 
   const _result = useHttpInfiniteQuery([queryKey, category, sort], url, {

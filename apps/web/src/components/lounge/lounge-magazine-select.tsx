@@ -10,15 +10,15 @@ import {
 } from '@yaksok/ui/dropdown-menu'
 
 export type LoungeMagazineSelectProps = {
-  value: string
-  onValueChange: React.Dispatch<React.SetStateAction<string>>
+  value: 'LATEST' | 'POPULAR'
+  onValueChange: React.Dispatch<React.SetStateAction<'LATEST' | 'POPULAR'>>
 }
 
 export default function LoungeMagazineSelect({
   value,
   onValueChange,
 }: LoungeMagazineSelectProps) {
-  const label = value === 'new' ? '최신순' : '인기순'
+  const label = value === 'LATEST' ? '최신순' : '인기순'
 
   return (
     <DropdownMenu modal={false}>
@@ -29,7 +29,10 @@ export default function LoungeMagazineSelect({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
+        <DropdownMenuRadioGroup
+          value={value}
+          onValueChange={onValueChange as (value: string) => void}
+        >
           <DropdownMenuRadioItem value="new">최신순</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="popular">인기순</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
