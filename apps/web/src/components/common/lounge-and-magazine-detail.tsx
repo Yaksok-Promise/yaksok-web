@@ -1,8 +1,7 @@
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
+import { useGetToken } from '@/hooks/use-get-token'
 import { PathType } from '@yaksok/api'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
-import { useLoginStore } from '@yaksok/store'
-import { getItem, LOCAL_STORAGE_KEY } from '@yaksok/utils'
 
 export type LoungeAndMagazineDetailProps = {
   id: string
@@ -12,7 +11,8 @@ export default function LoungeAndMagazineDetail({
   id,
 }: LoungeAndMagazineDetailProps) {
   const isMagazine = window.location.pathname.includes('magazine')
-  const { accessToken } = useLoginStore()
+  const token = useGetToken()
+
   const href: PathType = isMagazine
     ? '/api/post/magazine/{postId}'
     : '/api/post/general-forum/{postId}'
@@ -22,7 +22,7 @@ export default function LoungeAndMagazineDetail({
     href,
     {
       headers: {
-        Authorization: `Bearer ${window.ReactNativeWebView ? accessToken : getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${token}`,
       },
       params: {
         postId: id,

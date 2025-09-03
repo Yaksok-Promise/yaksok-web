@@ -1,12 +1,12 @@
-import Lounge from '@/components/lounge/lounge'
-import LoungeMagazine from '@/components/lounge/lounge-magazine'
-import LoungePayment from '@/components/lounge/lounge-payment'
-import LoungeYaksokSubscription from '@/components/lounge/lounge-yaksok-subscription'
-import { useGetToken } from '@/hooks/use-get-token'
+import Lounge from '@/components/magazine/magazine-lounge'
+import LoungeMagazine from '@/components/magazine/magazine'
+import LoungePayment from '@/components/magazine/magazine-payment'
+import LoungeYaksokSubscription from '@/components/magazine/magazine-yaksok-subscription'
+import { useUpdateToken } from '@/hooks/use-update-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 
 export default function MagazinePage() {
-  useGetToken()
+  useUpdateToken()
 
   return (
     <AppScreen

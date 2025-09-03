@@ -2,7 +2,7 @@ import { useFlow } from '@stackflow/react/future'
 import { MiniQr } from '@yaksok/icons'
 import { Tile } from '@yaksok/ui'
 
-export default function LoungePayment() {
+export default function MagazinePayment() {
   const { push } = useFlow()
   const openPurchase = () => {
     push('PaymentBottomSheetActivity', {})

@@ -1,6 +1,6 @@
 import { MainCarousel } from '../main/main-carousel'
 
-export default function Lounge() {
+export default function MagazineLounge() {
   const isDone = false
   return (
     <div className="mt-7 flex flex-col">

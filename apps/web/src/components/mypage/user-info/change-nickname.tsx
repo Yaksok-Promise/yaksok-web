@@ -1,6 +1,6 @@
 import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useDebounce } from '@/hooks/use-debounce'
-
+import { useGetToken } from '@/hooks/use-get-token'
 import { QUERY_KEY } from '@/utils/query-key'
 import { useQueryClient } from '@tanstack/react-query'
 import {
@@ -9,7 +9,6 @@ import {
   CheckResultResponse,
 } from '@yaksok/api/userType'
 import { Button, TextField } from '@yaksok/ui'
-import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useState } from 'react'
 
 export type ChangeNicknameProps = {
@@ -22,13 +21,13 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
   const [isDisabled, setIsDisabled] = useState(false)
   const [newNickname, setNewNickname] = useState('')
   const queryClient = useQueryClient()
-
+  const token = useGetToken()
   const changeNicknameMutation = useHttpMutation<ChangeNicknameRequest, void>(
     '/api/user/change/nickname',
     'patch',
     {
       headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${token}`,
       },
     },
     {
@@ -58,7 +57,7 @@ export default function ChangeNickname({ nickname }: ChangeNicknameProps) {
     'post',
     {
       headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${token}`,
       },
     },
     {

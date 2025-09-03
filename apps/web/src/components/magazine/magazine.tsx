@@ -1,7 +1,7 @@
 import { useFlow } from '@/utils/stackflow'
-import { LoungeTitle } from './lounge-magazine-title'
+import { MagazineTitle } from './magazine-title'
 
-export default function LoungeMagazine() {
+export default function MagazineLounge() {
   return (
     <div className="mt-14 flex flex-col gap-4">
       <h3 className="text-black01 text-head6">약속 메거진</h3>
@@ -22,7 +22,7 @@ const MagazineCard = () => {
       role="button"
       onClick={goLoungeDetail}
     >
-      <LoungeTitle />
+      <MagazineTitle />
     </div>
   )
 }

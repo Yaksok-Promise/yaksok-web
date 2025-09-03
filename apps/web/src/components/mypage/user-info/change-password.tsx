@@ -1,5 +1,6 @@
 import { ConfirmPassword, Password } from '@/components/common'
 import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
+import { useGetToken } from '@/hooks/use-get-token'
 import {
   ChangePasswordSchema,
   ChangePasswordSchemaRequest,
@@ -7,12 +8,12 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChangePasswordRequest } from '@yaksok/api/userType'
 import { Button } from '@yaksok/ui'
-import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export default function ChangePassword() {
   const [isChange, setIsChange] = useState(false)
+  const token = useGetToken()
   const methods = useForm<ChangePasswordSchemaRequest>({
     resolver: zodResolver(ChangePasswordSchema),
   })
@@ -25,7 +26,7 @@ export default function ChangePassword() {
     'post',
     {
       headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
+        Authorization: `Bearer ${token}`,
       },
     },
     {

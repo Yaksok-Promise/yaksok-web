@@ -2,16 +2,16 @@ import MagazineLogo from '@/assets/magazine-logo.png'
 import { FallbackImgProps, Fallbackimg } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
 
-export type LoungeTitleProps = {
+export type MagazineTitleProps = {
   fallbackImgProps?: FallbackImgProps
   titleClassName?: string
   instagramClassName?: string
 }
-export const LoungeTitle = ({
+export const MagazineTitle = ({
   fallbackImgProps,
   titleClassName,
   instagramClassName,
-}: LoungeTitleProps) => {
+}: MagazineTitleProps) => {
   const goInstagram = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
     //https://www.instagram.com/yakin_mag?igsh=a2NxM2phMmx2bHF0

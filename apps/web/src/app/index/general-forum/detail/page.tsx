@@ -1,6 +1,6 @@
 import LoungeAndMagazineDetail from '@/components/common/lounge-and-magazine-detail'
 import { SideDrawer } from '@/components/common/side-drawer'
-import { useGetToken } from '@/hooks/use-get-token'
+import { useUpdateToken } from '@/hooks/use-update-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 
@@ -13,7 +13,7 @@ type CommunityDetailPageProps = {
 export default function GeneralForumDetailPage({
   params: { id },
 }: CommunityDetailPageProps) {
-  useGetToken()
+  useUpdateToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
 
   return (

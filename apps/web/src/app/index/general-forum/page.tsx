@@ -1,6 +1,6 @@
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
-import { useGetToken } from '@/hooks/use-get-token'
+import { useUpdateToken } from '@/hooks/use-update-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { LoungeCategoryKey } from '@/utils/query-key'
 import { useFlow } from '@/utils/stackflow'
@@ -9,7 +9,7 @@ import { Pencil } from '@yaksok/icons'
 import { Button } from '@yaksok/ui'
 
 export default function GeneralForumPage() {
-  useGetToken()
+  useUpdateToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
   const { push } = useFlow()
 
