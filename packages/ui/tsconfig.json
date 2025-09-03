@@ -8,6 +8,6 @@
     },
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": ["src"],
+  "include": ["src", "../typescript-config/global.d.ts", "custom.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

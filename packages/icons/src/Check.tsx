@@ -5,7 +5,7 @@ const SvgCheck = React.forwardRef<
   SVGProps<SVGSVGElement> & {
     size?: number | string
   }
->(({ size = 24, ...props }, ref) => (
+>(({ size = 24, stroke = 'black', ...props }, ref) => (
   <svg
     width={size}
     height={size}
@@ -17,7 +17,7 @@ const SvgCheck = React.forwardRef<
   >
     <path
       d="M6 12L10.2426 16.2426L18.727 7.75732"
-      stroke="black"
+      stroke={stroke}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"

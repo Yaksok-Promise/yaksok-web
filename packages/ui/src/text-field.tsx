@@ -28,6 +28,8 @@ export interface TextFieldProps
   onVerify?: (value: string) => boolean | void | Promise<boolean>
   onFormat?: (value: string) => string
   onCondition?: (value: string) => boolean
+  bottomLabel?: string
+  verifyButtonText?: string
 }
 
 export const TextField = React.forwardRef(function TextField(
@@ -45,6 +47,8 @@ export const TextField = React.forwardRef(function TextField(
     onCondition,
     mode = 'line',
     isShownIcon = false,
+    bottomLabel,
+    verifyButtonText = '인증하기',
     ...rest
   }: TextFieldProps,
   ref: React.Ref<HTMLInputElement>
@@ -76,6 +80,8 @@ export const TextField = React.forwardRef(function TextField(
 
     if (onCondition) {
       const isTrue = onCondition(e.target.value as string)
+      console.log('isTrue', isTrue)
+      console.log(e.target.value)
       setStatus(isTrue ? 'success' : 'regexError')
       return
     }
@@ -91,6 +97,7 @@ export const TextField = React.forwardRef(function TextField(
   const handleVerify = async () => {
     const isVerified = await onVerify?.(value as string)
     setStatus(isVerified ? 'success' : 'verificationError')
+    console.log('Verification', isVerified)
   }
 
   const handleShowPassword = () => {
@@ -131,43 +138,48 @@ export const TextField = React.forwardRef(function TextField(
               disabled={status === 'regexError' || status === undefined}
               onClick={handleVerify}
             >
-              인증하기
+              {verifyButtonText}
             </button>
           )}
         </div>
       </div>
     )
   }
-
   return (
     <div className="flex w-full flex-col">
-      <div className="relative">
-        <input
-          ref={ref}
-          type={showPassword ? 'text' : type}
-          data-slot="input"
-          value={inputValue}
-          onChange={handleInputChange}
-          onBlur={onBlur}
-          className={cn(
-            'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none',
-            className
-          )}
-          {...rest}
-        />
-        {isShownIcon && (
-          <HideAndShowPassword
-            showPassword={showPassword}
-            handleShowPassword={handleShowPassword}
+      <div className="flex flex-col gap-2">
+        <label className="text-black01 text-caption1">{label}</label>
+        <div className="relative flex flex-1 items-center justify-between">
+          <input
+            ref={ref}
+            type={showPassword ? 'text' : type}
+            data-slot="input"
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={onBlur}
+            className={cn(
+              'min-h-[48px] w-full rounded-[8px] border-[1px] border-gray06 bg-white01 px-4 text-black01 text-body2 caret-blue01 focus:border-blue01 focus:outline-none disabled:bg-gray07',
+              className
+            )}
+            {...rest}
           />
-        )}
+          {isShownIcon && (
+            <HideAndShowPassword
+              showPassword={showPassword}
+              handleShowPassword={handleShowPassword}
+            />
+          )}
+        </div>
       </div>
 
-      <label className="text-caption1">
+      {/* This won't be affected by gap */}
+      <div className="text-caption1">
         {status?.includes('Error') ? (
           <span className="text-red01">{message[status as ErrorStatus]}</span>
-        ) : null}
-      </label>
+        ) : (
+          <span className="text-caption1 text-gray03">{bottomLabel}</span>
+        )}
+      </div>
     </div>
   )
 })

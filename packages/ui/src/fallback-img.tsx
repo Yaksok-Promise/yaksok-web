@@ -1,19 +1,20 @@
 import { cn } from '@yaksok/utils'
+import FallbackSrc from './asset/Image-not-found.png'
 
 export type FallbackImgProps = {
-  src: string
+  src?: string
   alt: string
-  fallbackSrc: string
+  fallbackSrc?: string
   imgClassName?: string
   wrapperClassName?: string
 }
 
-export default function Fallbackimg({
+export function Fallbackimg({
   src,
   alt,
-  fallbackSrc,
   imgClassName,
   wrapperClassName,
+  fallbackSrc = FallbackSrc,
 }: FallbackImgProps) {
   return (
     <div
@@ -23,9 +24,10 @@ export default function Fallbackimg({
       )}
     >
       <img
-        src={src}
+        src={src || fallbackSrc}
         alt={alt}
         onError={e => {
+          console.log(e)
           e.currentTarget.src = fallbackSrc
         }}
         className={cn('aspect-auto object-cover object-center', imgClassName)}

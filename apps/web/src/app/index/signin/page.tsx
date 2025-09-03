@@ -1,4 +1,4 @@
-import { useHttpMutation } from '@/hooks/use-http-mutation'
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useFlow } from '@/utils/stackflow'
 import {
   SigninRequest,
@@ -10,14 +10,28 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { LoginRequest, LoginResponse } from '@yaksok/api/userType'
+import { useLoginStore } from '@yaksok/store'
 import { Button, OauthButton, TextField } from '@yaksok/ui'
+import { LOCAL_STORAGE_KEY, setItem } from '@yaksok/utils'
 import { useForm } from 'react-hook-form'
 
 export default function Signin() {
   const { push, replace } = useFlow()
+  const { saveAccessToken, saveRefreshToken } = useLoginStore()
   const goSignup = () => {
     push('SignupPage', {
       title: '회원가입',
+    })
+  }
+
+  const goFindId = () => {
+    push('FindIdPassword', {
+      mode: 'id',
+    })
+  }
+  const goFindPassword = () => {
+    push('FindIdPassword', {
+      mode: 'password',
     })
   }
 
@@ -35,11 +49,28 @@ export default function Signin() {
     'post',
     undefined,
     {
-      onSuccess: () => {
-        goHome()
+      onSuccess: async data => {
+        setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, data.accessToken)
+        setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, data.refreshToken)
+        saveAccessToken(data.accessToken)
+        saveRefreshToken(data.refreshToken)
+
+        if (typeof window !== 'undefined' && window.ReactNativeWebView) {
+          window.ReactNativeWebView.postMessage(
+            JSON.stringify({
+              type: 'LOGIN',
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
+            })
+          )
+        }
+
+        if (!window.ReactNativeWebView) {
+          goHome()
+        }
       },
-      onSettled: (data, error, variables, context) => {
-        console.log('로그인 실패', data, error, variables, context)
+      onError: error => {
+        console.log('로그인 실패', error)
       },
     }
   )
@@ -81,6 +112,18 @@ export default function Signin() {
             로그인
           </Button>
         </form>
+        {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
+        <div className="mb-6 flex w-full items-center justify-end divide-x-1 divide-[rgb(99, 99, 102)]">
+          <button className="px-2 text-gray03 text-subhead3" onClick={goFindId}>
+            아이디 찾기
+          </button>
+          <button
+            className="px-2 text-gray03 text-subhead3"
+            onClick={goFindPassword}
+          >
+            비밀번호 찾기
+          </button>
+        </div>
         <button
           onClick={goSignup}
           className="w-full text-center text-black01 text-body2 underline underline-offset-1"

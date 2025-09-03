@@ -5,8 +5,8 @@ import {
   SignupModal,
   SmsCodeInput,
 } from '@/components/common'
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useFunnel } from '@/hooks/use-funnel'
-import { useHttpMutation } from '@/hooks/use-http-mutation'
 import useSmscodeInput from '@/hooks/use-smscode-input'
 import { useFlow } from '@/utils/stackflow'
 import { FindIdRequest, FindIdSchema, emailRegex } from '@/validation/zod'
@@ -157,7 +157,7 @@ const DoneStep = ({ findId }: { findId: string | null }) => {
     })
   }
   const handleSignin = () => {
-    replace('Signin', {})
+    replace('SigninPage', {})
   }
   return (
     <div className="flex h-full flex-col justify-between overflow-y-hidden pt-7.5 pb-20">

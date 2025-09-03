@@ -46,6 +46,22 @@ export type SendSMSRequest = {
   smsType: SMSType
 }
 
+export type ChangeNicknameRequest = {
+  nickname: string
+}
+
+export type ReissueRequest = {
+  refreshToken: string
+}
+
+export type CheckNicknameRequest = {
+  nickname: string
+}
+
+export type CheckLoginhIdRequest = {
+  loginId: string
+}
+
 // user api response type
 export type UserInfoResponse = {
   name: string
@@ -74,3 +90,5 @@ export type LoginResponse = {
 export type FindIdResponse = {
   loginId: string
 }
+
+export type ReissueResponse = LoginResponse

@@ -23,7 +23,7 @@ const buttonVariants = cva(
       },
       size: {
         full: 'w-full',
-        fit: 'w-fit px-[12px] py-[3.5px]',
+        fit: 'w-fit px-4 py-2.5',
       },
       mode: {
         line: 'border border-black01 text-black01 bg-white',

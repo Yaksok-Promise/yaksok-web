@@ -23,7 +23,7 @@ const meta: Meta<TabsProps> = {
       },
     },
     variant: {
-      options: ['dot', 'box'],
+      options: ['dot', 'box', 'line'],
       control: {
         type: 'radio',
       },

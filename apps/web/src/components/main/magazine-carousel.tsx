@@ -1,6 +1,7 @@
 import ExImg from '@/assets/ex.png'
 import MagazineImg from '@/assets/magazine.png'
 import MagazineImg2 from '@/assets/magazine2.png'
+import { useFlow } from '@/utils/stackflow'
 import { Carousel, MagazineCard } from '@yaksok/ui'
 
 export default function MagazineCarousel() {
@@ -22,6 +23,8 @@ export default function MagazineCarousel() {
       number: 2,
     },
   ]
+
+  const { push } = useFlow()
   return (
     <div className="mb-25">
       <Carousel.Root
@@ -31,13 +34,16 @@ export default function MagazineCarousel() {
         <Carousel.Background
           items={data}
           onClick={() => {
-            console.log('click')
+            push('MagazinePage', {})
           }}
         />
         <Carousel.Track className="mt-22 px-4">
           {data.map((data, index) => (
             <Carousel.Slide key={index} className="mt-4 pl-3">
-              <MagazineCard {...data} />
+              <MagazineCard
+                {...data}
+                onClick={() => console.log('카드 링크 연결 필요', data.title)}
+              />
             </Carousel.Slide>
           ))}
         </Carousel.Track>

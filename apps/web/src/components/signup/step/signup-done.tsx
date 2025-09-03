@@ -4,10 +4,10 @@ import { SignupTitle } from '@components/signup'
 import { Button } from '@yaksok/ui'
 
 export default function SignupDonePage() {
-  const { push } = useFlow()
+  const { replace } = useFlow()
 
   const pushMain = () => {
-    push('MainPage', {})
+    replace('MainPage', {})
   }
   return (
     <div className="relative flex h-screen flex-col items-center justify-center gap-10">

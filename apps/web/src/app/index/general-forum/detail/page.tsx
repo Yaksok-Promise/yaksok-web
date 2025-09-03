@@ -1,0 +1,45 @@
+import { SideDrawer } from '@/components/common/side-drawer'
+import { GeneralForumDetail } from '@/components/general-forum/general-forun-detail'
+import { Portal, usePortal } from '@/hooks/use-portal'
+import { useUpdateToken } from '@/hooks/use-update-token'
+import { AppScreen } from '@stackflow/plugin-basic-ui'
+
+type CommunityDetailPageProps = {
+  params: {
+    id: string
+  }
+}
+
+export default function GeneralForumDetailPage({
+  params: { id },
+}: CommunityDetailPageProps) {
+  useUpdateToken()
+  const { portalRef, isOpen, setIsOpen } = usePortal()
+
+  return (
+    <>
+      <AppScreen
+        appBar={{
+          title: '라운지',
+          textColor: '#ffffff',
+          iconColor: '#ffffff',
+          backgroundColor: '#000000',
+          border: false,
+          renderRight: () => (
+            <SideDrawer
+              container={portalRef.current}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          ),
+        }}
+      >
+        <main className="flex flex-col bg-white px-4 pb-10">
+          <GeneralForumDetail id={id} />
+        </main>
+      </AppScreen>
+
+      <Portal />
+    </>
+  )
+}

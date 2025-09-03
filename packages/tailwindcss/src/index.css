@@ -75,7 +75,7 @@
 @font-face {
   font-family: "SUIT";
   font-weight: 100 900;
-  src: url("./font/SUIT-Variable.woff2") format("woff2-variations");
+  src: url("public/font/SUIT-Variable.woff2") format("woff2-variations");
 }
 
 @theme inline {
@@ -121,6 +121,7 @@
   --shadow-floating-button: 0px 8px 24px 0px #00000026;
   --shadow-floating-button2: 0px 8px 24px 0px #00000033;
   --shadow-profile-ui: 0px 0px 1px 0px #00000033;
+  --shadow-box: 0 8px 24px 0 rgba(0, 0, 0, 0.15);
 }
 
 @layer base {

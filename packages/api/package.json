@@ -5,13 +5,17 @@
   "exports": {
     ".": "./index.ts",
     "./userType": "./type/user.ts",
-    "./commentType": "./type/comment.ts"
+    "./commentType": "./type/comment.ts",
+    "./paginationType": "./type/pagination.ts",
+    "./boardMagazineType": "./type/board-magazine.ts"
   },
   "scripts": {
     "test": "vitest run"
   },
   "dependencies": {
-    "axios": "^1.10.0"
+    "axios": "^1.10.0",
+    "@yaksok/store": "workspace:*",
+    "@yaksok/utils": "workspace:*"
   },
   "devDependencies": {
     "@vitest/coverage-istanbul": "^3.0.7",

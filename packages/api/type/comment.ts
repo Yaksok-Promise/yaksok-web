@@ -14,7 +14,7 @@ export type Comment = {
   replies: Reply[]
 }
 
-type MimeImage =
+export type MimeImage =
   | 'image/apng'
   | 'image/avif'
   | 'image/gif'
@@ -63,4 +63,9 @@ export type GeneralForumListResponse = Pagination & {
       tag: Tag[]
       commentCount: number
     }[]
+}
+
+export type ToggleRequest = {
+  elementId: string
+  target: 'POST' | 'COMMENT'
 }

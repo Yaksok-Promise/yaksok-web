@@ -1,9 +1,12 @@
 import ExImg from '@/assets/ex.png'
+import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
 import { CardProps } from '@yaksok/ui'
 import { NotEmptyArray } from '@yaksok/utils'
 import MainTabs from './main-tabs'
 
 export function MainLounge() {
+  const myInfo = useGetMyInfo()
+
   const philData: NotEmptyArray<CardProps> = [
     {
       imgSrc: ExImg,
@@ -50,7 +53,7 @@ export function MainLounge() {
   const eventData: NotEmptyArray<CardProps> = [...philData]
   return (
     <div className="flex flex-col gap-4 px-4">
-      <h1 className="text-head6">김약속님을 위한 약속 Lounge</h1>
+      <h1 className="text-head6">{myInfo.data.name}님을 위한 약속 Lounge</h1>
       <MainTabs
         philData={philData}
         pharmacyData={pharmacyData}

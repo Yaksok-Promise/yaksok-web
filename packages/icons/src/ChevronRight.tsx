@@ -4,8 +4,9 @@ const SvgChevronRight = React.forwardRef<
   SVGSVGElement,
   SVGProps<SVGSVGElement> & {
     size?: number | string
+    stroke?: string
   }
->(({ size = 24, ...props }, ref) => (
+>(({ size = 24, stroke = 'white', ...props }, ref) => (
   <svg
     width={size}
     height={size}
@@ -17,7 +18,7 @@ const SvgChevronRight = React.forwardRef<
   >
     <path
       d="M13.334 10.667L18.6673 16.0003L13.334 21.3337"
-      stroke="white"
+      stroke={stroke}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -5,7 +5,7 @@ const SvgHamburger = React.forwardRef<
   SVGProps<SVGSVGElement> & {
     size?: number | string
   }
->(({ size = 24, ...props }, ref) => (
+>(({ size = 24, stroke, ...props }, ref) => (
   <svg
     width={size}
     height={size}
@@ -17,7 +17,7 @@ const SvgHamburger = React.forwardRef<
   >
     <path
       d="M5 17.751H19M5 12.751H19M5 7.75098H19"
-      stroke="currentColor"
+      stroke={stroke ? stroke : 'currentColor'}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"

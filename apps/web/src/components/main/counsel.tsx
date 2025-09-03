@@ -1,19 +1,27 @@
-import { Bedge, BedgeProps } from '@yaksok/ui'
+import { useFlow } from '@/utils/stackflow'
+import { MiniQr } from '@yaksok/icons'
+import { Badge, BadgeProps } from '@yaksok/ui'
 import { NotEmptyArray } from '@yaksok/utils'
 
 export default function Counsel() {
-  const data: NotEmptyArray<BedgeProps> = [
+  const { push } = useFlow()
+  const data: NotEmptyArray<BadgeProps> = [
     {
-      miniTitle: '하루 20명 선착순',
-      title: '약사 복약 상담',
-      description: '약에 대한 고민,\n 전문 약사와 상담해 보세요',
+      variant: 'card',
+      miniTitle: '약속 상담',
+      title: '약사 상담',
+      description: '영양제 고민, 복약 지도까지\n지금 약사와 상담해 보세요',
       onClick: () => alert('약사 복약 상담'),
     },
     {
-      miniTitle: 'Beta',
-      title: 'AI 복약 상담',
-      description: '간단한 복약 고민,\n AI와 상담해 보세요',
-      onClick: () => alert('AI 복약 상담'),
+      variant: 'promo',
+      icon: <MiniQr size={20} />,
+      title: '현장 결제',
+      description: '약국에서 간편하게 결제',
+      lineBackground: true,
+      onClick: () => {
+        push('PaymentBottomSheetActivity', {})
+      },
     },
   ]
   return (
@@ -21,7 +29,7 @@ export default function Counsel() {
       <h1 className="text-black01 text-head6">약속 상담</h1>
       <div className="flex gap-4">
         {data.map((props, index) => (
-          <Bedge key={index} {...props} />
+          <Badge key={index} {...props} />
         ))}
       </div>
     </div>
