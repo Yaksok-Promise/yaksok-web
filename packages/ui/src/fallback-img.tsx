@@ -1,9 +1,10 @@
 import { cn } from '@yaksok/utils'
+import FallbackSrc from './asset/Image-not-found.png'
 
 export type FallbackImgProps = {
   src: string
   alt: string
-  fallbackSrc: string
+  fallbackSrc?: string
   imgClassName?: string
   wrapperClassName?: string
 }
@@ -11,9 +12,9 @@ export type FallbackImgProps = {
 export function Fallbackimg({
   src,
   alt,
-  fallbackSrc,
   imgClassName,
   wrapperClassName,
+  fallbackSrc = FallbackSrc,
 }: FallbackImgProps) {
   return (
     <div

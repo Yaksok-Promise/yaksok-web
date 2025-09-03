@@ -19,12 +19,11 @@ export type Magazine = {
   likes: number
   views: number
   commentCount: number
-  tag: Tag[]
-  category: string
+  tags: Tag[]
+  hasImages: boolean
 }
 
-export type MagazineDetail = Omit<Magazine, 'tag'> & {
-  tags: Tag[]
+export type MagazineDetail = Magazine & {
   images: Image[]
   magazineType: string
   aboutMedicineList: string // ex. 아스파린, 타이레놀

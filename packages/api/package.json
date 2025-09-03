@@ -6,7 +6,8 @@
     ".": "./index.ts",
     "./userType": "./type/user.ts",
     "./commentType": "./type/comment.ts",
-    "./paginationType": "./type/pagination.ts"
+    "./paginationType": "./type/pagination.ts",
+    "./boardMagazineType": "./type/board-magazine.ts"
   },
   "scripts": {
     "test": "vitest run"
