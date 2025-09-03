@@ -29,7 +29,7 @@ export default function MagazinePage() {
           ),
         }}
       >
-        <div className="relative h-screen overflow-auto">
+        <div className="relative h-full overflow-auto">
           <MagazineHeader />
           <LoungeAndMagazineTab<MagazineCategoryKey>
             tab="All"

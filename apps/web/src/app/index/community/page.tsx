@@ -31,26 +31,26 @@ export default function CommunityPage() {
           ),
         }}
       >
-        <div className="relative h-screen overflow-auto ">
+        <main className="relative h-full overflow-auto ">
           <LoungeAndMagazineTab<LoungeCategoryKey>
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
             url="/api/post/general-forum/list"
             queryKey="lounge"
           />
-        </div>
-        <div className="mb-5 flex items-center justify-center">
-          <Button
-            variant="default"
-            size="fit"
-            className="flex items-center justify-center gap-1 text-subhead1 shadow-box"
-            onClick={() => {
-              push('CommunityWritePage', {})
-            }}
-          >
-            <Pencil size={20} />글 작성하기
-          </Button>
-        </div>
+          <div className="mb-5 flex items-center justify-center">
+            <Button
+              variant="default"
+              size="fit"
+              className="flex items-center justify-center gap-1 text-subhead1 shadow-box"
+              onClick={() => {
+                push('CommunityWritePage', {})
+              }}
+            >
+              <Pencil size={20} />글 작성하기
+            </Button>
+          </div>
+        </main>
       </AppScreen>
 
       <Portal />
