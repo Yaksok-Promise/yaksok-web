@@ -15,7 +15,7 @@ export type Magazine = {
   author: string
   body: string
   createdAt: string
-  thumbnailUrl: string
+  thumbnailUrl?: string
   likes: number
   views: number
   commentCount: number

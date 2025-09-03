@@ -13,26 +13,14 @@ export type Paginated<T> = Pagination & { content: T[] }
 /** 페이지 파라미터(숫자 페이지 기반) */
 type PageParam = number
 
-/**
- * 외부에서 넘길 수 있는 옵션 타입
- * - 공식 시그니처 기준:
- *   UseSuspenseInfiniteQueryOptions<
- *     TQueryFnData,
- *     TError,
- *     TData,
- *     TQueryFnData,  // 공식 옵션 타입은 TQueryFnData를 한 번 더 받음
- *     TQueryKey,
- *     TPageParam
- *   >
- */
 type BaseInfiniteOptions<TItem, TQueryKey extends QueryKey> = Omit<
   UseSuspenseInfiniteQueryOptions<
-    Paginated<TItem>, // TQueryFnData
-    unknown, // TError
-    InfiniteData<Paginated<TItem>, PageParam>, // TData (InfiniteData 고정)
-    Paginated<TItem>, // (공식 시그니처 4번째 자리)
-    TQueryKey, // TQueryKey
-    PageParam // TPageParam
+    Paginated<TItem>,
+    unknown,
+    InfiniteData<Paginated<TItem>, PageParam>,
+    Paginated<TItem>,
+    TQueryKey,
+    PageParam
   >,
   | 'queryKey'
   | 'queryFn'
@@ -41,9 +29,6 @@ type BaseInfiniteOptions<TItem, TQueryKey extends QueryKey> = Omit<
   | 'getPreviousPageParam'
 >
 
-/**
- * Suspense 기반 무한스크롤 공통 훅 (페이지 인덱스 기반)
- */
 export function useHttpInfiniteQuery<
   Body = undefined,
   TItem = unknown,
@@ -59,7 +44,9 @@ export function useHttpInfiniteQuery<
 ): UseSuspenseInfiniteQueryResult<
   InfiniteData<Paginated<TItem>, PageParam>,
   unknown
-> & { items: TItem[] } {
+> & {
+  items: TItem[]
+} {
   const initialPage = queryOptions?.initialPage ?? 0
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -103,6 +90,7 @@ export function useHttpInfiniteQuery<
     getPreviousPageParam: (
       firstPage /*, allPages, firstPageParam, allPageParams */
     ) => (firstPage.first ? undefined : Math.max(firstPage.page - 1, 0)),
+
     ...queryOptions,
   })
 

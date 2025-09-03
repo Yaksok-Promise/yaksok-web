@@ -8,8 +8,11 @@ import {
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
+import { MagazineListCard } from '@yaksok/ui'
 import { Suspense, useState } from 'react'
 import LoungeMagazineSelect from '../lounge/lounge-magazine-select'
+import { Magazine } from '@yaksok/api/boardMagazineType'
+import { useInView } from 'react-intersection-observer'
 
 export type LoungeAndMagazineTabProps<T extends string> = {
   tab: T
@@ -92,17 +95,28 @@ function LoungeAndMagazineListItem({
     sortBy: sort,
   }
 
-  const _result = useHttpInfiniteQuery([queryKey, category, sort], url, {
+  const { items, hasNextPage, fetchNextPage } = useHttpInfiniteQuery<
+    undefined,
+    Magazine
+  >([queryKey, category, sort], url, {
     params: params,
+  })
+
+  const { ref } = useInView({
+    threshold: 0,
+    onChange: inView => {
+      if (inView && hasNextPage) {
+        fetchNextPage()
+      }
+    },
   })
 
   return (
     <div>
-      {Array.from({ length: 100 }).map((_, index) => (
-        <div key={index} className="h-10 w-full bg-gray-200">
-          {index}
-        </div>
+      {items.map(item => (
+        <MagazineListCard key={item.id} data={item} />
       ))}
+      <div ref={ref} />
     </div>
   )
 }

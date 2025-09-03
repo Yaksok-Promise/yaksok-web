@@ -20,7 +20,9 @@ export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
           {data.title}
         </h1>
         <Fallbackimg
-          src={data.thumbnailUrl}
+          src={
+            data.hasImages && data.thumbnailUrl ? data.thumbnailUrl : undefined
+          }
           alt={data.title}
           imgClassName="w-20 h-20"
           wrapperClassName="w-20 h-20 bg-gray01"
