@@ -7,7 +7,7 @@ import { MagazineCategoryKey } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { cn } from '@yaksok/utils'
 
-export default function MagazinePage() {
+export default function MagazineListPage() {
   useGetToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
 

@@ -8,7 +8,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Pencil } from '@yaksok/icons'
 import { Button } from '@yaksok/ui'
 
-export default function CommunityPage() {
+export default function GeneralForumPage() {
   useGetToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
   const { push } = useFlow()
@@ -36,7 +36,7 @@ export default function CommunityPage() {
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
             url="/api/post/general-forum/list"
-            queryKey="lounge"
+            queryKey="magazine"
           />
           <div className="mb-5 flex items-center justify-center">
             <Button
@@ -44,7 +44,7 @@ export default function CommunityPage() {
               size="fit"
               className="flex items-center justify-center gap-1 text-subhead1 shadow-box"
               onClick={() => {
-                push('CommunityWritePage', {})
+                push('GeneralForumWritePage', {})
               }}
             >
               <Pencil size={20} />글 작성하기

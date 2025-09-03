@@ -1,7 +1,7 @@
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Check } from '@yaksok/icons'
 
-export default function CommunityWritePage() {
+export default function GeneralForumWritePage() {
   return (
     <>
       <AppScreen

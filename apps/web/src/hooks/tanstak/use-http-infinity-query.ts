@@ -82,6 +82,7 @@ export function useHttpInfiniteQuery<
           size: pageSize,
         },
       }
+
       return http.get<Body, Paginated<TItem>>(path, mergedOption)
     },
     getNextPageParam: (

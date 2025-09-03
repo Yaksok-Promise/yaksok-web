@@ -11,7 +11,6 @@ type FindIdPasswordProps = {
 export default function FindIdPassword({
   params: { mode },
 }: FindIdPasswordProps) {
-  console.log(mode)
   const tabsInfo: TabsProps['tabInfo'] = [
     {
       value: 'id',

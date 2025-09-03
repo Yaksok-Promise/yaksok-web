@@ -5,7 +5,7 @@ import LoungeYaksokSubscription from '@/components/lounge/lounge-yaksok-subscrip
 import { useGetToken } from '@/hooks/use-get-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 
-export default function LoungePage() {
+export default function MagazinePage() {
   useGetToken()
 
   return (

@@ -13,6 +13,7 @@ import { Suspense, useState } from 'react'
 import LoungeMagazineSelect from '../lounge/lounge-magazine-select'
 import { Magazine } from '@yaksok/api/boardMagazineType'
 import { useInView } from 'react-intersection-observer'
+import { useFlow } from '@/utils/stackflow'
 
 export type LoungeAndMagazineTabProps<T extends string> = {
   tab: T
@@ -89,6 +90,7 @@ function LoungeAndMagazineListItem({
   sort,
   url,
 }: LoungeAndMagazineListItemProps) {
+  const { push } = useFlow()
   const params = {
     size: 10,
     category: category === 'All' ? undefined : category,
@@ -111,10 +113,19 @@ function LoungeAndMagazineListItem({
     },
   })
 
+  const onClick = (id: string) => {
+    const isMagazine = queryKey === 'magazine'
+    push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
+  }
+
   return (
     <div>
       {items.map(item => (
-        <MagazineListCard key={item.id} data={item} />
+        <MagazineListCard
+          key={item.id}
+          data={item}
+          onClick={() => onClick(item.id)}
+        />
       ))}
       <div ref={ref} />
     </div>
