@@ -64,3 +64,8 @@ export type GeneralForumListResponse = Pagination & {
       commentCount: number
     }[]
 }
+
+export type ToggleRequest = {
+  elementId: string
+  target: 'POST' | 'COMMENT'
+}

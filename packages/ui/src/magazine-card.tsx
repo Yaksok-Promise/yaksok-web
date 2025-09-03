@@ -3,6 +3,7 @@ import { BlankHeart, Bookmark, SvgIconElement } from '@yaksok/icons'
 import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
+import { IconTag } from './icon-tag'
 
 export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
@@ -33,29 +34,16 @@ export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
           {changeDate(data.createdAt)}
         </span>
         <div className="flex gap-1">
-          <Icon
+          <IconTag
             icon={<BlankHeart size={12} stroke="#959598" />}
-            count={data.likes}
+            label={data.likes.toString()}
           />
-          <Icon
+          <IconTag
             icon={<Bookmark size={12} stroke="#959598" />}
-            count={data.views}
+            label={data.views.toString()}
           />
         </div>
       </div>
-    </div>
-  )
-}
-
-type IconProps = {
-  icon: SvgIconElement
-  count: number
-}
-function Icon({ icon, count }: IconProps) {
-  return (
-    <div className="flex items-center">
-      {icon}
-      <span className="text-caption1 text-gray04">{count}</span>
     </div>
   )
 }

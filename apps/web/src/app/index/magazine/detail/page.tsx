@@ -1,8 +1,16 @@
-import LoungeAndMagazineDetail from '@/components/common/lounge-and-magazine-detail'
 import { SideDrawer } from '@/components/common/side-drawer'
-import { useUpdateToken } from '@/hooks/use-update-token'
+import { MagazineDetailFooter } from '@/components/magazine/magazine-detail-footer'
+import { MagazineDetailHead } from '@/components/magazine/magazine-detail-head'
+import { MagazineFloatingButton } from '@/components/magazine/magazine-floating-button'
+import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
+import { useGetToken } from '@/hooks/use-get-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
+import { useUpdateToken } from '@/hooks/use-update-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { MagazineDetail } from '@yaksok/api/boardMagazineType'
+import { useState } from 'react'
+
+import { useInView } from 'react-intersection-observer'
 
 type LoungeDetailPageProps = {
   params: {
@@ -15,6 +23,37 @@ export default function MagazineDetailPage({
 }: LoungeDetailPageProps) {
   useUpdateToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
+  const { ref, inView } = useInView({
+    threshold: 0.9,
+    onChange: inView => {
+      console.log(inView)
+    },
+  })
+
+  const token = useGetToken()
+  const result = useHttpQuery<undefined, MagazineDetail>(
+    ['magazine', id],
+    '/api/post/magazine/{postId}',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        postId: id,
+      },
+    }
+  )
+
+  const data = result.data
+  console.log(data)
+
+  const headProps = {
+    likes: data.likes,
+    views: data.views,
+    date: data.createdAt,
+    title: data.title,
+    tags: data.tags,
+  }
 
   return (
     <>
@@ -34,9 +73,12 @@ export default function MagazineDetailPage({
           ),
         }}
       >
-        <main className="flex flex-col bg-white px-4 pb-10">
-          <LoungeAndMagazineDetail id={id} />
+        <main className="flex flex-col bg-white pb-10">
+          <MagazineDetailHead {...headProps} />
+          <div className="h-[3000px]">{data.body}</div>
         </main>
+        <MagazineDetailFooter ref={ref} />
+        <MagazineFloatingButton inView={inView} magazineId={id} />
       </AppScreen>
       <Portal />
     </>

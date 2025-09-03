@@ -1,5 +1,5 @@
 import { useLoginStore } from '@yaksok/store'
-import { getItem, LOCAL_STORAGE_KEY } from '@yaksok/utils'
+import { LOCAL_STORAGE_KEY, getItem } from '@yaksok/utils'
 
 export function useGetToken() {
   const { accessToken } = useLoginStore()

@@ -1,7 +1,7 @@
-import LoungeAndMagazineDetail from '@/components/common/lounge-and-magazine-detail'
 import { SideDrawer } from '@/components/common/side-drawer'
-import { useUpdateToken } from '@/hooks/use-update-token'
+import { GeneralForumDetail } from '@/components/general-forum/general-forun-detail'
 import { Portal, usePortal } from '@/hooks/use-portal'
+import { useUpdateToken } from '@/hooks/use-update-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 
 type CommunityDetailPageProps = {
@@ -35,7 +35,7 @@ export default function GeneralForumDetailPage({
         }}
       >
         <main className="flex flex-col bg-white px-4 pb-10">
-          <LoungeAndMagazineDetail id={id} />
+          <GeneralForumDetail id={id} />
         </main>
       </AppScreen>
 

@@ -2,14 +2,15 @@ import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 
-export type MagazineDetailProps = {
+export type GeneralForumDetailProps = {
   id: string
 }
-export default function MagazineDetailShow({ id }: MagazineDetailProps) {
+
+export function GeneralForumDetail({ id }: GeneralForumDetailProps) {
   const token = useGetToken()
   const result = useHttpQuery<undefined, MagazineDetail>(
-    ['magazine', id],
-    '/api/post/magazine/{postId}',
+    ['general-forum', id],
+    '/api/post/general-forum/{postId}',
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,6 +22,5 @@ export default function MagazineDetailShow({ id }: MagazineDetailProps) {
   )
 
   console.log(result.data)
-
-  return <div>MagazineDetail</div>
+  return <div>{id}</div>
 }

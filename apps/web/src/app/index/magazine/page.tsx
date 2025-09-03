@@ -1,5 +1,5 @@
-import Lounge from '@/components/magazine/magazine-lounge'
 import LoungeMagazine from '@/components/magazine/magazine'
+import Lounge from '@/components/magazine/magazine-lounge'
 import LoungePayment from '@/components/magazine/magazine-payment'
 import LoungeYaksokSubscription from '@/components/magazine/magazine-yaksok-subscription'
 import { useUpdateToken } from '@/hooks/use-update-token'

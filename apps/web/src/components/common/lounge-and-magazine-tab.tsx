@@ -5,15 +5,15 @@ import {
   MAGAZINE_CATEGORY,
   MagazineCategoryKey,
 } from '@/utils/query-key'
+import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
-import { MagazineListCard } from '@yaksok/ui'
-import { Suspense, useState } from 'react'
-import LoungeMagazineSelect from './lounge-magazine-select'
 import { Magazine } from '@yaksok/api/boardMagazineType'
+import { MagazineListCard } from '@yaksok/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
+import { Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { useFlow } from '@/utils/stackflow'
+import LoungeMagazineSelect from './lounge-magazine-select'
 
 export type LoungeAndMagazineTabProps<T extends string> = {
   tab: T
