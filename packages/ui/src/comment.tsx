@@ -95,7 +95,7 @@ export function Comment({
 
 export function NotComment() {
   return (
-    <div className="flex items-center justify-center bg-bgColor pt-5">
+    <div className="flex items-center justify-center bg-bgColor py-5">
       <h3 className="text-subGray01 text-subhead1">첫 댓글을 남겨보세요!</h3>
     </div>
   )

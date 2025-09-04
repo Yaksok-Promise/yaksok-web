@@ -1,8 +1,15 @@
 import { useCommentLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
 import { flattenAndMarkMostLiked } from '@/utils/change-comment-list-optimistic'
 import { CommentResponse } from '@yaksok/api/commentType'
-import { BlankHeart } from '@yaksok/icons'
-import { NotComment, Comment } from '@yaksok/ui'
+import {
+  BlankHeart,
+  CommunicationDot,
+  TriangleWarning,
+  Trash,
+  Pencil,
+  MoreVertical,
+} from '@yaksok/icons'
+import { NotComment, Comment, DropDown } from '@yaksok/ui'
 
 export type GeneralForrumCommentListProps = {
   data: CommentResponse
@@ -19,7 +26,7 @@ export const GeneralForrumCommentList = ({
     return <NotComment />
   }
   const items = flattenAndMarkMostLiked(data)
-  console.log('items Flattened', items)
+
   return (
     <>
       {items.map(item => (
@@ -34,6 +41,7 @@ export const GeneralForrumCommentList = ({
               postId={postId}
             />
           }
+          sideButton={<CommentDropDown isMine={item.mine} />}
         />
       ))}
     </>
@@ -62,5 +70,54 @@ const LikedButton = ({
       />
       {likeCount}
     </button>
+  )
+}
+
+type CommentDropDownProps = {
+  isMine: boolean
+}
+const CommentDropDown = ({ isMine }: CommentDropDownProps) => {
+  const dropdownMenuList = isMine
+    ? [
+        {
+          label: '수정',
+          value: 'edit',
+          render: <Pencil size={16} stroke="#018381" />,
+          onClick: () => {
+            alert('수정')
+          },
+        },
+        {
+          label: '삭제',
+          value: 'delete',
+          render: <Trash size={16} stroke="#018381" />,
+          onClick: () => {
+            alert('삭제')
+          },
+        },
+      ]
+    : [
+        {
+          label: '답글',
+          value: 'reply',
+          render: <CommunicationDot size={16} stroke="#018381" />,
+          onClick: () => {
+            alert('답글')
+          },
+        },
+        {
+          label: '신고',
+          value: 'report',
+          render: <TriangleWarning size={16} stroke="#018381" />,
+          onClick: () => {
+            alert('신고')
+          },
+        },
+      ]
+  return (
+    <DropDown
+      data={dropdownMenuList}
+      trigger={<MoreVertical size={16} stroke="#959598" />}
+    />
   )
 }

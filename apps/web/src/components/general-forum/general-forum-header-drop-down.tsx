@@ -1,26 +1,14 @@
 'use client'
 
 import { useFlow } from '@stackflow/react/future'
-import {
-  MoreHorizontal,
-  Pencil,
-  Share,
-  Trash,
-  TriangleWarning,
-} from '@yaksok/icons'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from '@yaksok/ui/dropdown-menu'
+import { Pencil, Share, Trash, TriangleWarning } from '@yaksok/icons'
+import { DropDown } from '@yaksok/ui'
 
 export type GeneralForumHeaderSelectProps = {
   isMine: boolean
 }
 
-export default function GeneralForumHeaderSelect({
+export function GeneralForumHeaderDropDown({
   isMine,
 }: GeneralForumHeaderSelectProps) {
   // 각 버튼 기능 요소 정리 필요
@@ -62,24 +50,5 @@ export default function GeneralForumHeaderSelect({
           },
         },
       ]
-  return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <MoreHorizontal />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuRadioGroup>
-          {_dropdownMenuList.map(item => (
-            <DropdownMenuRadioItem
-              value={item.value}
-              className="flex items-center justify-center gap-1 text-body1 text-gray04"
-            >
-              {item.label}
-              {item.render}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
+  return <DropDown data={_dropdownMenuList} />
 }

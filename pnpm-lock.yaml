@@ -187,6 +187,9 @@ importers:
       storybook:
         specifier: ^8.6.12
         version: 8.6.12(prettier@2.8.8)
+      storybook-addon-deep-controls:
+        specifier: ^0.9.5
+        version: 0.9.5(storybook@8.6.12(prettier@2.8.8))
       typescript:
         specifier: ~5.7.2
         version: 5.7.3
@@ -4753,6 +4756,11 @@ packages:
 
   std-env@3.9.0:
     resolution: {integrity: sha512-UGvjygr6F6tpH7o2qyqR6QYpwraIjKSdtzyBdyytFOHmPZY917kwdwLG0RbOjWOnKmnm3PeHjaoLLMie7kPLQw==}
+
+  storybook-addon-deep-controls@0.9.5:
+    resolution: {integrity: sha512-HYyHC5nMrE2MMpU4InrKAPOLBeil/B4xjLWh+aN0veQjJiYbjNixnyCobYMRZ4SB8KUt5v+TwuvdEZBEGJLPJg==}
+    peerDependencies:
+      storybook: '>= 7.0.0 < 8.5.0 || >= 9.0.0 < 10.0.0'
 
   storybook@8.6.12:
     resolution: {integrity: sha512-Z/nWYEHBTLK1ZBtAWdhxC0l5zf7ioJ7G4+zYqtTdYeb67gTnxNj80gehf8o8QY9L2zA2+eyMRGLC2V5fI7Z3Tw==}
@@ -9816,6 +9824,10 @@ snapshots:
   stackback@0.0.2: {}
 
   std-env@3.9.0: {}
+
+  storybook-addon-deep-controls@0.9.5(storybook@8.6.12(prettier@2.8.8)):
+    dependencies:
+      storybook: 8.6.12(prettier@2.8.8)
 
   storybook@8.6.12(prettier@2.8.8):
     dependencies:

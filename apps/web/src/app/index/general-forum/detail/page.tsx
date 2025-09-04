@@ -1,6 +1,6 @@
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
 import { GeneralForrumCommentList } from '@/components/general-forum/general-forum-comment-list'
-import GeneralForumHeaderSelect from '@/components/general-forum/general-forum-header-select'
+import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
 import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
@@ -86,14 +86,16 @@ export default function GeneralForumDetailPage({
         backgroundColor: '#000000',
         border: false,
         renderRight: () => (
-          <GeneralForumHeaderSelect isMine={generalForumDetailData.mine} />
+          <GeneralForumHeaderDropDown isMine={generalForumDetailData.mine} />
         ),
       }}
     >
-      <main className="flex min-h-full flex-col bg-bgColor px-4 pb-10">
-        <GeneralForumTitle {...titleProps} />
-        <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
-        <GeneralForumButtonList {...buttonListProps} />
+      <main className="flex min-h-full flex-col bg-bgColor">
+        <div className="px-4">
+          <GeneralForumTitle {...titleProps} />
+          <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
+          <GeneralForumButtonList {...buttonListProps} />
+        </div>
         <Suspense fallback={<div>Loading...</div>}>
           <GeneralForrumCommentList
             data={commentListData}
