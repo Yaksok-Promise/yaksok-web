@@ -1,3 +1,4 @@
+import { AppointmentQueryKey } from '@/utils/query-key'
 import { InfiniteData, QueryKey } from '@tanstack/react-query'
 import {
   UseSuspenseInfiniteQueryOptions,
@@ -32,7 +33,7 @@ type BaseInfiniteOptions<TItem, TQueryKey extends QueryKey> = Omit<
 export function useHttpInfiniteQuery<
   Body = undefined,
   TItem = unknown,
-  TQueryKey extends QueryKey = QueryKey,
+  TQueryKey extends AppointmentQueryKey = AppointmentQueryKey,
 >(
   queryKey: TQueryKey,
   path: PathType,

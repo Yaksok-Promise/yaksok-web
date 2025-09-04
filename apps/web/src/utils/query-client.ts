@@ -13,8 +13,6 @@ export const getQueryData = <Res, K extends AppointmentQueryKey>(
 ) => client.getQueryData<Res>(key)
 
 /**
- * React Query의 setQueryData 원형을 그대로 따르면서
- * queryKey를 YxQueryKey로 좁힌 버전.
  *
  * - 값 또는 업데이터 함수를 모두 허용 (Updater)
  * - TInferredQueryFnData는 React Query의 InferDataFromTag 로 추론

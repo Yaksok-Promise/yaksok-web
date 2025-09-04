@@ -4,7 +4,7 @@ import {
   invalidateQueries,
   setQueryData,
 } from '@/utils/query-client'
-import { AppointmentQueryKey } from '@/utils/query-key'
+import { AppointmentQueryKey, QUERY_KEY } from '@/utils/query-key'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   GeneralForumDetail,
@@ -101,10 +101,15 @@ export function useOptimisticLike<T extends Likeable>(
 export const useMagazineLikeOptimistic = (
   magazineId: string,
   target: 'POST' | 'COMMENT'
-) => useOptimisticLike<MagazineDetail>('magazine', magazineId, target)
+) => useOptimisticLike<MagazineDetail>(QUERY_KEY.MAGAZINE, magazineId, target)
 
 // general-forum
 export const useGeneralForumLikeOptimistic = (
   forumId: string,
   target: 'POST' | 'COMMENT'
-) => useOptimisticLike<GeneralForumDetail>('general-forum', forumId, target)
+) =>
+  useOptimisticLike<GeneralForumDetail>(
+    QUERY_KEY.GENERAL_FORUM,
+    forumId,
+    target
+  )
