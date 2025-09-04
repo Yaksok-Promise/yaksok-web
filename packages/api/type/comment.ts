@@ -5,6 +5,9 @@ export type Reply = {
   childCommentId: string
   author: string
   content: string
+  likeCount: number
+  liked: boolean
+  mine: boolean
 }
 
 export type Comment = {
@@ -12,6 +15,9 @@ export type Comment = {
   author: string
   content: string
   replies: Reply[]
+  liked: boolean
+  mine: boolean
+  likeCount: number
 }
 
 export type MimeImage =

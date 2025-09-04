@@ -32,6 +32,10 @@ export type MagazineDetail = Magazine & {
   mine: boolean
 }
 
+export type GeneralForumDetail = MagazineDetail & {
+  authorProfileImageUrl: string
+}
+
 export type MagazineListResponse = Pagination & {
   content: Magazine[]
 }
