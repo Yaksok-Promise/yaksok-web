@@ -14,30 +14,26 @@ import { CheckResultResponse } from '@yaksok/api/userType'
 import { useCallback } from 'react'
 import { useGetToken } from '../use-get-token'
 import { useHttpMutation } from './use-http-mutation'
+import { CommentResponse } from '@yaksok/api/commentType'
+import { updateCommentListOptimisticByElementId } from '@/utils/update-comment-like-optimistic'
+import { updateMagazineLikeOptimistic } from '@/utils/upadate-magazine-like-optimistic'
 
-type Likeable = {
-  liked: boolean
-  likes?: number | null
-}
-
-type LikeContext<T> = {
-  previous?: T
-}
+type LikeContext<T> = { previous?: T }
 
 /**
  * 공통 낙관적 좋아요 토글 훅
- * @param scope 쿼리 키 prefix (예: 'magazine', 'general-forum')
+ * @param queryKey 쿼리 키
  * @param elementId 서버에 전송할 elementId (보통 상세 id)
  * @param target 'POST' | 'COMMENT'
  */
-export function useOptimisticLike<T extends Likeable>(
-  scope: 'magazine' | 'general-forum',
+function useOptimisticLike<T>(
+  queryKey: AppointmentQueryKey,
   elementId: string,
-  target: 'POST' | 'COMMENT'
+  target: 'POST' | 'COMMENT',
+  customUpdater: (old: T | undefined) => T | undefined
 ) {
   const queryClient = useQueryClient()
   const token = useGetToken()
-  const queryKey = [scope, elementId] as const
 
   const mutation = useHttpMutation<
     undefined,
@@ -62,16 +58,11 @@ export function useOptimisticLike<T extends Likeable>(
           queryKey
         )
 
-        setQueryData<T, AppointmentQueryKey>(queryClient, queryKey, old => {
-          if (!old) return old
-          const nextLiked = !old.liked
-          const delta = nextLiked ? 1 : -1
-          return {
-            ...old,
-            liked: nextLiked,
-            likes: Math.max(0, (old.likes ?? 0) + delta),
-          }
-        })
+        setQueryData<T, AppointmentQueryKey>(
+          queryClient,
+          queryKey,
+          customUpdater
+        )
 
         return { previous }
       },
@@ -98,18 +89,34 @@ export function useOptimisticLike<T extends Likeable>(
 }
 
 // magazine
-export const useMagazineLikeOptimistic = (
-  magazineId: string,
-  target: 'POST' | 'COMMENT'
-) => useOptimisticLike<MagazineDetail>(QUERY_KEY.MAGAZINE, magazineId, target)
+export const useMagazineLikeOptimistic = (magazineId: string) => {
+  return useOptimisticLike<MagazineDetail>(
+    [QUERY_KEY.MAGAZINE, magazineId],
+    magazineId,
+    'POST',
+    updateMagazineLikeOptimistic
+  )
+}
 
 // general-forum
-export const useGeneralForumLikeOptimistic = (
-  forumId: string,
-  target: 'POST' | 'COMMENT'
-) =>
-  useOptimisticLike<GeneralForumDetail>(
-    QUERY_KEY.GENERAL_FORUM,
+export const useGeneralForumLikeOptimistic = (forumId: string) => {
+  return useOptimisticLike<GeneralForumDetail>(
+    [QUERY_KEY.GENERAL_FORUM, forumId],
     forumId,
-    target
+    'POST',
+    updateMagazineLikeOptimistic
   )
+}
+
+// commentList
+export const useCommentLikeOptimistic = (postId: string, commentId: string) => {
+  const customUpdater = (old: CommentResponse | undefined) =>
+    updateCommentListOptimisticByElementId(old, commentId)
+
+  return useOptimisticLike<CommentResponse>(
+    [QUERY_KEY.COMMENT_LIST, postId],
+    commentId,
+    'COMMENT',
+    customUpdater
+  )
+}

@@ -18,7 +18,6 @@ export type Magazine = {
   thumbnailUrl?: string
   likes: number
   views: number
-  commentCount: number
   tags: Tag[]
   hasImages: boolean
 }

@@ -1,27 +1,21 @@
-import { MoreVertical, ReplyArrow } from '@yaksok/icons'
+import { ReplyArrow } from '@yaksok/icons'
 import { changeDate, cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import { Profile } from './profile'
 
-type CommentData = {
-  id: string
+export type FlatItem = {
+  mode: 'comment' | 'reply'
+  createdAt: string
+  id: string // comment: parentCommentId, reply: childCommentId
   author: string
   authorProfileImageUrl: string
   content: string
-  createdAt: string
+  likeCount: number
   liked: boolean
   mine: boolean
-  likeCount: number
+  isMostLiked: boolean // 고유 최대일 때만 true
+  parentId?: string // reply일 때만 부모 id
 }
-
-export type CommentProps = {
-  mode: 'reply' | 'comment'
-  commentData: CommentData
-  isMostLiked?: boolean
-  background?: 'comment' | 'reply'
-  sideButton?: React.ReactNode
-  likeButton?: React.ReactNode
-} & Omit<VariantProps<typeof commentVariants>, 'background'>
 
 export const commentVariants = cva('flex flex-col gap-2.5 pt-5', {
   variants: {
@@ -43,36 +37,55 @@ export const commentVariants = cva('flex flex-col gap-2.5 pt-5', {
   },
 })
 
+/** 배경을 강제로 덮어쓸 때 사용(‘mostLiked’는 내부에서만 결정) */
+type BackgroundBase = Exclude<
+  NonNullable<VariantProps<typeof commentVariants>['background']>,
+  'mostLiked'
+>
+
+export type CommentProps = {
+  /** 한 덩어리로 전달: mode / isMostLiked / author ... 모두 포함 */
+  item: FlatItem
+  /** 기본은 item.mode를 따라가고, 필요 시 강제 오버라이드 */
+  backgroundOverride?: BackgroundBase
+  sideButton?: React.ReactNode
+  likeButton?: React.ReactNode
+}
+
 export function Comment({
-  mode,
-  commentData,
+  item,
   sideButton,
   likeButton,
-  isMostLiked = false,
-  background = 'comment',
+  backgroundOverride,
 }: CommentProps) {
+  const computedBackground = item.isMostLiked
+    ? 'mostLiked'
+    : (backgroundOverride ?? item.mode)
+
   return (
     <div
       className={cn(
         commentVariants({
-          mode,
-          background: isMostLiked ? 'mostLiked' : background,
+          mode: item.mode,
+          background: computedBackground,
         })
       )}
     >
       <div className="flex items-center justify-between" role="header">
         <div className="flex items-center gap-1">
-          {mode === 'reply' && <ReplyArrow size={8} fill="#959598" />}
-          <Profile profileUrl={commentData.authorProfileImageUrl} size={25} />
+          {item.mode === 'reply' && <ReplyArrow size={8} fill="#959598" />}
+          <Profile profileUrl={item.authorProfileImageUrl} size={25} />
           <span className="text-caption1 text-gray02">
-            {commentData.author}·{changeDate(commentData.createdAt, 'time')}
+            {item.author}·{changeDate(item.createdAt, 'time')}
           </span>
         </div>
         <div>{sideButton}</div>
       </div>
+
       <div className="text-wrap pr-2 pl-7.5 text-body2 text-gray01">
-        {commentData.content}
+        {item.content}
       </div>
+
       <div className="flex items-center justify-end border-gray03/20 border-b-1 pb-2">
         {likeButton}
       </div>
@@ -82,7 +95,7 @@ export function Comment({
 
 export function NotComment() {
   return (
-    <div className="flex items-center justify-center bg-bgColor">
+    <div className="flex items-center justify-center bg-bgColor pt-5">
       <h3 className="text-subGray01 text-subhead1">첫 댓글을 남겨보세요!</h3>
     </div>
   )

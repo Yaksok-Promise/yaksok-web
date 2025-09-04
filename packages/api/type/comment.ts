@@ -3,6 +3,8 @@ import { Pagination } from './pagination'
 // comment type
 export type Reply = {
   childCommentId: string
+  createdAt: string
+  authorProfileImageUrl: string
   author: string
   content: string
   likeCount: number
@@ -12,7 +14,9 @@ export type Reply = {
 
 export type Comment = {
   parentCommentId: string
+  authorProfileImageUrl: string
   author: string
+  createdAt: string
   content: string
   replies: Reply[]
   liked: boolean

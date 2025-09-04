@@ -1,31 +1,66 @@
-import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
-import { useGetToken } from '@/hooks/use-get-token'
-import { QUERY_KEY } from '@/utils/query-key'
+import { useCommentLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
+import { flattenAndMarkMostLiked } from '@/utils/change-comment-list-optimistic'
 import { CommentResponse } from '@yaksok/api/commentType'
+import { BlankHeart } from '@yaksok/icons'
+import { NotComment, Comment } from '@yaksok/ui'
 
 export type GeneralForrumCommentListProps = {
+  data: CommentResponse
+  countComment: number
   postId: string
 }
 
 export const GeneralForrumCommentList = ({
+  data,
+  countComment,
   postId,
 }: GeneralForrumCommentListProps) => {
-  const token = useGetToken()
-  const result = useHttpQuery<undefined, CommentResponse>(
-    [QUERY_KEY.COMMENT_LIST, postId],
-    '/api/comment/list',
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      query: {
-        postId,
-      },
-    }
+  if (countComment === 0) {
+    return <NotComment />
+  }
+  const items = flattenAndMarkMostLiked(data)
+  console.log('items Flattened', items)
+  return (
+    <>
+      {items.map(item => (
+        <Comment
+          key={item.id}
+          item={item}
+          likeButton={
+            <LikedButton
+              liked={item.liked}
+              likeCount={item.likeCount}
+              commentId={item.id}
+              postId={postId}
+            />
+          }
+        />
+      ))}
+    </>
   )
+}
 
-  const { data } = result
-  console.log('Comment List', data)
-
-  return <div>GeneralForrumCommentList</div>
+type LikedButtonProps = {
+  liked: boolean
+  likeCount: number
+  commentId: string
+  postId: string
+}
+const LikedButton = ({
+  liked,
+  likeCount,
+  commentId,
+  postId,
+}: LikedButtonProps) => {
+  const { handleLike } = useCommentLikeOptimistic(postId, commentId)
+  return (
+    <button className="flex items-center gap-1" onClick={handleLike}>
+      <BlankHeart
+        size={20}
+        stroke="#636366"
+        fill={liked ? '#636366' : 'none'}
+      />
+      {likeCount}
+    </button>
+  )
 }

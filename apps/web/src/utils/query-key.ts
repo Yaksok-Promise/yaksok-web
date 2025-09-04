@@ -7,7 +7,7 @@ export const QUERY_KEY = {
 } as const
 
 // QUERY_KEY의 value 유니온
-type QueryKeyHead = (typeof QUERY_KEY)[keyof typeof QUERY_KEY]
+export type QueryKeyHead = (typeof QUERY_KEY)[keyof typeof QUERY_KEY]
 
 // "첫번째는 QueryKeyHead, 나머지는 string 0개 이상" 제약
 export type AppointmentQueryKey = readonly [

@@ -5,8 +5,10 @@ import { GeneralForumTitle } from '@/components/general-forum/general-forum-titl
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { useUpdateToken } from '@/hooks/use-update-token'
+import { QUERY_KEY } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
+import { CommentResponse } from '@yaksok/api/commentType'
 import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
@@ -20,9 +22,10 @@ export default function GeneralForumDetailPage({
 }: CommunityDetailPageProps) {
   useUpdateToken()
 
+  // general forum detail
   const token = useGetToken()
   const result = useHttpQuery<undefined, MagazineDetail>(
-    ['general-forum', id],
+    [QUERY_KEY.GENERAL_FORUM, id],
     '/api/post/general-forum/{postId}',
     {
       headers: {
@@ -33,23 +36,45 @@ export default function GeneralForumDetailPage({
       },
     }
   )
-  const { data } = result
-  console.log(data)
+  const { data: generalForumDetailData } = result
+  console.log('general forum detail', generalForumDetailData)
+
+  // general forum comment list
+  const commentListResult = useHttpQuery<undefined, CommentResponse>(
+    [QUERY_KEY.COMMENT_LIST, id],
+    '/api/comment/list',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      query: {
+        postId: id,
+      },
+    }
+  )
+
+  const { data: commentListData } = commentListResult
+  console.log('Comment List', commentListData)
+
+  const countComment = (commentListData ?? []).reduce(
+    (sum, c) => sum + 1 + (Array.isArray(c.replies) ? c.replies.length : 0),
+    0
+  )
 
   // props
   const titleProps = {
-    title: data.title,
-    tags: data.tags,
-    author: data.author,
-    date: data.createdAt,
+    title: generalForumDetailData.title,
+    tags: generalForumDetailData.tags,
+    author: generalForumDetailData.author,
+    date: generalForumDetailData.createdAt,
   }
 
   const buttonListProps = {
-    likes: data.likes,
-    liked: data.liked,
-    views: data.views,
-    commentCount: data.commentCount,
-    id: data.id,
+    likes: generalForumDetailData.likes,
+    liked: generalForumDetailData.liked,
+    views: generalForumDetailData.views,
+    commentCount: countComment,
+    id: generalForumDetailData.id,
   }
 
   return (
@@ -60,15 +85,21 @@ export default function GeneralForumDetailPage({
         iconColor: '#ffffff',
         backgroundColor: '#000000',
         border: false,
-        renderRight: () => <GeneralForumHeaderSelect isMine={data.mine} />,
+        renderRight: () => (
+          <GeneralForumHeaderSelect isMine={generalForumDetailData.mine} />
+        ),
       }}
     >
       <main className="flex min-h-full flex-col bg-bgColor px-4 pb-10">
         <GeneralForumTitle {...titleProps} />
-        <div className="pt-5 pb-20">{data.body}</div>
+        <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
         <GeneralForumButtonList {...buttonListProps} />
         <Suspense fallback={<div>Loading...</div>}>
-          <GeneralForrumCommentList postId={id} />
+          <GeneralForrumCommentList
+            data={commentListData}
+            countComment={countComment}
+            postId={id}
+          />
         </Suspense>
       </main>
     </AppScreen>
