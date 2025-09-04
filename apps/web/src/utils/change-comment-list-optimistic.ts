@@ -12,11 +12,7 @@ export function flattenAndMarkMostLiked(
 
   // 최대값 추적용
   let max = -Infinity
-
-  // idx와 맥스값 중복 여부는 혹시 몰라서 남겨둠
-  // biome-ignore lint/correctness/noUnusedVariables: <explanation>
   let maxIdx = -1
-  // biome-ignore lint/correctness/noUnusedVariables: <explanation>
   let hasDuplicateMax = false
 
   const consider = (idx: number, likeCount: number) => {
