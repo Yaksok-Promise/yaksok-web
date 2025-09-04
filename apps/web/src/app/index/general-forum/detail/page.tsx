@@ -1,4 +1,5 @@
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
+import { GeneralForrumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import GeneralForumHeaderSelect from '@/components/general-forum/general-forum-header-select'
 import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
@@ -6,6 +7,7 @@ import { useGetToken } from '@/hooks/use-get-token'
 import { useUpdateToken } from '@/hooks/use-update-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
+import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
   params: {
@@ -61,11 +63,13 @@ export default function GeneralForumDetailPage({
         renderRight: () => <GeneralForumHeaderSelect isMine={data.mine} />,
       }}
     >
-      <main className="flex flex-col bg-white px-4 pb-10">
+      <main className="flex min-h-full flex-col bg-bgColor px-4 pb-10">
         <GeneralForumTitle {...titleProps} />
         <div className="pt-5 pb-20">{data.body}</div>
         <GeneralForumButtonList {...buttonListProps} />
-        {/* <GeneralForumCommentList /> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <GeneralForrumCommentList postId={id} />
+        </Suspense>
       </main>
     </AppScreen>
   )

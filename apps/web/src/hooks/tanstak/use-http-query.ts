@@ -1,14 +1,11 @@
-import {
-  QueryKey,
-  UseQueryOptions,
-  useSuspenseQuery,
-} from '@tanstack/react-query'
+import { AppointmentQueryKey } from '@/utils/query-key'
+import { UseQueryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { http, PathType, RequestOption } from '@yaksok/api'
 
 export const useHttpQuery = <
   Body = undefined,
   Res = unknown,
-  TQueryKey extends QueryKey = QueryKey,
+  TQueryKey extends AppointmentQueryKey = AppointmentQueryKey,
 >(
   queryKey: TQueryKey,
   path: PathType,

@@ -8,7 +8,6 @@ import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
-import { useState } from 'react'
 
 import { useInView } from 'react-intersection-observer'
 

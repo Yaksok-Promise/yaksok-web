@@ -1,30 +1,22 @@
+//query key
 export const QUERY_KEY = {
   MY_INFO: 'myInfo',
-}
+  COMMENT_LIST: 'commentList',
+  GENERAL_FORUM: 'general-forum',
+  MAGAZINE: 'magazine',
+} as const
 
-// 메거진
-export const MAGAZINE_CATEGORY = {
-  All: '전체',
-  MEDICINE: '의약',
-  LIFE: '웰빙·라이프스타일',
-}
+// QUERY_KEY의 value 유니온
+type QueryKeyHead = (typeof QUERY_KEY)[keyof typeof QUERY_KEY]
 
-export type MagazineOrGeneralForum = 'magazine' | 'general-forum'
+// "첫번째는 QueryKeyHead, 나머지는 string 0개 이상" 제약
+export type AppointmentQueryKey = readonly [
+  QueryKeyHead,
+  ...(readonly string[]),
+]
 
-export type MagazineCategory =
-  (typeof MAGAZINE_CATEGORY)[keyof typeof MAGAZINE_CATEGORY]
-
-export type MagazineCategoryKey = keyof typeof MAGAZINE_CATEGORY
-
-// 라운지
-export const LOUNGE_CATEGORY = {
-  All: '전체',
-  QUESTION: '질문',
-  REVIEW: '후기',
-  DIALY: '잡담·일상',
-}
-
-export type LoungeCategory =
-  (typeof LOUNGE_CATEGORY)[keyof typeof LOUNGE_CATEGORY]
-
-export type LoungeCategoryKey = keyof typeof LOUNGE_CATEGORY
+// 편하게 만드는 헬퍼(튜플 리터럴 보존 + 자동 추론)
+export const makeQueryKey = <H extends QueryKeyHead>(
+  head: H,
+  ...rest: string[]
+) => [head, ...rest] as const

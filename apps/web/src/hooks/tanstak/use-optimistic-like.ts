@@ -1,3 +1,10 @@
+import {
+  cancelQueries,
+  getQueryData,
+  invalidateQueries,
+  setQueryData,
+} from '@/utils/query-client'
+import { AppointmentQueryKey } from '@/utils/query-key'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   GeneralForumDetail,
@@ -48,12 +55,14 @@ export function useOptimisticLike<T extends Likeable>(
     },
     {
       onMutate: async () => {
-        await queryClient.cancelQueries({ queryKey })
+        await cancelQueries(queryClient, queryKey)
 
-        const previous = queryClient.getQueryData<T>(queryKey)
+        const previous = getQueryData<T, AppointmentQueryKey>(
+          queryClient,
+          queryKey
+        )
 
-        // 낙관적 업데이트
-        queryClient.setQueryData<T>(queryKey, old => {
+        setQueryData<T, AppointmentQueryKey>(queryClient, queryKey, old => {
           if (!old) return old
           const nextLiked = !old.liked
           const delta = nextLiked ? 1 : -1
@@ -61,18 +70,22 @@ export function useOptimisticLike<T extends Likeable>(
             ...old,
             liked: nextLiked,
             likes: Math.max(0, (old.likes ?? 0) + delta),
-          } as T
+          }
         })
 
         return { previous }
       },
       onError: (_err, _vars, ctx) => {
         if (ctx?.previous) {
-          queryClient.setQueryData(queryKey, ctx.previous)
+          setQueryData<T, AppointmentQueryKey>(
+            queryClient,
+            queryKey,
+            ctx.previous
+          )
         }
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey })
+        invalidateQueries(queryClient, queryKey)
       },
     }
   )

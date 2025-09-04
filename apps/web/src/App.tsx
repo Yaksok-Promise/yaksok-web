@@ -5,7 +5,6 @@ import { Suspense } from 'react'
 import { ErrorProvider } from './components/common/error-boundary'
 import '@yaksok/ui/styles.css'
 import '@stackflow/plugin-basic-ui/index.css'
-import '@yaksok/ui/styles.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {
