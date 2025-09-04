@@ -20,7 +20,7 @@ type TextMode = 'line' | 'box'
 export interface TextFieldProps
   extends React.ComponentProps<'input'>,
     VariantProps<typeof textFieldVariants> {
-  label: string
+  label?: string
   message: Message
   regex: RegExp
   isShownIcon?: boolean
@@ -107,13 +107,19 @@ export const TextField = React.forwardRef(function TextField(
   if (mode === 'line') {
     return (
       <div className="flex w-full flex-col">
-        <label className="text-caption1">
-          {status?.includes('Error') ? (
-            <span className="text-red01">{message[status as ErrorStatus]}</span>
-          ) : (
-            label
-          )}
-        </label>
+        {label && status?.includes('Error') && (
+          <label className="text-caption1">
+            {status?.includes('Error') ? (
+              <span className="text-red01">
+                {message[status as ErrorStatus]}
+              </span>
+            ) : (
+              label && (
+                <label className="text-black01 text-caption1">{label}</label>
+              )
+            )}
+          </label>
+        )}
         <div className="flex items-center gap-[16px]">
           <div className="flex w-full flex-1 items-center justify-between border-black01 border-b-[2px]">
             <input
@@ -148,7 +154,7 @@ export const TextField = React.forwardRef(function TextField(
   return (
     <div className="flex w-full flex-col">
       <div className="flex flex-col gap-2">
-        <label className="text-black01 text-caption1">{label}</label>
+        {label && <label className="text-black01 text-caption1">{label}</label>}
         <div className="relative flex flex-1 items-center justify-between">
           <input
             ref={ref}

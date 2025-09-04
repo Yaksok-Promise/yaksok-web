@@ -1,6 +1,6 @@
 import {
-  MagazineDetail,
   GeneralForumDetail,
+  MagazineDetail,
 } from '@yaksok/api/boardMagazineType'
 
 export function updateMagazineLikeOptimistic<

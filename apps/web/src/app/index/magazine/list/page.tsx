@@ -1,9 +1,9 @@
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { MagazineTitle } from '@/components/magazine/magazine-title'
+import { MagazineCategoryKey } from '@/const/magazine-and-lounge'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
-import { MagazineCategoryKey } from '@/const/magazine-and-lounge'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { cn } from '@yaksok/utils'
 

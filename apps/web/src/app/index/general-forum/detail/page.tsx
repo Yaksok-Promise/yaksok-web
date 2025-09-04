@@ -1,6 +1,7 @@
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
 import { GeneralForrumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
+import { GeneralForumTextField } from '@/components/general-forum/general-forum-text-field'
 import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
@@ -90,7 +91,7 @@ export default function GeneralForumDetailPage({
         ),
       }}
     >
-      <main className="flex min-h-full flex-col bg-bgColor">
+      <main className="relative flex min-h-full flex-col bg-bgColor">
         <div className="px-4">
           <GeneralForumTitle {...titleProps} />
           <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
@@ -103,6 +104,7 @@ export default function GeneralForumDetailPage({
             postId={id}
           />
         </Suspense>
+        <GeneralForumTextField />
       </main>
     </AppScreen>
   )

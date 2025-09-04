@@ -5,18 +5,18 @@ import {
   setQueryData,
 } from '@/utils/query-client'
 import { AppointmentQueryKey, QUERY_KEY } from '@/utils/query-key'
+import { updateMagazineLikeOptimistic } from '@/utils/upadate-magazine-like-optimistic'
+import { updateCommentListOptimisticByElementId } from '@/utils/update-comment-like-optimistic'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   GeneralForumDetail,
   MagazineDetail,
 } from '@yaksok/api/boardMagazineType'
+import { CommentResponse } from '@yaksok/api/commentType'
 import { CheckResultResponse } from '@yaksok/api/userType'
 import { useCallback } from 'react'
 import { useGetToken } from '../use-get-token'
 import { useHttpMutation } from './use-http-mutation'
-import { CommentResponse } from '@yaksok/api/commentType'
-import { updateCommentListOptimisticByElementId } from '@/utils/update-comment-like-optimistic'
-import { updateMagazineLikeOptimistic } from '@/utils/upadate-magazine-like-optimistic'
 
 type LikeContext<T> = { previous?: T }
 
