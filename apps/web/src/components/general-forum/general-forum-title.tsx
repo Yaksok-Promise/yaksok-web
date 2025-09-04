@@ -29,9 +29,9 @@ export function GeneralForumTitle({
       <div>
         <h1 className="text-wrap text-head5">{title}</h1>
       </div>
-      <div className="flex items-center gap-2">
-        {tags.map(tag => (
-          <Tag key={tag.id} tag={tag} size="fit" />
+      <div className="flex flex-wrap items-center gap-2">
+        {tags.map((tag, idx) => (
+          <Tag key={idx} tag={tag} size="fit" />
         ))}
       </div>
     </div>

@@ -1,11 +1,11 @@
-import { useHttpInfiniteQuery } from '@/hooks/tanstak/use-http-infinity-query'
 import {
   LOUNGE_CATEGORY,
   LoungeCategoryKey,
   MAGAZINE_CATEGORY,
   MagazineCategoryKey,
   MagazineOrGeneralForum,
-} from '@/utils/query-key'
+} from '@/const/magazine-and-lounge'
+import { useHttpInfiniteQuery } from '@/hooks/tanstak/use-http-infinity-query'
 import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
