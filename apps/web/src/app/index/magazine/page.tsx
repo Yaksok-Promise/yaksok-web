@@ -11,7 +11,7 @@ export default function MagazinePage() {
   return (
     <AppScreen
       appBar={{
-        title: '라운지',
+        title: '메거진',
         backgroundColor: '#ffffff',
         border: false,
       }}

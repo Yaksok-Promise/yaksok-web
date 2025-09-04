@@ -36,7 +36,7 @@ export default function GeneralForumPage() {
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
             url="/api/post/general-forum/list"
-            queryKey="magazine"
+            queryKey="general-forum"
           />
           <div className="mb-5 flex items-center justify-center">
             <Button

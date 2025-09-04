@@ -4,6 +4,7 @@ import {
   LoungeCategoryKey,
   MAGAZINE_CATEGORY,
   MagazineCategoryKey,
+  MagazineOrGeneralForum,
 } from '@/utils/query-key'
 import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
@@ -19,10 +20,10 @@ export type LoungeAndMagazineTabProps<T extends string> = {
   tab: T
   tabList: T[]
   url: PathType
-  queryKey: 'magazine' | 'lounge'
+  queryKey: MagazineOrGeneralForum
 }
 
-const isMagazine = (queryKey: 'magazine' | 'lounge'): queryKey is 'magazine' =>
+const isMagazine = (queryKey: MagazineOrGeneralForum): queryKey is 'magazine' =>
   queryKey === 'magazine'
 
 export function LoungeAndMagazineTab<T extends string>({
@@ -79,7 +80,7 @@ export function LoungeAndMagazineTab<T extends string>({
 }
 
 type LoungeAndMagazineListItemProps = {
-  queryKey: 'magazine' | 'lounge'
+  queryKey: MagazineOrGeneralForum
   category: string
   sort: string
   url: PathType

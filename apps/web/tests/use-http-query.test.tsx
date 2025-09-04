@@ -1,14 +1,14 @@
-// use-http-query.test.tsx
-import { describe, it, vi, expect } from 'vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import {
   QueryClient,
   QueryClientProvider,
   UseQueryOptions,
 } from '@tanstack/react-query'
-import { useHttpQuery } from '../src/hooks/tanstak/use-http-query'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { http, PathType } from '@yaksok/api'
 import React from 'react'
+// use-http-query.test.tsx
+import { describe, expect, it, vi } from 'vitest'
+import { useHttpQuery } from '../src/hooks/tanstak/use-http-query'
 
 // http.get 모킹
 vi.mock('@yaksok/api', () => {

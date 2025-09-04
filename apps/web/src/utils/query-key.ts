@@ -9,6 +9,8 @@ export const MAGAZINE_CATEGORY = {
   LIFE: '웰빙·라이프스타일',
 }
 
+export type MagazineOrGeneralForum = 'magazine' | 'general-forum'
+
 export type MagazineCategory =
   (typeof MAGAZINE_CATEGORY)[keyof typeof MAGAZINE_CATEGORY]
 

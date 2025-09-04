@@ -1,4 +1,4 @@
-import { useMagazineLikeOptimistic } from '@/hooks/tanstak/use-magazine-like-optimistic'
+import { useMagazineLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
 import { BlankHeart, Bookmark, Share } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'

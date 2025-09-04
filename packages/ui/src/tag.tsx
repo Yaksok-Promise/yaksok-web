@@ -4,7 +4,7 @@ import { VariantProps, cva } from 'class-variance-authority'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 const tagVariants = cva(
-  'flex items-center justify-center rounded-[4px] bg-gray03/40 px-1.5 py-0.5',
+  'flex items-center justify-center rounded-[4px] bg-gray03/30 px-1.5 py-0.5',
   {
     variants: {
       size: {
