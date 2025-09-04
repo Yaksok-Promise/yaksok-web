@@ -2,7 +2,7 @@ import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-ta
 import { SideDrawer } from '@/components/common/side-drawer'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
-import { LoungeCategoryKey } from '@/utils/query-key'
+import { LoungeCategoryKey } from '@/const/magazine-and-lounge'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Pencil } from '@yaksok/icons'
