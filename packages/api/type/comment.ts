@@ -34,27 +34,6 @@ export type Tag = {
   name: string
 }
 
-export type ForumImage = {
-  id: number
-  url: string
-  thumbnailUrl: string
-  originalName: string
-  mimeType: MimeImage
-}
-
-export type GeneralForum = {
-  id: string
-  title: string
-  body: string
-  author: string
-  createdAt: string
-  images: ForumImage[]
-  likes: number
-  views: number
-  liked: boolean
-  mine: boolean
-}
-
 // comment requset type
 export type CommentRequest = {
   content: string
@@ -62,14 +41,6 @@ export type CommentRequest = {
 
 //comment response type
 export type CommentResponse = Comment[]
-
-export type GeneralForumListResponse = Pagination & {
-  content: Omit<GeneralForum, 'liked' | 'mine'> &
-    {
-      tag: Tag[]
-      commentCount: number
-    }[]
-}
 
 export type ToggleRequest = {
   elementId: string
