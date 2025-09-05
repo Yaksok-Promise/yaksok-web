@@ -9,7 +9,7 @@ export type GeneralForumTextFieldProps = {
   postId: string
   commentId: string
   onCancelEdit?: () => void
-  mode?: 'comment' | 'reply'
+  mode?: 'comment' | 'reply' | 'edit'
 }
 
 export const GeneralForumTextField = forwardRef<
@@ -22,7 +22,7 @@ export const GeneralForumTextField = forwardRef<
   // api 댓글 생성
   const postMutation = useCommentReplyMutation({
     postId,
-    mode,
+    mode: 'comment',
     controllDisabled: setDisabled,
     commentId: postId,
     method: 'post',
@@ -31,23 +31,43 @@ export const GeneralForumTextField = forwardRef<
   // api 답글 생성
   const replyMutation = useCommentReplyMutation({
     postId,
-    mode,
+    mode: 'reply',
     controllDisabled: setDisabled,
     commentId,
-    method: 'post',
+  })
+
+  // api 댓글 수정
+  const editMutation = useCommentReplyMutation({
+    postId,
+    controllDisabled: setDisabled,
+    commentId,
+    method: 'patch',
   })
 
   const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const value =
       ref && typeof ref !== 'function' ? ref.current?.getValue().trim() : ''
+
+    console.log(value)
     if (!value) return
 
-    const mutate = mode === 'comment' ? postMutation : replyMutation
-    await mutate.mutateAsync({ content: value })
-    ref && typeof ref !== 'function' && ref.current?.clear()
-    setDisabled(true)
-    if (mode === 'reply') onCancelEdit?.()
+    if (mode === 'edit') {
+      await editMutation.mutateAsync({ content: value })
+    }
+    if (mode === 'reply') {
+      await replyMutation.mutateAsync({ content: value })
+    }
+    if (mode === 'comment') {
+      await postMutation.mutateAsync({ content: value })
+    }
+
+    if (ref && typeof ref !== 'function') {
+      ref.current?.clear()
+      ref.current?.unFocus()
+    }
+
+    onCancelEdit?.()
   }
 
   // 인풋 입력창이 비어있을 경우 포커스 해제하면 댓글 모드로 복귀
@@ -57,7 +77,10 @@ export const GeneralForumTextField = forwardRef<
 
     const v =
       ref && typeof ref !== 'function' ? ref.current?.getValue().trim() : ''
-    if (!v) onCancelEdit?.()
+    if (!v) {
+      ref && typeof ref !== 'function' && ref.current?.clear()
+      onCancelEdit?.()
+    }
   }
 
   return (
@@ -72,7 +95,11 @@ export const GeneralForumTextField = forwardRef<
         message={{}}
         mode="box"
         placeholder={
-          mode === 'comment' ? '댓글을 입력해 주세요' : '답글을 입력해 주세요'
+          mode === 'comment'
+            ? '댓글을 입력해 주세요'
+            : mode === 'reply'
+              ? '답글을 입력해 주세요'
+              : '댓글을 수정해 주세요'
         }
         className="bg-gray07"
         onChange={e => setDisabled(e.target.value.trim().length === 0)}

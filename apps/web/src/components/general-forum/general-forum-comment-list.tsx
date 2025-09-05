@@ -12,45 +12,66 @@ import {
 import { Comment, DropDown, NotComment, TextFieldAPI } from '@yaksok/ui'
 import { GeneralForumTextField } from './general-forum-text-field'
 import { useMemo, useRef, useState } from 'react'
+import { useCommentReplyMutation } from '@/hooks/tanstak/use-comment-mutation'
 
-export type GeneralForrumCommentListProps = {
+export type GeneralForumCommentListProps = {
   data: CommentResponse
   countComment: number
   postId: string
 }
 
-export const GeneralForrumCommentList = ({
+export const GeneralForumCommentList = ({
   data,
   countComment,
   postId,
-}: GeneralForrumCommentListProps) => {
+}: GeneralForumCommentListProps) => {
+  // textField 관련 상태
   const [focusedId, setFocusedId] = useState<string | null>(null)
-  const [textFieldMode, setTextFieldMode] = useState<'comment' | 'reply'>(
-    'comment'
-  )
-
+  const [textFieldMode, setTextFieldMode] = useState<
+    'comment' | 'reply' | 'edit'
+  >('comment')
   const [disabled, setDisabled] = useState(true)
 
-  // ✅ Single unified ref (focus/clear/getValue + DOM via .el)
   const inputRef = useRef<TextFieldAPI>(null)
 
+  // 댓글 리스트 관련 상태
   const items = useMemo(() => {
     const base = flattenAndMarkMostLiked(data)
     return base.map(it => ({ ...it, isFocus: it.id === focusedId }))
   }, [data, focusedId])
 
+  // 답글 생성 로직
   const handleCancelEdit = () => {
     setFocusedId(null)
     setTextFieldMode('comment')
   }
 
-  const focusAndReply = (targetId: string) => {
+  const focusComment = (targetId: string) => {
     setFocusedId(targetId)
-    setTextFieldMode('reply')
     requestAnimationFrame(() => {
       inputRef.current?.focus() // ✅ use the same ref
     })
   }
+
+  const focusAndReply = (targetId: string) => {
+    focusComment(targetId)
+    setTextFieldMode('reply')
+  }
+
+  // 댓글 수정 로직
+  const focusAndEdit = (targetId: string) => {
+    focusComment(targetId)
+    setTextFieldMode('edit')
+  }
+
+  // 댓글, 답글 삭제 로직
+  const commentDeleteMutation = useCommentReplyMutation({
+    commentId: focusedId ?? '',
+    postId,
+    mode: 'comment',
+    method: 'delete',
+    controllDisabled: setDisabled,
+  })
 
   if (countComment === 0) return <NotComment />
 
@@ -71,7 +92,7 @@ export const GeneralForrumCommentList = ({
           sideButton={
             <CommentDropDown
               isMine={item.mine}
-              onEdit={() => focusAndReply(item.id)}
+              onEdit={() => focusAndEdit(item.id)}
               onReply={() => focusAndReply(item.id)}
             />
           }

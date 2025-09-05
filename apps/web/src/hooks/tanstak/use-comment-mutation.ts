@@ -11,17 +11,12 @@ import {
   setQueryData,
 } from '@/utils/query-client'
 
-type CommentUpdater = (
-  old: CommentResponse | undefined
-) => CommentResponse | undefined
-
 export type CommentReplyRequest = {
   commentId: string
   postId: string
-  mode: 'comment' | 'reply'
-  method: 'post' | 'patch' | 'delete'
   controllDisabled: (isDisabled: boolean) => void
-  updater?: CommentUpdater
+  mode?: 'comment' | 'reply'
+  method?: 'post' | 'patch' | 'delete'
 }
 
 type CommentReplyContext = { previous?: CommentResponse }
@@ -29,9 +24,8 @@ type CommentReplyContext = { previous?: CommentResponse }
 export const useCommentReplyMutation = ({
   commentId,
   postId,
-  mode,
   controllDisabled,
-  updater,
+  mode = 'comment',
   method = 'post',
 }: CommentReplyRequest) => {
   const token = useGetToken()
@@ -51,7 +45,11 @@ export const useCommentReplyMutation = ({
     }
   }
 
-  return useHttpMutation<CommentRequest, undefined, CommentReplyContext>(
+  return useHttpMutation<
+    CommentRequest | undefined,
+    undefined,
+    CommentReplyContext
+  >(
     path,
     method,
     {
@@ -59,7 +57,8 @@ export const useCommentReplyMutation = ({
       params,
     },
     {
-      onMutate: async () => {
+      onMutate: async value => {
+        console.log('value', value)
         controllDisabled(true)
         await cancelQueries(queryClient, queryKey)
 
@@ -68,11 +67,77 @@ export const useCommentReplyMutation = ({
           queryKey
         )
 
-        if (updater) {
+        // 댓글 수정
+        if (method === 'patch') {
           setQueryData<CommentResponse, AppointmentQueryKey>(
             queryClient,
             queryKey,
-            updater
+            old => {
+              if (!Array.isArray(old) || old.length === 0) return old
+
+              const newCommentData = old.map(comment => {
+                if (comment.parentCommentId === commentId) {
+                  return {
+                    ...comment,
+                    content: value?.content as string,
+                  }
+                }
+
+                const newReplies = comment.replies.map(reply => {
+                  if (reply.childCommentId === commentId) {
+                    return {
+                      ...reply,
+                      content: value?.content as string,
+                    }
+                  }
+                  return reply
+                })
+                return {
+                  ...comment,
+                  replies: newReplies,
+                }
+              })
+              return newCommentData
+            }
+          )
+        }
+
+        if (method === 'delete') {
+          setQueryData<CommentResponse, AppointmentQueryKey>(
+            queryClient,
+            queryKey,
+            old => {
+              if (!Array.isArray(old) || old.length === 0) return old
+
+              const newCommentData = old.map(comment => {
+                if (comment.parentCommentId === commentId) {
+                  return {
+                    ...comment,
+                    author: '',
+                    authorProfileImageUrl: '',
+                    content: '삭제된 댓글입니다.',
+                  }
+                }
+
+                const newReplies = comment.replies.map(reply => {
+                  if (reply.childCommentId === commentId) {
+                    return {
+                      ...reply,
+                      author: '',
+                      authorProfileImageUrl: '',
+                      content: '삭제된 댓글입니다.',
+                    }
+                  }
+                  return reply
+                })
+
+                return {
+                  ...comment,
+                  replies: newReplies,
+                }
+              })
+              return newCommentData
+            }
           )
         }
 
@@ -93,103 +158,4 @@ export const useCommentReplyMutation = ({
       },
     }
   )
-}
-
-// patch
-
-type EditDeleteCommentMutationRequest = Omit<
-  CommentReplyRequest,
-  'mode' | 'method' | 'updater'
-> & { content: string }
-export const useEditCommentMuntation = ({
-  content,
-  commentId,
-  postId,
-  controllDisabled,
-}: EditDeleteCommentMutationRequest) => {
-  const updater: CommentUpdater = old => {
-    if (!Array.isArray(old) || old.length === 0) return old
-
-    const newCommentData = old.map(comment => {
-      if (comment.parentCommentId === commentId) {
-        return {
-          ...comment,
-          content,
-        }
-      }
-
-      const newReplies = comment.replies.map(reply => {
-        if (reply.childCommentId === commentId) {
-          return {
-            ...reply,
-            content,
-          }
-        }
-        return reply
-      })
-      return {
-        ...comment,
-        replies: newReplies,
-      }
-    })
-    return newCommentData
-  }
-
-  return useCommentReplyMutation({
-    commentId,
-    postId,
-    mode: 'comment',
-    method: 'patch',
-    controllDisabled,
-    updater,
-  })
-}
-
-// delete
-export const useDeleteCommentMuntation = ({
-  commentId,
-  postId,
-  controllDisabled,
-}: EditDeleteCommentMutationRequest) => {
-  const updater: CommentUpdater = old => {
-    if (!Array.isArray(old) || old.length === 0) return old
-
-    const newCommentData = old.map(comment => {
-      if (comment.parentCommentId === commentId) {
-        return {
-          ...comment,
-          author: '',
-          authorProfileImageUrl: '',
-          content: '삭제된 댓글입니다.',
-        }
-      }
-
-      const newReplies = comment.replies.map(reply => {
-        if (reply.childCommentId === commentId) {
-          return {
-            ...reply,
-            author: '',
-            authorProfileImageUrl: '',
-            content: '삭제된 댓글입니다.',
-          }
-        }
-        return reply
-      })
-
-      return {
-        ...comment,
-        replies: newReplies,
-      }
-    })
-    return newCommentData
-  }
-
-  return useCommentReplyMutation({
-    commentId,
-    postId,
-    mode: 'comment',
-    method: 'delete',
-    controllDisabled,
-    updater,
-  })
 }

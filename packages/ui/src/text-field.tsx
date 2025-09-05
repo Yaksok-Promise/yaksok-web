@@ -25,6 +25,7 @@ export type TextFieldAPI = {
   clear: () => void
   /** Get current input value */
   getValue: () => string
+  unFocus: () => void
   /** The inner HTMLInputElement (DOM node) */
   el: HTMLInputElement | null
 }
@@ -85,6 +86,7 @@ export const TextField = React.forwardRef<TextFieldAPI, TextFieldProps>(
           innerRef.current?.focus()
         },
         getValue: () => inputValue ?? '',
+        unFocus: () => innerRef.current?.blur(),
         el: innerRef.current,
       }),
       [inputValue]

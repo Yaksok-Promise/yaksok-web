@@ -1,5 +1,5 @@
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
-import { GeneralForrumCommentList } from '@/components/general-forum/general-forum-comment-list'
+import { GeneralForumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
 import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
@@ -96,7 +96,7 @@ export default function GeneralForumDetailPage({
         </div>
         <div className="mb-40">
           <Suspense fallback={<div>Loading...</div>}>
-            <GeneralForrumCommentList
+            <GeneralForumCommentList
               data={commentListData}
               countComment={countComment}
               postId={id}
