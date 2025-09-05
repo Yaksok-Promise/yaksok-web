@@ -1,7 +1,6 @@
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
 import { GeneralForrumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
-import { GeneralForumTextField } from '@/components/general-forum/general-forum-text-field'
 import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
 import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
@@ -38,7 +37,6 @@ export default function GeneralForumDetailPage({
     }
   )
   const { data: generalForumDetailData } = result
-  console.log('general forum detail', generalForumDetailData)
 
   // general forum comment list
   const commentListResult = useHttpQuery<undefined, CommentResponse>(
@@ -55,7 +53,6 @@ export default function GeneralForumDetailPage({
   )
 
   const { data: commentListData } = commentListResult
-  console.log('Comment List', commentListData)
 
   const countComment = (commentListData ?? []).reduce(
     (sum, c) => sum + 1 + (Array.isArray(c.replies) ? c.replies.length : 0),
@@ -97,14 +94,15 @@ export default function GeneralForumDetailPage({
           <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
           <GeneralForumButtonList {...buttonListProps} />
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <GeneralForrumCommentList
-            data={commentListData}
-            countComment={countComment}
-            postId={id}
-          />
-        </Suspense>
-        <GeneralForumTextField />
+        <div className="mb-40">
+          <Suspense fallback={<div>Loading...</div>}>
+            <GeneralForrumCommentList
+              data={commentListData}
+              countComment={countComment}
+              postId={id}
+            />
+          </Suspense>
+        </div>
       </main>
     </AppScreen>
   )

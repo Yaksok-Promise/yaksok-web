@@ -13,7 +13,7 @@ export type FlatItem = {
   likeCount: number
   liked: boolean
   mine: boolean
-  isMostLiked: boolean // 고유 최대일 때만 true
+  isFocus: boolean // 고유 최대일 때만 true
   parentId?: string // reply일 때만 부모 id
 }
 
@@ -27,7 +27,7 @@ export const commentVariants = cva('flex flex-col gap-2.5 pt-5', {
       reply:
         'bg-gradient-to-t from-[rgba(244,244,244,0.5)] from-0% to-[rgba(244,244,244,0.5)] to-100%',
       comment: 'bg-white01',
-      mostLiked:
+      focus:
         'bg-gradient-to-t from-[rgba(1,131,129,0.1)] from-0% to-[rgba(1,131,129,0.00)] to-50%',
     },
   },
@@ -40,11 +40,11 @@ export const commentVariants = cva('flex flex-col gap-2.5 pt-5', {
 /** 배경을 강제로 덮어쓸 때 사용(‘mostLiked’는 내부에서만 결정) */
 type BackgroundBase = Exclude<
   NonNullable<VariantProps<typeof commentVariants>['background']>,
-  'mostLiked'
+  'focus'
 >
 
 export type CommentProps = {
-  /** 한 덩어리로 전달: mode / isMostLiked / author ... 모두 포함 */
+  /** 한 덩어리로 전달: mode / isFocus / author ... 모두 포함 */
   item: FlatItem
   /** 기본은 item.mode를 따라가고, 필요 시 강제 오버라이드 */
   backgroundOverride?: BackgroundBase
@@ -58,8 +58,8 @@ export function Comment({
   likeButton,
   backgroundOverride,
 }: CommentProps) {
-  const computedBackground = item.isMostLiked
-    ? 'mostLiked'
+  const computedBackground = item.isFocus
+    ? 'focus'
     : (backgroundOverride ?? item.mode)
 
   return (

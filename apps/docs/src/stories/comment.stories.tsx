@@ -14,7 +14,7 @@ const baseItem: FlatItem = {
   likeCount: 0,
   liked: false,
   mine: false,
-  isMostLiked: false,
+  isFocus: false,
 }
 
 const meta: TypeWithDeepControls<Meta<CommentProps>> = {
@@ -30,9 +30,9 @@ const meta: TypeWithDeepControls<Meta<CommentProps>> = {
       options: ['comment', 'reply'],
       description: '`FlatItem.mode`',
     },
-    'item.isMostLiked': {
+    'item.isFocus': {
       control: { type: 'boolean' },
-      description: '`FlatItem.isMostLiked`',
+      description: '`FlatItem.isFocus`',
     },
     backgroundOverride: {
       control: { type: 'select' },
@@ -43,7 +43,7 @@ const meta: TypeWithDeepControls<Meta<CommentProps>> = {
     likeButton: { control: false },
   },
   args: {
-    item: { ...baseItem, mode: 'comment', isMostLiked: false },
+    item: { ...baseItem, mode: 'comment', isFocus: false },
   },
 }
 export default meta
@@ -58,7 +58,7 @@ const SampleLikeButton = (
 
 export const NormalComment: Story = {
   args: {
-    item: { ...baseItem, mode: 'comment', isMostLiked: false },
+    item: { ...baseItem, mode: 'comment', isFocus: false },
     backgroundOverride: 'comment',
     sideButton: SampleSideButton,
     likeButton: SampleLikeButton,
@@ -71,7 +71,7 @@ export const ReplyComment: Story = {
       ...baseItem,
       mode: 'reply',
       parentId: 'parent-1',
-      isMostLiked: false,
+      isFocus: false,
     },
     backgroundOverride: 'reply',
     sideButton: SampleSideButton,
@@ -79,22 +79,22 @@ export const ReplyComment: Story = {
   },
 }
 
-export const MostLikedComment: Story = {
+export const FocusComment: Story = {
   args: {
-    item: { ...baseItem, mode: 'comment', isMostLiked: true },
+    item: { ...baseItem, mode: 'comment', isFocus: true },
     backgroundOverride: undefined,
     sideButton: SampleSideButton,
     likeButton: SampleLikeButton,
   },
 }
 
-export const MostLikedReply: Story = {
+export const FocusReply: Story = {
   args: {
     item: {
       ...baseItem,
       mode: 'reply',
       parentId: 'parent-1',
-      isMostLiked: true,
+      isFocus: true,
     },
     backgroundOverride: undefined,
     sideButton: SampleSideButton,

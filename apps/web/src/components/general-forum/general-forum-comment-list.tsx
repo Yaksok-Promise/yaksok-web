@@ -4,12 +4,14 @@ import { CommentResponse } from '@yaksok/api/commentType'
 import {
   BlankHeart,
   CommunicationDot,
-  TriangleWarning,
-  Trash,
-  Pencil,
   MoreVertical,
+  Pencil,
+  Trash,
+  TriangleWarning,
 } from '@yaksok/icons'
-import { NotComment, Comment, DropDown } from '@yaksok/ui'
+import { Comment, DropDown, NotComment, TextFieldAPI } from '@yaksok/ui'
+import { GeneralForumTextField } from './general-forum-text-field'
+import { useMemo, useRef, useState } from 'react'
 
 export type GeneralForrumCommentListProps = {
   data: CommentResponse
@@ -22,10 +24,35 @@ export const GeneralForrumCommentList = ({
   countComment,
   postId,
 }: GeneralForrumCommentListProps) => {
-  if (countComment === 0) {
-    return <NotComment />
+  const [focusedId, setFocusedId] = useState<string | null>(null)
+  const [textFieldMode, setTextFieldMode] = useState<'comment' | 'reply'>(
+    'comment'
+  )
+
+  const [disabled, setDisabled] = useState(true)
+
+  // ✅ Single unified ref (focus/clear/getValue + DOM via .el)
+  const inputRef = useRef<TextFieldAPI>(null)
+
+  const items = useMemo(() => {
+    const base = flattenAndMarkMostLiked(data)
+    return base.map(it => ({ ...it, isFocus: it.id === focusedId }))
+  }, [data, focusedId])
+
+  const handleCancelEdit = () => {
+    setFocusedId(null)
+    setTextFieldMode('comment')
   }
-  const items = flattenAndMarkMostLiked(data)
+
+  const focusAndReply = (targetId: string) => {
+    setFocusedId(targetId)
+    setTextFieldMode('reply')
+    requestAnimationFrame(() => {
+      inputRef.current?.focus() // ✅ use the same ref
+    })
+  }
+
+  if (countComment === 0) return <NotComment />
 
   return (
     <>
@@ -41,9 +68,24 @@ export const GeneralForrumCommentList = ({
               postId={postId}
             />
           }
-          sideButton={<CommentDropDown isMine={item.mine} />}
+          sideButton={
+            <CommentDropDown
+              isMine={item.mine}
+              onEdit={() => focusAndReply(item.id)}
+              onReply={() => focusAndReply(item.id)}
+            />
+          }
         />
       ))}
+      <GeneralForumTextField
+        mode={textFieldMode}
+        ref={inputRef} // ✅ same unified ref here
+        disabled={disabled}
+        setDisabled={setDisabled}
+        postId={postId}
+        commentId={focusedId ?? ''}
+        onCancelEdit={handleCancelEdit}
+      />
     </>
   )
 }
@@ -75,25 +117,32 @@ const LikedButton = ({
 
 type CommentDropDownProps = {
   isMine: boolean
+  onEdit?: () => void
+  onReply?: () => void
+  onReport?: () => void
+  onDelete?: () => void
 }
-const CommentDropDown = ({ isMine }: CommentDropDownProps) => {
+
+const CommentDropDown = ({
+  isMine,
+  onEdit,
+  onReply,
+  onReport,
+  onDelete,
+}: CommentDropDownProps) => {
   const dropdownMenuList = isMine
     ? [
         {
           label: '수정',
           value: 'edit',
           render: <Pencil size={16} stroke="#018381" />,
-          onClick: () => {
-            alert('수정')
-          },
+          onClick: onEdit ?? (() => console.log('수정')),
         },
         {
           label: '삭제',
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
-          onClick: () => {
-            alert('삭제')
-          },
+          onClick: onDelete ?? (() => console.log('삭제')),
         },
       ]
     : [
@@ -101,19 +150,16 @@ const CommentDropDown = ({ isMine }: CommentDropDownProps) => {
           label: '답글',
           value: 'reply',
           render: <CommunicationDot size={16} stroke="#018381" />,
-          onClick: () => {
-            alert('답글')
-          },
+          onClick: onReply ?? (() => console.log('답글')),
         },
         {
           label: '신고',
           value: 'report',
           render: <TriangleWarning size={16} stroke="#018381" />,
-          onClick: () => {
-            alert('신고')
-          },
+          onClick: onReport ?? (() => console.log('신고')),
         },
       ]
+
   return (
     <DropDown
       data={dropdownMenuList}

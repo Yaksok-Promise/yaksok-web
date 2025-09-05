@@ -1,4 +1,5 @@
 export { default as Apple } from './Apple'
+export { default as ArrowRight } from './ArrowRight'
 export { default as Attach } from './Attach'
 export { default as Bell } from './Bell'
 export { default as BellNotification } from './BellNotification'
