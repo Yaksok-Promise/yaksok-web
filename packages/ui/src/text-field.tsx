@@ -1,4 +1,4 @@
-import { Check, Show } from '@yaksok/icons'
+import { Check, Show, Hide } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
@@ -223,7 +223,7 @@ const HideAndShowPassword = ({
 }: HideAndShowPasswordProps) => {
   return (
     <button onClick={handleShowPassword} className="absolute top-3 right-4">
-      <Show size={24} />
+      {showPassword ? <Show size={24} /> : <Hide size={24} />}
     </button>
   )
 }
