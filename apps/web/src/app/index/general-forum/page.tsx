@@ -1,8 +1,8 @@
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
+import { LoungeCategoryKey } from '@/const/magazine-and-lounge'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
-import { LoungeCategoryKey } from '@/utils/query-key'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Pencil } from '@yaksok/icons'
@@ -36,7 +36,7 @@ export default function GeneralForumPage() {
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
             url="/api/post/general-forum/list"
-            queryKey="magazine"
+            queryKey="general-forum"
           />
           <div className="mb-5 flex items-center justify-center">
             <Button

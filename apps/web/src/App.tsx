@@ -5,7 +5,6 @@ import { Suspense } from 'react'
 import { ErrorProvider } from './components/common/error-boundary'
 import '@yaksok/ui/styles.css'
 import '@stackflow/plugin-basic-ui/index.css'
-import '@yaksok/ui/styles.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +24,7 @@ function App() {
           <Stack />
         </Suspense>
       </ErrorProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
     </QueryClientProvider>
   )
 }

@@ -4,18 +4,25 @@ import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
 import { IconTag } from './icon-tag'
+import { Tag } from './tag'
 
 export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
 }
 
 export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
+  const tags = data.tags
   return (
     <div
       role="button"
       {...props}
-      className="flex max-w-[328px] flex-col border-gray03/20 border-b-[1px]"
+      className="flex max-w-[328px] flex-col border-gray03/20 border-b-[1px] not-first:pt-5"
     >
+      <div className="mb-2.5 flex flex-wrap items-center gap-1.25">
+        {tags.map((tag, idx) => (
+          <Tag key={idx} tag={tag} size="fit" />
+        ))}
+      </div>
       <div className="mb-2 flex h-20 w-full justify-between">
         <h1 className="h-full w-[69.5%] overflow-hidden text-ellipsis text-head6">
           {data.title}

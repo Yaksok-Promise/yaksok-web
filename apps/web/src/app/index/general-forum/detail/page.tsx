@@ -1,8 +1,15 @@
-import { SideDrawer } from '@/components/common/side-drawer'
-import { GeneralForumDetail } from '@/components/general-forum/general-forun-detail'
-import { Portal, usePortal } from '@/hooks/use-portal'
+import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
+import { GeneralForumCommentList } from '@/components/general-forum/general-forum-comment-list'
+import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
+import { GeneralForumTitle } from '@/components/general-forum/general-forum-title'
+import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
+import { useGetToken } from '@/hooks/use-get-token'
 import { useUpdateToken } from '@/hooks/use-update-token'
+import { QUERY_KEY } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { MagazineDetail } from '@yaksok/api/boardMagazineType'
+import { CommentResponse } from '@yaksok/api/commentType'
+import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
   params: {
@@ -14,32 +21,90 @@ export default function GeneralForumDetailPage({
   params: { id },
 }: CommunityDetailPageProps) {
   useUpdateToken()
-  const { portalRef, isOpen, setIsOpen } = usePortal()
+
+  // general forum detail
+  const token = useGetToken()
+  const result = useHttpQuery<undefined, MagazineDetail>(
+    [QUERY_KEY.GENERAL_FORUM, id],
+    '/api/post/general-forum/{postId}',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        postId: id,
+      },
+    }
+  )
+  const { data: generalForumDetailData } = result
+
+  // general forum comment list
+  const commentListResult = useHttpQuery<undefined, CommentResponse>(
+    [QUERY_KEY.COMMENT_LIST, id],
+    '/api/comment/list',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      query: {
+        postId: id,
+      },
+    },
+    {}
+  )
+
+  const { data: commentListData } = commentListResult
+
+  const countComment = (commentListData ?? []).reduce(
+    (sum, c) => sum + 1 + (Array.isArray(c.replies) ? c.replies.length : 0),
+    0
+  )
+
+  // props
+  const titleProps = {
+    title: generalForumDetailData.title,
+    tags: generalForumDetailData.tags,
+    author: generalForumDetailData.author,
+    date: generalForumDetailData.createdAt,
+  }
+
+  const buttonListProps = {
+    likes: generalForumDetailData.likes,
+    liked: generalForumDetailData.liked,
+    views: generalForumDetailData.views,
+    commentCount: countComment,
+    id: generalForumDetailData.id,
+  }
 
   return (
-    <>
-      <AppScreen
-        appBar={{
-          title: '라운지',
-          textColor: '#ffffff',
-          iconColor: '#ffffff',
-          backgroundColor: '#000000',
-          border: false,
-          renderRight: () => (
-            <SideDrawer
-              container={portalRef.current}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
+    <AppScreen
+      appBar={{
+        title: '자유게시판',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        backgroundColor: '#000000',
+        border: false,
+        renderRight: () => (
+          <GeneralForumHeaderDropDown isMine={generalForumDetailData.mine} />
+        ),
+      }}
+    >
+      <main className="relative flex min-h-full flex-col bg-bgColor">
+        <div className="px-4">
+          <GeneralForumTitle {...titleProps} />
+          <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
+          <GeneralForumButtonList {...buttonListProps} />
+        </div>
+        <div className="mb-40">
+          <Suspense fallback={<div>Loading...</div>}>
+            <GeneralForumCommentList
+              data={commentListData}
+              countComment={countComment}
+              postId={id}
             />
-          ),
-        }}
-      >
-        <main className="flex flex-col bg-white px-4 pb-10">
-          <GeneralForumDetail id={id} />
-        </main>
-      </AppScreen>
-
-      <Portal />
-    </>
+          </Suspense>
+        </div>
+      </main>
+    </AppScreen>
   )
 }

@@ -18,7 +18,6 @@ export type Magazine = {
   thumbnailUrl?: string
   likes: number
   views: number
-  commentCount: number
   tags: Tag[]
   hasImages: boolean
 }
@@ -30,6 +29,10 @@ export type MagazineDetail = Magazine & {
   instagramUrl: string
   liked: boolean
   mine: boolean
+}
+
+export type GeneralForumDetail = MagazineDetail & {
+  authorProfileImageUrl: string
 }
 
 export type MagazineListResponse = Pagination & {
