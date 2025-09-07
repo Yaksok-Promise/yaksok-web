@@ -1,3 +1,4 @@
+import { useCommentReplyMutation } from '@/hooks/tanstak/use-comment-mutation'
 import { useCommentLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
 import { flattenAndMarkMostLiked } from '@/utils/change-comment-list-optimistic'
 import { CommentResponse } from '@yaksok/api/commentType'
@@ -9,10 +10,10 @@ import {
   Trash,
   TriangleWarning,
 } from '@yaksok/icons'
-import { Comment, DropDown, NotComment, TextFieldAPI } from '@yaksok/ui'
+import { useCommentEditorStore } from '@yaksok/store'
+import { Comment, DropDown, NotComment } from '@yaksok/ui'
+import { RefObject, useMemo, useRef } from 'react'
 import { GeneralForumTextField } from './general-forum-text-field'
-import { useMemo, useRef, useState } from 'react'
-import { useCommentReplyMutation } from '@/hooks/tanstak/use-comment-mutation'
 
 export type GeneralForumCommentListProps = {
   data: CommentResponse
@@ -26,54 +27,36 @@ export const GeneralForumCommentList = ({
   postId,
 }: GeneralForumCommentListProps) => {
   // textField 관련 상태
-  const [focusedId, setFocusedId] = useState<string | null>(null)
-  const [textFieldMode, setTextFieldMode] = useState<
-    'comment' | 'reply' | 'edit'
-  >('comment')
-  const [disabled, setDisabled] = useState(true)
 
-  const inputRef = useRef<TextFieldAPI>(null)
+  const { commentId, mode } = useCommentEditorStore()
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   // 댓글 리스트 관련 상태
   const items = useMemo(() => {
     const base = flattenAndMarkMostLiked(data)
-    return base.map(it => ({ ...it, isFocus: it.id === focusedId }))
-  }, [data, focusedId])
-
-  // 답글 생성 로직
-  const handleCancelEdit = () => {
-    setFocusedId(null)
-    setTextFieldMode('comment')
-  }
-
-  const focusComment = (targetId: string) => {
-    setFocusedId(targetId)
-    requestAnimationFrame(() => {
-      inputRef.current?.focus() // ✅ use the same ref
-    })
-  }
-
-  const focusAndReply = (targetId: string) => {
-    focusComment(targetId)
-    setTextFieldMode('reply')
-  }
-
-  // 댓글 수정 로직
-  const focusAndEdit = (targetId: string) => {
-    focusComment(targetId)
-    setTextFieldMode('edit')
-  }
+    return base.map(it => ({
+      ...it,
+      isFocus: it.id === commentId,
+      isEdit: it.id === commentId && mode === 'edit',
+    }))
+  }, [data, commentId, mode])
 
   // 댓글, 답글 삭제 로직
-  const commentDeleteMutation = useCommentReplyMutation({
-    commentId: focusedId ?? '',
+  const _commentDeleteMutation = useCommentReplyMutation({
+    commentId: commentId ?? '',
     postId,
     mode: 'comment',
     method: 'delete',
-    controllDisabled: setDisabled,
   })
 
-  if (countComment === 0) return <NotComment />
+  if (countComment === 0)
+    return (
+      <>
+        <NotComment />
+        <GeneralForumTextField ref={textAreaRef} postId={postId} />
+      </>
+    )
 
   return (
     <>
@@ -91,22 +74,16 @@ export const GeneralForumCommentList = ({
           }
           sideButton={
             <CommentDropDown
+              text={item.content}
               isMine={item.mine}
-              onEdit={() => focusAndEdit(item.id)}
-              onReply={() => focusAndReply(item.id)}
+              commentId={item.id}
+              postId={postId}
+              textAreaRef={textAreaRef}
             />
           }
         />
       ))}
-      <GeneralForumTextField
-        mode={textFieldMode}
-        ref={inputRef} // ✅ same unified ref here
-        disabled={disabled}
-        setDisabled={setDisabled}
-        postId={postId}
-        commentId={focusedId ?? ''}
-        onCancelEdit={handleCancelEdit}
-      />
+      <GeneralForumTextField ref={textAreaRef} postId={postId} />
     </>
   )
 }
@@ -138,32 +115,37 @@ const LikedButton = ({
 
 type CommentDropDownProps = {
   isMine: boolean
-  onEdit?: () => void
-  onReply?: () => void
-  onReport?: () => void
-  onDelete?: () => void
+  commentId: string
+  postId: string
+  textAreaRef: RefObject<HTMLTextAreaElement | null>
+  text: string
 }
 
 const CommentDropDown = ({
+  commentId,
   isMine,
-  onEdit,
-  onReply,
-  onReport,
-  onDelete,
+  postId,
+  textAreaRef,
+  text,
 }: CommentDropDownProps) => {
+  const { focusEdit, focusReply, focusDelete } = useCommentEditorStore()
   const dropdownMenuList = isMine
     ? [
         {
           label: '수정',
           value: 'edit',
           render: <Pencil size={16} stroke="#018381" />,
-          onClick: onEdit ?? (() => console.log('수정')),
+          onClick: () => {
+            focusEdit(commentId, textAreaRef, text)
+          },
         },
         {
           label: '삭제',
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
-          onClick: onDelete ?? (() => console.log('삭제')),
+          onClick: () => {
+            focusDelete(commentId)
+          },
         },
       ]
     : [
@@ -171,13 +153,15 @@ const CommentDropDown = ({
           label: '답글',
           value: 'reply',
           render: <CommunicationDot size={16} stroke="#018381" />,
-          onClick: onReply ?? (() => console.log('답글')),
+          onClick: () => {
+            focusReply(commentId, textAreaRef)
+          },
         },
         {
           label: '신고',
           value: 'report',
           render: <TriangleWarning size={16} stroke="#018381" />,
-          onClick: onReport ?? (() => console.log('신고')),
+          onClick: () => console.log('신고'),
         },
       ]
 

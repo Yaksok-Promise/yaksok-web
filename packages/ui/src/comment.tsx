@@ -1,4 +1,5 @@
 import { ReplyArrow } from '@yaksok/icons'
+import { useCommentEditorStore } from '@yaksok/store'
 import { changeDate, cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import { Profile } from './profile'
@@ -13,7 +14,8 @@ export type FlatItem = {
   likeCount: number
   liked: boolean
   mine: boolean
-  isFocus: boolean // 고유 최대일 때만 true
+  isFocus: boolean // Focus 모드일 때만 true
+  isEdit: boolean // 수정 모드일 때만 true
   parentId?: string // reply일 때만 부모 id
 }
 
@@ -58,6 +60,7 @@ export function Comment({
   likeButton,
   backgroundOverride,
 }: CommentProps) {
+  const { text } = useCommentEditorStore()
   const computedBackground = item.isFocus
     ? 'focus'
     : (backgroundOverride ?? item.mode)
@@ -82,9 +85,18 @@ export function Comment({
         <div>{sideButton}</div>
       </div>
 
-      <div className="text-wrap pr-2 pl-7.5 text-body2 text-gray01">
-        {item.content}
-      </div>
+      {item.isEdit ? (
+        <textarea
+          className="w-full text-wrap border-1 border-gray06 p-2 text-body2 text-gray01"
+          value={text}
+          rows={2}
+          disabled
+        />
+      ) : (
+        <div className="text-wrap pr-2 pl-7.5 text-body2 text-gray01">
+          {item.content}
+        </div>
+      )}
 
       <div className="flex items-center justify-end border-gray03/20 border-b-1 pb-2">
         {likeButton}

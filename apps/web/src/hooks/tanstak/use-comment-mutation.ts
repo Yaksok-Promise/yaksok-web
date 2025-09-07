@@ -1,20 +1,19 @@
-import { PathType, UrlOption } from '@yaksok/api'
-import { useGetToken } from '../use-get-token'
-import { useHttpMutation } from './use-http-mutation'
-import { CommentRequest, CommentResponse } from '@yaksok/api/commentType'
-import { useQueryClient } from '@tanstack/react-query'
-import { AppointmentQueryKey, QUERY_KEY } from '@/utils/query-key'
 import {
   cancelQueries,
   getQueryData,
   invalidateQueries,
   setQueryData,
 } from '@/utils/query-client'
+import { AppointmentQueryKey, QUERY_KEY } from '@/utils/query-key'
+import { useQueryClient } from '@tanstack/react-query'
+import { PathType, UrlOption } from '@yaksok/api'
+import { CommentRequest, CommentResponse } from '@yaksok/api/commentType'
+import { useGetToken } from '../use-get-token'
+import { useHttpMutation } from './use-http-mutation'
 
 export type CommentReplyRequest = {
   commentId: string
   postId: string
-  controllDisabled: (isDisabled: boolean) => void
   mode?: 'comment' | 'reply'
   method?: 'post' | 'patch' | 'delete'
 }
@@ -24,7 +23,6 @@ type CommentReplyContext = { previous?: CommentResponse }
 export const useCommentReplyMutation = ({
   commentId,
   postId,
-  controllDisabled,
   mode = 'comment',
   method = 'post',
 }: CommentReplyRequest) => {
@@ -59,7 +57,6 @@ export const useCommentReplyMutation = ({
     {
       onMutate: async value => {
         console.log('value', value)
-        controllDisabled(true)
         await cancelQueries(queryClient, queryKey)
 
         const previous = getQueryData<CommentResponse, AppointmentQueryKey>(
@@ -154,7 +151,6 @@ export const useCommentReplyMutation = ({
       },
       onSettled: () => {
         invalidateQueries(queryClient, queryKey)
-        controllDisabled(false)
       },
     }
   )

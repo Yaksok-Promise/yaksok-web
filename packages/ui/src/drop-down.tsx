@@ -28,8 +28,9 @@ export function DropDown({
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuRadioGroup>
-          {data.map(item => (
+          {data.map((item, index) => (
             <DropdownMenuRadioItem
+              key={index}
               value={item.value}
               className="flex items-center justify-center gap-1 text-body1 text-gray04"
               onClick={item.onClick}

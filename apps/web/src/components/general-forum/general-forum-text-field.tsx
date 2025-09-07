@@ -1,29 +1,23 @@
 import { useCommentReplyMutation } from '@/hooks/tanstak/use-comment-mutation'
-import { ArrowRight } from '@yaksok/icons'
-import { TextField, TextFieldAPI } from '@yaksok/ui'
-import { FocusEvent, FormEvent, forwardRef } from 'react'
+import { ArrowRight, Undo } from '@yaksok/icons'
+import { useCommentEditorStore } from '@yaksok/store'
+import { FocusEvent, FormEvent, RefObject, forwardRef, useState } from 'react'
 
 export type GeneralForumTextFieldProps = {
-  disabled: boolean
-  setDisabled: (disabled: boolean) => void
   postId: string
-  commentId: string
-  onCancelEdit?: () => void
-  mode?: 'comment' | 'reply' | 'edit'
 }
 
 export const GeneralForumTextField = forwardRef<
-  TextFieldAPI,
+  HTMLTextAreaElement,
   GeneralForumTextFieldProps
->(function GeneralForumTextField(
-  { disabled, setDisabled, postId, commentId, onCancelEdit, mode = 'comment' },
-  ref
-) {
+>(function GeneralForumTextField({ postId }, ref) {
+  const [disabled, setDisabled] = useState(true)
+  const { commentId, mode, text, clear, setText } = useCommentEditorStore()
+
   // api 댓글 생성
   const postMutation = useCommentReplyMutation({
     postId,
     mode: 'comment',
-    controllDisabled: setDisabled,
     commentId: postId,
     method: 'post',
   })
@@ -32,42 +26,33 @@ export const GeneralForumTextField = forwardRef<
   const replyMutation = useCommentReplyMutation({
     postId,
     mode: 'reply',
-    controllDisabled: setDisabled,
-    commentId,
+    commentId: commentId!,
   })
 
   // api 댓글 수정
   const editMutation = useCommentReplyMutation({
     postId,
-    controllDisabled: setDisabled,
-    commentId,
+    commentId: commentId!,
     method: 'patch',
   })
 
   const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const value =
-      ref && typeof ref !== 'function' ? ref.current?.getValue().trim() : ''
-
-    console.log(value)
-    if (!value) return
+    setDisabled(true)
+    console.log(text)
+    if (!text || text.trim() === '') return
 
     if (mode === 'edit') {
-      await editMutation.mutateAsync({ content: value })
+      await editMutation.mutateAsync({ content: text })
     }
     if (mode === 'reply') {
-      await replyMutation.mutateAsync({ content: value })
+      await replyMutation.mutateAsync({ content: text })
     }
     if (mode === 'comment') {
-      await postMutation.mutateAsync({ content: value })
+      await postMutation.mutateAsync({ content: text })
     }
-
-    if (ref && typeof ref !== 'function') {
-      ref.current?.clear()
-      ref.current?.unFocus()
-    }
-
-    onCancelEdit?.()
+    setDisabled(false)
+    clear(ref as RefObject<HTMLTextAreaElement | null>)
   }
 
   // 인풋 입력창이 비어있을 경우 포커스 해제하면 댓글 모드로 복귀
@@ -75,11 +60,9 @@ export const GeneralForumTextField = forwardRef<
     const next = e.relatedTarget as Node | null
     if (next && e.currentTarget.contains(next)) return
 
-    const v =
-      ref && typeof ref !== 'function' ? ref.current?.getValue().trim() : ''
-    if (!v) {
-      ref && typeof ref !== 'function' && ref.current?.clear()
-      onCancelEdit?.()
+    const textValue = text.trim()
+    if (!textValue) {
+      clear(ref as RefObject<HTMLTextAreaElement | null>)
     }
   }
 
@@ -89,11 +72,14 @@ export const GeneralForumTextField = forwardRef<
       onSubmit={e => e.preventDefault()}
       onBlur={handleBlur}
     >
-      <TextField
-        ref={ref} // ✅ pass the unified ref down
-        regex={/\*/} // dummy regex
-        message={{}}
-        mode="box"
+      <textarea
+        ref={ref}
+        value={text}
+        onChange={e => {
+          setText(e.target.value)
+          setDisabled(e.target.value.trim() === '')
+        }}
+        className="w-full rounded-[8px] bg-gray07 p-2 text-gray01 placeholder:text-gray05"
         placeholder={
           mode === 'comment'
             ? '댓글을 입력해 주세요'
@@ -101,9 +87,16 @@ export const GeneralForumTextField = forwardRef<
               ? '답글을 입력해 주세요'
               : '댓글을 수정해 주세요'
         }
-        className="bg-gray07"
-        onChange={e => setDisabled(e.target.value.trim().length === 0)}
+        rows={1}
       />
+      {mode === 'edit' && (
+        <button
+          onClick={() => clear(ref as RefObject<HTMLTextAreaElement | null>)}
+          className="rounded-[8px] bg-black01 px-2.5 py-3 disabled:bg-subGray01"
+        >
+          <Undo size={16} stroke="white" strokeWidth={2} />
+        </button>
+      )}
       <button
         type="submit"
         className="rounded-[8px] bg-black01 px-2.5 py-3 disabled:bg-subGray01"
