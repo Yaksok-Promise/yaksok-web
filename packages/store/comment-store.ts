@@ -18,7 +18,7 @@ export interface CommentEditorState {
     ref: RefObject<HTMLTextAreaElement | null>,
     seed: string
   ) => void
-  focusDelete: (commentId: string) => void
+  // focusDelete: (commentId: string) => void
   setText: (v: string) => void
   clear: (ref: RefObject<HTMLTextAreaElement | null>) => void
 }
@@ -28,7 +28,7 @@ export const commentEditorStore = createStore<CommentEditorState>(set => ({
   mode: 'comment',
   text: '',
 
-  focusDelete: commentId => set({ mode: 'comment', commentId: commentId }),
+  // focusDelete: commentId => set({ mode: 'comment', commentId: commentId }),
   focusReply: (
     commentId,
     ref: RefObject<HTMLTextAreaElement | null>,

@@ -56,7 +56,6 @@ export const useCommentReplyMutation = ({
     },
     {
       onMutate: async value => {
-        console.log('value', value)
         await cancelQueries(queryClient, queryKey)
 
         const previous = getQueryData<CommentResponse, AppointmentQueryKey>(

@@ -42,14 +42,6 @@ export const GeneralForumCommentList = ({
     }))
   }, [data, commentId, mode])
 
-  // 댓글, 답글 삭제 로직
-  const _commentDeleteMutation = useCommentReplyMutation({
-    commentId: commentId ?? '',
-    postId,
-    mode: 'comment',
-    method: 'delete',
-  })
-
   if (countComment === 0)
     return (
       <>
@@ -128,7 +120,16 @@ const CommentDropDown = ({
   textAreaRef,
   text,
 }: CommentDropDownProps) => {
-  const { focusEdit, focusReply, focusDelete } = useCommentEditorStore()
+  const { focusEdit, focusReply, clear } = useCommentEditorStore()
+
+  // 댓글, 답글 삭제 로직
+  const commentDeleteMutation = useCommentReplyMutation({
+    commentId: commentId,
+    postId,
+    mode: 'comment',
+    method: 'delete',
+  })
+
   const dropdownMenuList = isMine
     ? [
         {
@@ -143,8 +144,9 @@ const CommentDropDown = ({
           label: '삭제',
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
-          onClick: () => {
-            focusDelete(commentId)
+          onClick: async () => {
+            await commentDeleteMutation.mutateAsync(undefined)
+            clear(textAreaRef)
           },
         },
       ]
