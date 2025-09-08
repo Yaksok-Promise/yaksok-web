@@ -20,6 +20,7 @@
     "@tailwindcss/vite": "^4.0.17",
     "@tanstack/react-query": "^5.70.0",
     "@tanstack/react-query-devtools": "^5.70.0",
+    "@tiptap/react": "^3.4.1",
     "@yaksok/api": "workspace:*",
     "@yaksok/icons": "workspace:*",
     "@yaksok/store": "workspace:*",

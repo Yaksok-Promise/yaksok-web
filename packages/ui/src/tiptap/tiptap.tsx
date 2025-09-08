@@ -5,10 +5,18 @@ import { TextStyleKit } from '@tiptap/extension-text-style'
 import { Placeholder } from '@tiptap/extensions'
 import type { Editor } from '@tiptap/react'
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react'
+import ImageResize from 'tiptap-extension-resize-image'
 import StarterKit from '@tiptap/starter-kit'
+import {
+  ImageWithMeta,
+  isLikelyImageURL,
+  makeImageAttrsFromFile,
+  uid,
+} from './image'
 import {
   Bold,
   Heading as HeadingIcon,
+  Image,
   Italic,
   ListOrdered,
   ListUnderorder,
@@ -19,6 +27,7 @@ import {
   TextAlignRight,
   Underline,
 } from '@yaksok/icons'
+import { ChangeEventHandler, useRef } from 'react'
 
 const PLACEHOLDER = `공유하고 싶은 이야기를 자유롭게 적어주세요.
     
@@ -106,9 +115,28 @@ const extensions = [
   TextAlign.configure({
     types: ['heading', 'paragraph'], // 어떤 노드에 text-align 허용할지
   }),
+  ImageWithMeta.configure({
+    inline: true,
+    allowBase64: true,
+  }),
+  ImageResize.configure({
+    inline: true,
+    allowBase64: true,
+  }),
 ]
 
 function MenuBar({ editor }: { editor: Editor }) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const onPickImage = () => fileInputRef.current?.click()
+  const onFileChange: ChangeEventHandler<HTMLInputElement> = e => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const attrs = makeImageAttrsFromFile(file)
+    editor.chain().focus().setImage(attrs).run()
+    e.currentTarget.value = '' // reset input
+  }
+
   const editorState = useEditorState({
     editor,
     selector: ctx => {
@@ -134,6 +162,16 @@ function MenuBar({ editor }: { editor: Editor }) {
 
   return (
     <div className="flex flex-wrap items-center gap-1.25 px-4 py-3 shadow-box">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={onFileChange}
+      />
+      <button onClick={onPickImage}>
+        <Image size={24} stroke={'#636366'} />
+      </button>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editorState.canBold}
@@ -226,6 +264,70 @@ function MenuBar({ editor }: { editor: Editor }) {
 export const Tiptap = () => {
   const editor = useEditor({
     extensions,
+    editorProps: {
+      handlePaste: (view, event) => {
+        // 이미지 파일 붙여넣기
+        const items = event.clipboardData?.items
+        const fileItem =
+          items && Array.from(items).find(i => i.type.startsWith('image/'))
+        if (fileItem) {
+          const file = fileItem.getAsFile()
+          if (file) {
+            event.preventDefault()
+            const attrs = makeImageAttrsFromFile(file)
+            editor?.chain().focus().setImage(attrs).run()
+            return true
+          }
+        }
+
+        // 이미지 URL 붙여넣기
+        const text = event.clipboardData?.getData('text')
+        if (text && isLikelyImageURL(text)) {
+          event.preventDefault()
+          const alt = `pasted-${uid()}`
+          editor
+            ?.chain()
+            .focus()
+            .setImage({ src: text.trim(), alt, name: alt })
+            .run()
+          return true
+        }
+        return false
+      },
+      handleDrop: (view, event, _slice, moved) => {
+        if (moved) return false
+        const files = Array.from(event.dataTransfer?.files || [])
+        if (files.length) {
+          let handled = false
+          files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+              const attrs = makeImageAttrsFromFile(file)
+              editor?.chain().focus().setImage(attrs).run()
+              handled = true
+            }
+          })
+          if (handled) {
+            event.preventDefault()
+            return true
+          }
+        }
+        const text = event.dataTransfer?.getData('text')
+        if (text && isLikelyImageURL(text)) {
+          event.preventDefault()
+          const alt = `dropped-${uid()}`
+          editor
+            ?.chain()
+            .focus()
+            .setImage({ src: text.trim(), alt, title: alt })
+            .run()
+          return true
+        }
+        return false
+      },
+      attributes: {
+        class: 'min-h-screen p-2 focus:outline-none',
+      },
+    },
   })
   return (
     <div>
