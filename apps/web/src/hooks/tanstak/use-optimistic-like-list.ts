@@ -26,7 +26,7 @@ type LikeContext<T> = { previous?: T }
  * @param elementId 서버에 전송할 elementId (보통 상세 id)
  * @param target 'POST' | 'COMMENT'
  */
-function useOptimisticLike<T>(
+function useOptimisticLikeList<T>(
   queryKey: AppointmentQueryKey,
   elementId: string,
   target: 'POST' | 'COMMENT',
@@ -85,34 +85,21 @@ function useOptimisticLike<T>(
 }
 
 // magazine
-export const useMagazineLikeOptimistic = (magazineId: string) => {
-  return useOptimisticLike<MagazineDetail>(
-    [QUERY_KEY.MAGAZINE, magazineId],
+export const useMagazineLikeListOptimistic = (magazineId: string) => {
+  return useOptimisticLikeList<MagazineDetail>(
+    [QUERY_KEY.MAGAZINE],
     magazineId,
-    'POST',
-    updateMagazineLikeOptimistic
+    'POST'
+    // customUpdater 필요
   )
 }
 
 // general-forum
-export const useGeneralForumLikeOptimistic = (forumId: string) => {
-  return useOptimisticLike<GeneralForumDetail>(
-    [QUERY_KEY.GENERAL_FORUM, forumId],
+export const useGeneralForumLikeListOptimistic = (forumId: string) => {
+  return useOptimisticLikeList<GeneralForumDetail>(
+    [QUERY_KEY.GENERAL_FORUM],
     forumId,
-    'POST',
-    updateMagazineLikeOptimistic
-  )
-}
-
-// commentList
-export const useCommentLikeOptimistic = (postId: string, commentId: string) => {
-  const customUpdater = (old: CommentResponse | undefined) =>
-    updateCommentListOptimisticByElementId(old, commentId)
-
-  return useOptimisticLike<CommentResponse>(
-    [QUERY_KEY.COMMENT_LIST, postId],
-    commentId,
-    'COMMENT',
-    customUpdater
+    'POST'
+    // customUpdater 필요
   )
 }

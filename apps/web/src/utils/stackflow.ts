@@ -1,11 +1,13 @@
 import ComparePage from '@/app/index/compare/page'
 import FindIdPassword from '@/app/index/find-id-password/page'
 import GeneralForumDetailPage from '@/app/index/general-forum/detail/page'
+import GeneralForumMenuPage from '@/app/index/general-forum/menu/page'
 import GeneralForumPage from '@/app/index/general-forum/page'
 import GeneralForumWritePage from '@/app/index/general-forum/write/page'
 import MagazineDetailPage from '@/app/index/magazine/detail/page'
 import MagazineListPage from '@/app/index/magazine/list/page'
 import MagazinePage from '@/app/index/magazine/list/page'
+import MagazineMenuPage from '@/app/index/magazine/menu/page'
 import Mypage from '@/app/index/mypage/page'
 import ProfilePage from '@/app/index/mypage/profile/page'
 import MainPage from '@/app/index/page'
@@ -40,6 +42,8 @@ export const { Stack, useFlow } = stackflow({
         GeneralForumPage: '/general-forum',
         GeneralForumWritePage: '/general-forum/write',
         GeneralForumDetailPage: '/general-forum/detail',
+        MagazineMenuPage: '/magazine/menu',
+        GeneralForumMenuPage: '/general-forum/menu',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -56,9 +60,11 @@ export const { Stack, useFlow } = stackflow({
     MagazinePage,
     MagazineListPage,
     MagazineDetailPage,
+    MagazineMenuPage,
     GeneralForumPage,
     GeneralForumWritePage,
     GeneralForumDetailPage,
+    GeneralForumMenuPage,
   },
   initialActivity: () => 'MainPage',
 })

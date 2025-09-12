@@ -24,6 +24,7 @@ export default function GeneralForumPage() {
           border: false,
           renderRight: () => (
             <SideDrawer
+              mode="general-forum"
               container={portalRef.current}
               isOpen={isOpen}
               setIsOpen={setIsOpen}

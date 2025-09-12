@@ -15,6 +15,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
 import { Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import LoungeMagazineSelect from './lounge-magazine-select'
+import {
+  useGeneralForumLikeOptimistic,
+  useMagazineLikeOptimistic,
+} from '@/hooks/tanstak/use-optimistic-like'
 
 export type LoungeAndMagazineTabProps<T extends string> = {
   tab: T
@@ -122,13 +126,53 @@ function LoungeAndMagazineListItem({
   return (
     <div>
       {items.map(item => (
-        <MagazineListCard
+        <MagazineListCardWithLike
           key={item.id}
           data={item}
-          onClick={() => onClick(item.id)}
+          onClick={e => {
+            e.stopPropagation()
+            onClick(item.id)
+          }}
+          queryKey={queryKey}
         />
       ))}
       <div ref={ref} />
     </div>
+  )
+}
+
+type MagazineListCardWithLikeProps = {
+  data: Magazine
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
+  queryKey: MagazineOrGeneralForum
+}
+const MagazineListCardWithLike = ({
+  data,
+  onClick,
+  queryKey,
+}: MagazineListCardWithLikeProps) => {
+  const likeGeneralForum = useGeneralForumLikeOptimistic(data.id)
+
+  const likeMagazine = useMagazineLikeOptimistic(data.id)
+
+  const clickLike = () => {
+    if (queryKey === 'magazine') {
+      likeMagazine.handleLike()
+    } else {
+      likeGeneralForum.handleLike()
+    }
+  }
+
+  const clickBookmark = (id: string) => {
+    console.log('clickBookmark', id)
+  }
+
+  return (
+    <MagazineListCard
+      data={data}
+      onClick={onClick}
+      onClickLike={clickLike}
+      onClickBookmark={clickBookmark}
+    />
   )
 }
