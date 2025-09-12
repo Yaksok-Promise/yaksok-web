@@ -1,5 +1,6 @@
 import { GeneralForumWrite } from '@/components/general-forum/gener-forum-write'
 import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
+import { GeneralForumCreateButton } from '@/components/general-forum/general-forunm-create-button'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Check, ChevronLeft } from '@yaksok/icons'
 import { TipTapContext } from '@yaksok/ui'
@@ -14,11 +15,7 @@ export default function GeneralForumWritePage() {
           iconColor: '#ffffff',
           backgroundColor: '#000000',
           border: false,
-          renderRight: () => (
-            <button>
-              <Check size={24} stroke="white" />
-            </button>
-          ),
+          renderRight: () => <GeneralForumCreateButton />,
           renderLeft: () => (
             <button>
               <ChevronLeft size={24} stroke="white" />

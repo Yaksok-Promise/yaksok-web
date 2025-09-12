@@ -9,6 +9,7 @@ import { QUERY_KEY } from '@/utils/query-key'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { CommentResponse } from '@yaksok/api/commentType'
+import { TiptapViewer } from '@yaksok/ui'
 import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
@@ -92,7 +93,9 @@ export default function GeneralForumDetailPage({
       <main className="relative flex min-h-full flex-col bg-bgColor">
         <div className="px-4">
           <GeneralForumTitle {...titleProps} />
-          <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
+          <div className="px-4 py-5">
+            <TiptapViewer content={generalForumDetailData.body} />
+          </div>
           <GeneralForumButtonList {...buttonListProps} />
         </div>
         <div className="mb-40">

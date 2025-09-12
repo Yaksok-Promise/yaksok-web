@@ -5,14 +5,19 @@ export type Category = 'DAILY' | 'REVIEW' | 'ALL' | 'QUESTION'
 
 export type CategoryToKorean = '잡담·일상' | '후기' | '전체' | '질문'
 
+type Tag = {
+  id: string
+  name: string
+}
+
 export interface MagazineStore {
   title: string
-  tagNames: string[]
+  tags: Tag[]
   category: Category
-  files: Map<string, File>
-  registerFile: (name: string, file: File) => void
+  images: Map<string, File>
+  registerImage: (name: string, file: File) => void
   setTitle: (title: string) => void
-  setTagNames: (tagNames: string[]) => void
+  setTags: (tags: Tag[]) => void
   setCategory: (category: Category) => void
   clear: () => void
 }
@@ -20,16 +25,15 @@ export interface MagazineStore {
 // 상태 관리를 위한 store 객체 생성
 export const magazineStore = createStore<MagazineStore>((set, get) => ({
   title: '',
-  tagNames: [],
+  tags: [],
   category: 'ALL',
-  files: new Map(),
-  registerFile: (name: string, file: File) =>
-    set({ files: get().files.set(name, file) }),
+  images: new Map(),
+  registerImage: (name: string, file: File) =>
+    set({ images: get().images.set(name, file) }),
   setTitle: (title: string) => set({ title }),
-  setTagNames: (tagNames: string[]) => set({ tagNames }),
+  setTags: (tags: Tag[]) => set({ tags }),
   setCategory: (category: Category) => set({ category }),
-  clear: () =>
-    set({ files: new Map(), title: '', tagNames: [], category: 'ALL' }),
+  clear: () => set({ images: new Map(), title: '', tags: [], category: 'ALL' }),
 }))
 
 export const useMagazineStore = () => useStore(magazineStore)

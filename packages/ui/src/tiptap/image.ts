@@ -25,14 +25,13 @@ export function uid(prefix = 'img') {
 }
 
 export function makeImageAttrsFromFile(file: File) {
-  const { registerFile } = magazineStore.getState()
-  registerFile(file.name, file)
+  const { registerImage } = magazineStore.getState()
+  registerImage(file.name, file)
   const objectUrl = URL.createObjectURL(file)
   const baseName = file.name?.replace(/\.[^.]+$/, '') || 'image'
   const alt = `${baseName}-${uid()}`
-  const name = file.name || alt
-  registerFile(name, file)
-  console.log(file)
+  const name = alt
+  registerImage(name, file)
   return { src: objectUrl, alt, name }
 }
 
