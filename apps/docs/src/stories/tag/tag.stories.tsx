@@ -3,7 +3,7 @@ import { Tag, TagProps } from '@yaksok/ui'
 
 const meta: Meta<TagProps> = {
   component: Tag,
-  title: 'stories/tag',
+  title: 'stories/tag/tagItem',
   tags: ['autodocs'],
   argTypes: {
     tag: {

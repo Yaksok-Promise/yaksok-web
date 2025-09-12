@@ -11,6 +11,7 @@
     "./tabs": "./src/tabs/index.tsx",
     "./select": "./src/select/index.tsx",
     "./dropdown-menu": "./src/dropdown-menu/index.tsx",
+    "./tiptap": "./src/tiptap/index.ts",
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {

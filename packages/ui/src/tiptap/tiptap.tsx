@@ -4,15 +4,14 @@ import TextAlign from '@tiptap/extension-text-align'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import { Placeholder } from '@tiptap/extensions'
 import type { Editor } from '@tiptap/react'
-import { EditorContent, useEditor, useEditorState } from '@tiptap/react'
-import ImageResize from 'tiptap-extension-resize-image'
-import StarterKit from '@tiptap/starter-kit'
 import {
-  ImageWithMeta,
-  isLikelyImageURL,
-  makeImageAttrsFromFile,
-  uid,
-} from './image'
+  EditorContent,
+  EditorContext,
+  useCurrentEditor,
+  useEditor,
+  useEditorState,
+} from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 import {
   Bold,
   Heading as HeadingIcon,
@@ -27,7 +26,14 @@ import {
   TextAlignRight,
   Underline,
 } from '@yaksok/icons'
-import { ChangeEventHandler, useRef } from 'react'
+import { ChangeEventHandler, useMemo, useRef } from 'react'
+import ImageResize from 'tiptap-extension-resize-image'
+import {
+  ImageWithMeta,
+  fileFromRemoteURL,
+  isLikelyImageURL,
+  makeImageAttrsFromFile,
+} from './image'
 
 const PLACEHOLDER = `공유하고 싶은 이야기를 자유롭게 적어주세요.
     
@@ -125,7 +131,7 @@ const extensions = [
   }),
 ]
 
-function MenuBar({ editor }: { editor: Editor }) {
+export function MenuBar({ editor }: { editor: Editor }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const onPickImage = () => fileInputRef.current?.click()
@@ -161,7 +167,7 @@ function MenuBar({ editor }: { editor: Editor }) {
   })
 
   return (
-    <div className="flex flex-wrap items-center gap-1.25 px-4 py-3 shadow-box">
+    <div className="flex flex-wrap items-center gap-1.25 px-4 py-3">
       <input
         ref={fileInputRef}
         type="file"
@@ -262,10 +268,19 @@ function MenuBar({ editor }: { editor: Editor }) {
 }
 
 export const Tiptap = () => {
+  const { editor } = useCurrentEditor()
+  return (
+    <div>
+      <EditorContent editor={editor} className="min-h-screen p-2" />
+    </div>
+  )
+}
+
+export const TipTapContext = ({ children }: { children: React.ReactNode }) => {
   const editor = useEditor({
     extensions,
     editorProps: {
-      handlePaste: (view, event) => {
+      handlePaste: (_view, event) => {
         // 이미지 파일 붙여넣기
         const items = event.clipboardData?.items
         const fileItem =
@@ -284,17 +299,17 @@ export const Tiptap = () => {
         const text = event.clipboardData?.getData('text')
         if (text && isLikelyImageURL(text)) {
           event.preventDefault()
-          const alt = `pasted-${uid()}`
-          editor
-            ?.chain()
-            .focus()
-            .setImage({ src: text.trim(), alt, name: alt })
-            .run()
+          ;(async () => {
+            const file = await fileFromRemoteURL(text.trim())
+            console.log('file', file)
+            const attrs = makeImageAttrsFromFile(file) // 내부에서 registerImageFile 수행
+            editor?.chain().focus().setImage(attrs).run()
+          })()
           return true
         }
         return false
       },
-      handleDrop: (view, event, _slice, moved) => {
+      handleDrop: (_view, event, _slice, moved) => {
         if (moved) return false
         const files = Array.from(event.dataTransfer?.files || [])
         if (files.length) {
@@ -314,12 +329,11 @@ export const Tiptap = () => {
         const text = event.dataTransfer?.getData('text')
         if (text && isLikelyImageURL(text)) {
           event.preventDefault()
-          const alt = `dropped-${uid()}`
-          editor
-            ?.chain()
-            .focus()
-            .setImage({ src: text.trim(), alt, title: alt })
-            .run()
+          ;(async () => {
+            const file = await fileFromRemoteURL(text.trim())
+            const attrs = makeImageAttrsFromFile(file)
+            editor?.chain().focus().setImage(attrs).run()
+          })()
           return true
         }
         return false
@@ -329,10 +343,12 @@ export const Tiptap = () => {
       },
     },
   })
+
+  const providerValue = useMemo(() => ({ editor }), [editor])
+
   return (
-    <div>
-      <EditorContent editor={editor} className="min-h-screen p-2" />
-      <MenuBar editor={editor} />
-    </div>
+    <EditorContext.Provider value={providerValue}>
+      {children}
+    </EditorContext.Provider>
   )
 }

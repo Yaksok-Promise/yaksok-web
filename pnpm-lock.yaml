@@ -96,6 +96,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@tiptap/react':
+        specifier: ^3.4.1
+        version: 3.4.1(@floating-ui/dom@1.7.4)(@tiptap/core@3.4.1(@tiptap/pm@3.4.1))(@tiptap/pm@3.4.1)(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@yaksok/icons':
         specifier: workspace:*
         version: link:../../packages/icons

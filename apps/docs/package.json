@@ -10,6 +10,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tiptap/react": "^3.4.1",
     "@yaksok/icons": "workspace:*",
     "@yaksok/ui": "workspace:*",
     "react": "^19.0.0",

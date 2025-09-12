@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { SVGProps } from 'react'
-const SvgClose = React.forwardRef<
+const SvgPlus = React.forwardRef<
   SVGSVGElement,
   SVGProps<SVGSVGElement> & {
     size?: number | string
@@ -9,29 +9,21 @@ const SvgClose = React.forwardRef<
   <svg
     width={size}
     height={size}
-    viewBox="0 0 30 30"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     ref={ref}
     {...props}
   >
     <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke={stroke}
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
+      stroke="#48484A"
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke={stroke}
-      strokeOpacity={0.2}
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
       stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
@@ -39,7 +31,7 @@ const SvgClose = React.forwardRef<
       strokeLinejoin="round"
     />
     <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
       stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
@@ -47,15 +39,23 @@ const SvgClose = React.forwardRef<
       strokeLinejoin="round"
     />
     <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="currentColor"
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
+      stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
+      stroke={stroke}
+      strokeOpacity={0.2}
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6 12H12M12 12H18M12 12V18M12 12V6"
       stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
@@ -64,5 +64,5 @@ const SvgClose = React.forwardRef<
     />
   </svg>
 ))
-SvgClose.displayName = 'SvgClose'
-export default SvgClose
+SvgPlus.displayName = 'SvgPlus'
+export default SvgPlus
