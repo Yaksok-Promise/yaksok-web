@@ -100,3 +100,17 @@ export const ChangePasswordSchema = z
   })
 
 export type ChangePasswordSchemaRequest = z.infer<typeof ChangePasswordSchema>
+
+export const FeedbackSchema = z.object({
+  rating: z.enum(['1', '2', '3', '4', '5'], {
+    errorMap: () => ({ message: '만족도를 선택해 주세요.' }),
+  }),
+  // make required: z.string().min(1, '의견을 입력해 주세요.').max(1000, '최대 1000자까지 입력 가능합니다.')
+  comment: z
+    .string()
+    .max(1000, '최대 1000자까지 입력 가능합니다.')
+    .optional()
+    .or(z.literal('')),
+})
+
+export type FeedbackFormValues = z.infer<typeof FeedbackSchema>

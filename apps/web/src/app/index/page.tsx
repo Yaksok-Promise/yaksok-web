@@ -27,7 +27,7 @@ export default function MainPage() {
         },
       }}
     >
-      <div className="flex flex-col gap-14 bg-bgColor py-6">
+      <div className="flex flex-col gap-14 overflow-y-auto scroll-auto bg-bgColor py-6">
         <Search containerClassName="px-3" />
         <MainLounge />
         <MainCheck />

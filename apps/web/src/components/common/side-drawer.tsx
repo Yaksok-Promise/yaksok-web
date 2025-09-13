@@ -159,6 +159,10 @@ export const SideDrawer = forwardRef(function SideDrawer(
               icon={<Mail size={18} />}
               title={'피드백・문의'}
               className="text-black01 text-body2"
+              navigate={() => {
+                push('FeedbackPage', { previousPage: mode })
+                setIsOpen(false)
+              }}
             />
             <Line />
             <ListItem

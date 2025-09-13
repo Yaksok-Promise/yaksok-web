@@ -11,7 +11,7 @@ export const BottomsheetLikeBackground = ({
       {...props}
     >
       <div className="h-30 w-full bg-black01" />
-      <div className="min-h-screen w-full rounded-t-[20px] bg-white">
+      <div className="min-h-screen w-full overflow-y-auto scroll-auto rounded-t-[20px] bg-white">
         {children}
       </div>
     </div>

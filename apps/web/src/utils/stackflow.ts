@@ -1,4 +1,5 @@
 import ComparePage from '@/app/index/compare/page'
+import FeedbackPage from '@/app/index/feedback/feedback-page'
 import FindIdPassword from '@/app/index/find-id-password/page'
 import GeneralForumDetailPage from '@/app/index/general-forum/detail/page'
 import GeneralForumMenuPage from '@/app/index/general-forum/menu/page'
@@ -46,6 +47,7 @@ export const { Stack, useFlow } = stackflow({
         GeneralForumDetailPage: '/general-forum/detail',
         MagazineMenuPage: '/magazine/menu',
         GeneralForumMenuPage: '/general-forum/menu',
+        FeedbackPage: '/feedback',
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -68,6 +70,7 @@ export const { Stack, useFlow } = stackflow({
     GeneralForumWritePage,
     GeneralForumDetailPage,
     GeneralForumMenuPage,
+    FeedbackPage,
   },
   initialActivity: () => 'MainPage',
 })
