@@ -18,8 +18,8 @@ export function MagazineListCard({
   onClickBookmark,
   ...props
 }: MagazineListCardProps) {
-  const tags = data.tags
-  console.log(data)
+  const tags = data.tag ? data.tag : data.tags
+
   return (
     <div
       role="button"

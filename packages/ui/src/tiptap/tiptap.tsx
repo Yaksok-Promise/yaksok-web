@@ -358,14 +358,9 @@ export type ViewerProps = {
 }
 export function TiptapViewer({ content }: ViewerProps) {
   const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        // 필요 없는 기능은 꺼도 됨
-        heading: false,
-      }),
-    ],
-    content, // 서버 데이터 (HTML)
-    editable: false, // 수정 불가
+    extensions: [...extensions],
+    content,
+    editable: false,
   })
 
   if (!editor) return null

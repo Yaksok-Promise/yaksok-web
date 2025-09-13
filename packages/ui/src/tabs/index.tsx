@@ -19,8 +19,8 @@ export const tabsTriggerVariants = cva(
           'after:-translate-y-1/2 after:-translate-x-full',
         ],
         box: [
-          'inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full',
-          'px-7.5 py-1 text-sm font-medium text-black',
+          'inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-[20px] border-1 border-gray06 bg-white',
+          'px-2 py-1 text-caption1 text-gray03',
           'data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:z-10',
         ],
         line: [

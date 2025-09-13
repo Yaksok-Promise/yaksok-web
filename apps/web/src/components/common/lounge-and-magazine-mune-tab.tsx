@@ -1,11 +1,6 @@
-import {
-  LOUNGE_CATEGORY,
-  LoungeCategoryKey,
-  MAGAZINE_CATEGORY,
-  MagazineCategoryKey,
-  MagazineOrGeneralForum,
-} from '@/const/magazine-and-lounge'
+import { MagazineOrGeneralForum } from '@/const/magazine-and-lounge'
 import { useHttpInfiniteQuery } from '@/hooks/tanstak/use-http-infinity-query'
+import { useGetToken } from '@/hooks/use-get-token'
 import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
@@ -14,39 +9,43 @@ import { MagazineListCard } from '@yaksok/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
 import { Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import LoungeMagazineSelect from './lounge-magazine-select'
 
-export type LoungeAndMagazineTabProps<T extends string> = {
-  tab: T
-  tabList: T[]
-  url: PathType
+type Tab = 'LIKE' | 'BOOKMARK' | 'COMMENT' | 'MINE'
+
+type LoungeAndMagazineMuneTabProps = {
+  tab: Tab
   queryKey: MagazineOrGeneralForum
 }
-
-const isMagazine = (queryKey: MagazineOrGeneralForum): queryKey is 'magazine' =>
-  queryKey === 'magazine'
-
-export function LoungeAndMagazineTab<T extends string>({
+export const GeneralForumAndMagazineMuneTab = ({
   tab,
-  tabList,
-  url,
   queryKey,
-}: LoungeAndMagazineTabProps<T>) {
+}: LoungeAndMagazineMuneTabProps) => {
+  const [value, setValue] = useState<'LIKE' | 'BOOKMARK' | 'COMMENT' | 'MINE'>(
+    tab
+  )
   const queryClient = useQueryClient()
-  const [category, setCategory] = useState<T>(tab)
-  const [sort, setSort] = useState<'LATEST' | 'POPULAR'>('LATEST')
-
-  const changeCategory = (category: string) => {
-    setCategory(category as T)
-    queryClient.invalidateQueries({ queryKey: [queryKey, category, sort] })
+  const changeCategory = (value: string) => {
+    setValue(value as Tab)
+    queryClient.invalidateQueries({ queryKey: [queryKey, value] })
   }
 
+  const tabList =
+    queryKey === 'magazine'
+      ? ['LIKE', 'BOOKMARK']
+      : ['LIKE', 'BOOKMARK', 'COMMENT', 'MINE']
+
+  const tabListToKorean = {
+    LIKE: '좋아요 한 글',
+    BOOKMARK: '스크랩 한 글',
+    COMMENT: '댓글 단 글',
+    MINE: '작성한 글',
+  }
   return (
     <Tabs
       orientation="horizontal"
-      value={category}
+      value={value}
       onValueChange={changeCategory}
-      className="bg-white px-5"
+      className="rounded-t-full bg-white px-5"
     >
       <TabsList className="sticky top-0 flex w-full justify-between rounded-none bg-white">
         <div>
@@ -54,25 +53,17 @@ export function LoungeAndMagazineTab<T extends string>({
             <TabsTrigger
               key={tab}
               value={tab}
-              variant={'line'}
+              variant={'box'}
               className="mt-4 mb-4 not-first:ml-2.5"
             >
-              {isMagazine(queryKey)
-                ? MAGAZINE_CATEGORY[tab as MagazineCategoryKey]
-                : LOUNGE_CATEGORY[tab as LoungeCategoryKey]}
+              {tabListToKorean[tab as keyof typeof tabListToKorean]}
             </TabsTrigger>
           ))}
         </div>
-        <LoungeMagazineSelect value={sort} onValueChange={setSort} />
       </TabsList>
-      <TabsContent value={category} className="mb-10">
+      <TabsContent value={value} className="mb-10">
         <Suspense fallback={<div>Loading...</div>}>
-          <LoungeAndMagazineListItem
-            queryKey={queryKey}
-            category={category}
-            sort={sort}
-            url={url}
-          />
+          <LoungeAndMagazineListItem queryKey={queryKey} value={value} />
         </Suspense>
       </TabsContent>
     </Tabs>
@@ -81,29 +72,40 @@ export function LoungeAndMagazineTab<T extends string>({
 
 type LoungeAndMagazineListItemProps = {
   queryKey: MagazineOrGeneralForum
-  category: string
-  sort: string
-  url: PathType
+  value: Tab
 }
 function LoungeAndMagazineListItem({
   queryKey,
-  category,
-  sort,
-  url,
+  value,
 }: LoungeAndMagazineListItemProps) {
   const { push } = useFlow()
   const params = {
     size: 10,
-    category: category === 'All' ? undefined : category,
-    sortBy: sort,
+    bodySize: 50,
   }
+
+  // 추가 설정 필요
+  let url: PathType | null = '/api/post/general-forum/my'
+
+  if (queryKey === 'general-forum' && value === 'MINE') {
+    url = '/api/post/general-forum/my'
+  }
+  const token = useGetToken()
 
   const { items, hasNextPage, fetchNextPage } = useHttpInfiniteQuery<
     undefined,
     Magazine
-  >([queryKey, category, sort], url, {
-    params: params,
-  })
+  >(
+    [queryKey, value],
+    url,
+    {
+      params: params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    {}
+  )
 
   const { ref } = useInView({
     threshold: 0,

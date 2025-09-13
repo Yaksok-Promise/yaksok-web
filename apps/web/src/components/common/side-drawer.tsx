@@ -7,13 +7,14 @@ import {
   BlankHeart,
   Bookmark,
   ChevronRight,
+  CommunicationDot,
   Hamburger,
   Info,
   Instagram,
   Mail,
   Show,
 } from '@yaksok/icons'
-import { ListItem, Profile, Switch } from '@yaksok/ui'
+import { Comment, ListItem, Profile, Switch } from '@yaksok/ui'
 import {
   Drawer,
   DrawerContent,
@@ -108,18 +109,18 @@ export const SideDrawer = forwardRef(function SideDrawer(
               title={'스크랩 한 글'}
               className="text-black01 text-body2"
             />
-            {mode === 'magazine' && (
+            {mode === 'general-forum' && (
               <ListItem
                 navigate={() => {
                   push('GeneralForumMenuPage', { tab: 'COMMENT' })
                   setIsOpen(false)
                 }}
-                icon={<Show size={18} stroke={'#000000'} />}
+                icon={<CommunicationDot size={18} stroke={'#000000'} />}
                 title={'댓글 단 글'}
                 className="text-black01 text-body2"
               />
             )}
-            {mode === 'magazine' && (
+            {mode === 'general-forum' && (
               <ListItem
                 navigate={() => {
                   push('GeneralForumMenuPage', { tab: 'MINE' })
