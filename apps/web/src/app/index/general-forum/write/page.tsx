@@ -1,25 +1,32 @@
+import { GeneralForumWrite } from '@/components/general-forum/gener-forum-write'
+import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
+import { GeneralForumCreateButton } from '@/components/general-forum/general-forunm-create-button'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { Check } from '@yaksok/icons'
+import { Check, ChevronLeft } from '@yaksok/icons'
+import { TipTapContext } from '@yaksok/ui'
 
 export default function GeneralForumWritePage() {
   return (
-    <>
+    <TipTapContext>
       <AppScreen
         appBar={{
-          title: <div>자유게시판</div>,
+          title: <GeneralForumWriteSelect />,
           textColor: '#ffffff',
           iconColor: '#ffffff',
           backgroundColor: '#000000',
           border: false,
-          renderRight: () => (
+          renderRight: () => <GeneralForumCreateButton />,
+          renderLeft: () => (
             <button>
-              <Check size={24} stroke="white" />
+              <ChevronLeft size={24} stroke="white" />
             </button>
           ),
         }}
       >
-        <div className="relative h-screen overflow-auto "></div>
+        <div className="relative h-screen overflow-auto ">
+          <GeneralForumWrite />
+        </div>
       </AppScreen>
-    </>
+    </TipTapContext>
   )
 }

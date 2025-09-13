@@ -3,6 +3,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.ProseMirror,
+.ProseMirror:focus,
+.ProseMirror.ProseMirror-focused {
+  outline: none !important;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -160,6 +174,7 @@
   /*  carousel style */
   --animate-slide: slide var(--autoplay-duration, 3000ms) linear forwards;
 
+  --text-head1: 40px;
   --text-head1--line-height: 52px;
   --text-head1--letter-spacing: -0.6px;
   --text-head1--font-weight: 800;

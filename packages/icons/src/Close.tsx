@@ -5,7 +5,7 @@ const SvgClose = React.forwardRef<
   SVGProps<SVGSVGElement> & {
     size?: number | string
   }
->(({ size = 24, ...props }, ref) => (
+>(({ size = 24, stroke = 'black', ...props }, ref) => (
   <svg
     width={size}
     height={size}
@@ -17,14 +17,30 @@ const SvgClose = React.forwardRef<
   >
     <path
       d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="#48484A"
+      stroke={stroke}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="currentColor"
+      stroke={stroke}
+      strokeOpacity={0.2}
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
+      stroke={stroke}
+      strokeOpacity={0.2}
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
+      stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
       strokeLinecap="round"
@@ -40,23 +56,7 @@ const SvgClose = React.forwardRef<
     />
     <path
       d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="currentColor"
-      strokeOpacity={0.2}
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="currentColor"
-      strokeOpacity={0.2}
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M20 20L15 15M15 15L10 10M15 15L20 10M15 15L10 20"
-      stroke="currentColor"
+      stroke={stroke}
       strokeOpacity={0.2}
       strokeWidth={1.5}
       strokeLinecap="round"

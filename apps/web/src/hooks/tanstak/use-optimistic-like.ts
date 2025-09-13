@@ -35,11 +35,7 @@ function useOptimisticLike<T>(
   const queryClient = useQueryClient()
   const token = useGetToken()
 
-  const mutation = useHttpMutation<
-    undefined,
-    CheckResultResponse,
-    LikeContext<T>
-  >(
+  const mutation = useHttpMutation<{}, CheckResultResponse, LikeContext<T>>(
     '/api/like/toggle',
     'post',
     {
@@ -82,7 +78,7 @@ function useOptimisticLike<T>(
   )
 
   const handleLike = useCallback(() => {
-    mutation.mutate(undefined)
+    mutation.mutate({})
   }, [mutation])
 
   return { handleLike, mutation }

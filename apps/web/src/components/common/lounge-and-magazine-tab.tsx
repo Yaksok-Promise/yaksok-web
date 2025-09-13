@@ -125,7 +125,10 @@ function LoungeAndMagazineListItem({
         <MagazineListCard
           key={item.id}
           data={item}
-          onClick={() => onClick(item.id)}
+          onClick={e => {
+            e.stopPropagation()
+            onClick(item.id)
+          }}
         />
       ))}
       <div ref={ref} />

@@ -8,10 +8,18 @@ import { Tag } from './tag'
 
 export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
+  onClickLike?: (id: string) => void
+  onClickBookmark?: (id: string) => void
 }
 
-export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
-  const tags = data.tags
+export function MagazineListCard({
+  data,
+  onClickLike,
+  onClickBookmark,
+  ...props
+}: MagazineListCardProps) {
+  const tags = data.tag ? data.tag : data.tags
+
   return (
     <div
       role="button"
@@ -42,12 +50,20 @@ export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
         </span>
         <div className="flex gap-1">
           <IconTag
-            icon={<BlankHeart size={12} stroke="#959598" />}
+            icon={<BlankHeart size={16} stroke="#959598" />}
             label={data.likes.toString()}
+            onClick={e => {
+              e.stopPropagation()
+              onClickLike?.(data.id)
+            }}
           />
           <IconTag
-            icon={<Bookmark size={12} stroke="#959598" />}
+            icon={<Bookmark size={16} stroke="#959598" />}
             label={data.views.toString()}
+            onClick={e => {
+              e.stopPropagation()
+              onClickBookmark?.(data.id)
+            }}
           />
         </div>
       </div>

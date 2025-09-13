@@ -17,19 +17,6 @@ type Status = undefined | ErrorStatus | SuccessStatus
 type Message = Partial<Record<ErrorStatus, string>>
 type TextMode = 'line' | 'box'
 
-// ✅ Unified handle (single ref)
-export type TextFieldAPI = {
-  /** Focus the input */
-  focus: () => void
-  /** Clear the input + reset status */
-  clear: () => void
-  /** Get current input value */
-  getValue: () => string
-  unFocus: () => void
-  /** The inner HTMLInputElement (DOM node) */
-  el: HTMLInputElement | null
-}
-
 export interface TextFieldProps
   extends Omit<React.ComponentProps<'input'>, 'ref'>,
     VariantProps<typeof textFieldVariants> {
@@ -45,7 +32,7 @@ export interface TextFieldProps
   verifyButtonText?: string
 }
 
-export const TextField = React.forwardRef<TextFieldAPI, TextFieldProps>(
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
     {
       type = 'text',
@@ -67,30 +54,11 @@ export const TextField = React.forwardRef<TextFieldAPI, TextFieldProps>(
     },
     ref
   ) {
-    const innerRef = React.useRef<HTMLInputElement>(null)
-
     const [inputValue, setInputValue] = useState<string>(
       typeof value === 'string' ? value : ''
     )
     const [status, setStatus] = useState<Status>(undefined)
     const [showPassword, setShowPassword] = useState(false)
-
-    // ✅ Expose single unified API via ref
-    React.useImperativeHandle(
-      ref,
-      (): TextFieldAPI => ({
-        focus: () => innerRef.current?.focus(),
-        clear: () => {
-          setInputValue('')
-          setStatus(undefined)
-          innerRef.current?.focus()
-        },
-        getValue: () => inputValue ?? '',
-        unFocus: () => innerRef.current?.blur(),
-        el: innerRef.current,
-      }),
-      [inputValue]
-    )
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       let newValue = e.target.value
@@ -146,7 +114,7 @@ export const TextField = React.forwardRef<TextFieldAPI, TextFieldProps>(
           <div className="flex items-center gap-[16px]">
             <div className="flex w-full flex-1 items-center justify-between border-black01 border-b-[2px]">
               <input
-                ref={innerRef}
+                ref={ref}
                 type={showPassword ? 'text' : type}
                 data-slot="input"
                 value={inputValue}
@@ -180,7 +148,7 @@ export const TextField = React.forwardRef<TextFieldAPI, TextFieldProps>(
           )}
           <div className="relative flex flex-1 items-center justify-between">
             <input
-              ref={innerRef}
+              ref={ref}
               type={showPassword ? 'text' : type}
               data-slot="input"
               value={inputValue}

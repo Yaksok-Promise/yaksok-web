@@ -24,6 +24,7 @@ export default function GeneralForumPage() {
           border: false,
           renderRight: () => (
             <SideDrawer
+              mode="general-forum"
               container={portalRef.current}
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -31,7 +32,7 @@ export default function GeneralForumPage() {
           ),
         }}
       >
-        <main className="relative h-full overflow-auto ">
+        <main className="relative overflow-auto scroll-auto">
           <LoungeAndMagazineTab<LoungeCategoryKey>
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}

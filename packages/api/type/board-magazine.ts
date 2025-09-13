@@ -20,6 +20,7 @@ export type Magazine = {
   views: number
   tags: Tag[]
   hasImages: boolean
+  tag?: Tag[]
 }
 
 export type MagazineDetail = Magazine & {
