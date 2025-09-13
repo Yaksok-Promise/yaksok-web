@@ -138,11 +138,17 @@ export const SideDrawer = forwardRef(function SideDrawer(
               className="text-black01 text-body2"
               rightIcon={<Switch />}
             />
-            <ListItem
-              icon={<Attach size={18} />}
-              title={'YAKIN STORY'}
-              className="text-black01 text-body2"
-            />
+            {mode === 'magazine' && (
+              <ListItem
+                navigate={() => {
+                  push('MagazineYakinStoryPage', {})
+                  setIsOpen(false)
+                }}
+                icon={<Attach size={18} />}
+                title={'YAKIN STORY'}
+                className="text-black01 text-body2"
+              />
+            )}
             <ListItem
               icon={<Instagram size={18} />}
               title={'Instagram'}

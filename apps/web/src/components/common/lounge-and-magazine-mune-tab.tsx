@@ -124,7 +124,7 @@ function LoungeAndMagazineListItem({
 
   if (items.length === 0) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-white px-4">
+      <div className="flex h-full w-full flex-col items-center justify-center bg-white pt-10">
         <h1 className="text-gray03 text-head6">
           {TAB_LIST_TO_KOREAN[value as keyof typeof TAB_LIST_TO_KOREAN]}한 글이
           없습니다.

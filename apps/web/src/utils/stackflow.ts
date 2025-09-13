@@ -8,6 +8,7 @@ import MagazineDetailPage from '@/app/index/magazine/detail/page'
 import MagazineListPage from '@/app/index/magazine/list/page'
 import MagazinePage from '@/app/index/magazine/list/page'
 import MagazineMenuPage from '@/app/index/magazine/menu/page'
+import MagazineYakinStoryPage from '@/app/index/magazine/yakin-story/page'
 import Mypage from '@/app/index/mypage/page'
 import ProfilePage from '@/app/index/mypage/profile/page'
 import MainPage from '@/app/index/page'
@@ -39,6 +40,7 @@ export const { Stack, useFlow } = stackflow({
         MagazinePage: '/magazine',
         MagazineDetailPage: '/magazine/detail',
         MagazineListPage: '/magazine/list',
+        MagazineYakinStoryPage: '/magazine/yakin-story',
         GeneralForumPage: '/general-forum',
         GeneralForumWritePage: '/general-forum/write',
         GeneralForumDetailPage: '/general-forum/detail',
@@ -61,6 +63,7 @@ export const { Stack, useFlow } = stackflow({
     MagazineListPage,
     MagazineDetailPage,
     MagazineMenuPage,
+    MagazineYakinStoryPage,
     GeneralForumPage,
     GeneralForumWritePage,
     GeneralForumDetailPage,
