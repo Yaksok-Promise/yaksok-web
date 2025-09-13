@@ -5,7 +5,7 @@ import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
 import { Magazine } from '@yaksok/api/boardMagazineType'
-import { MagazineListCard } from '@yaksok/ui'
+import { Button, MagazineListCard } from '@yaksok/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
 import { Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -16,6 +16,13 @@ type LoungeAndMagazineMuneTabProps = {
   tab: Tab
   queryKey: MagazineOrGeneralForum
 }
+
+const TAB_LIST_TO_KOREAN = {
+  LIKE: '좋아요 한 글',
+  BOOKMARK: '스크랩 한 글',
+  COMMENT: '댓글 단 글',
+  MINE: '작성한 글',
+} as const
 export const GeneralForumAndMagazineMuneTab = ({
   tab,
   queryKey,
@@ -34,12 +41,6 @@ export const GeneralForumAndMagazineMuneTab = ({
       ? ['LIKE', 'BOOKMARK']
       : ['LIKE', 'BOOKMARK', 'COMMENT', 'MINE']
 
-  const tabListToKorean = {
-    LIKE: '좋아요 한 글',
-    BOOKMARK: '스크랩 한 글',
-    COMMENT: '댓글 단 글',
-    MINE: '작성한 글',
-  }
   return (
     <Tabs
       orientation="horizontal"
@@ -56,7 +57,7 @@ export const GeneralForumAndMagazineMuneTab = ({
               variant={'box'}
               className="mt-4 mb-4 not-first:ml-2.5"
             >
-              {tabListToKorean[tab as keyof typeof tabListToKorean]}
+              {TAB_LIST_TO_KOREAN[tab as keyof typeof TAB_LIST_TO_KOREAN]}
             </TabsTrigger>
           ))}
         </div>
@@ -119,6 +120,30 @@ function LoungeAndMagazineListItem({
   const onClick = (id: string) => {
     const isMagazine = queryKey === 'magazine'
     push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-white px-4">
+        <h1 className="text-gray03 text-head6">
+          {TAB_LIST_TO_KOREAN[value as keyof typeof TAB_LIST_TO_KOREAN]}한 글이
+          없습니다.
+        </h1>
+        <p className="pb-11 text-body2 text-gray05">
+          {'회원들의 최신 글을 만나보세요 :)'}
+        </p>
+        <Button
+          onClick={() => {
+            push(
+              queryKey === 'magazine' ? 'MagazinePage' : 'GeneralForumPage',
+              {}
+            )
+          }}
+        >
+          {queryKey === 'magazine' ? '메거진 바로가기' : '자유게시판 바로가기'}
+        </Button>
+      </div>
+    )
   }
 
   return (
