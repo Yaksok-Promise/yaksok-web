@@ -65,6 +65,7 @@ export default function MagazineDetailPage({
           border: false,
           renderRight: () => (
             <SideDrawer
+              mode="magazine"
               container={portalRef.current}
               isOpen={isOpen}
               setIsOpen={setIsOpen}

@@ -1,18 +1,36 @@
 'use client'
 
+import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
+import { useGetToken } from '@/hooks/use-get-token'
 import { useFlow } from '@stackflow/react/future'
+import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { Pencil, Share, Trash, TriangleWarning } from '@yaksok/icons'
 import { DropDown } from '@yaksok/ui'
 
 export type GeneralForumHeaderSelectProps = {
   isMine: boolean
+  data: MagazineDetail
 }
 
 export function GeneralForumHeaderDropDown({
   isMine,
+  data,
 }: GeneralForumHeaderSelectProps) {
   // 각 버튼 기능 요소 정리 필요
   const { push } = useFlow()
+  const token = useGetToken()
+  const deleteMutation = useHttpMutation(
+    '/api/post/general-forum/{postId}',
+    'delete',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        postId: data.id,
+      },
+    }
+  )
   const _dropdownMenuList = isMine
     ? [
         {
@@ -27,8 +45,9 @@ export function GeneralForumHeaderDropDown({
           label: '삭제',
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
-          onClick: () => {
-            alert('삭제')
+          onClick: async () => {
+            await deleteMutation.mutateAsync({})
+            push('GeneralForumPage', {})
           },
         },
       ]
