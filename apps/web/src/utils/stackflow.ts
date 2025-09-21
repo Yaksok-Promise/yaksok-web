@@ -2,6 +2,7 @@ import ComparePage from '@/app/index/compare/page'
 import FeedbackPage from '@/app/index/feedback/feedback-page'
 import FindIdPassword from '@/app/index/find-id-password/page'
 import GeneralForumDetailPage from '@/app/index/general-forum/detail/page'
+import GeneralForumEditPage from '@/app/index/general-forum/edit/page'
 import GeneralForumMenuPage from '@/app/index/general-forum/menu/page'
 import GeneralForumPage from '@/app/index/general-forum/page'
 import GeneralForumWritePage from '@/app/index/general-forum/write/page'
@@ -45,6 +46,7 @@ export const { Stack, useFlow } = stackflow({
         GeneralForumPage: '/general-forum',
         GeneralForumWritePage: '/general-forum/write',
         GeneralForumDetailPage: '/general-forum/detail',
+        GeneralForumEditPage: '/general-forum/edit',
         MagazineMenuPage: '/magazine/menu',
         GeneralForumMenuPage: '/general-forum/menu',
         FeedbackPage: '/feedback',
@@ -70,6 +72,7 @@ export const { Stack, useFlow } = stackflow({
     GeneralForumWritePage,
     GeneralForumDetailPage,
     GeneralForumMenuPage,
+    GeneralForumEditPage,
     FeedbackPage,
   },
   initialActivity: () => 'MainPage',

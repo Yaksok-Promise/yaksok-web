@@ -86,7 +86,10 @@ export default function GeneralForumDetailPage({
         backgroundColor: '#000000',
         border: false,
         renderRight: () => (
-          <GeneralForumHeaderDropDown isMine={generalForumDetailData.mine} />
+          <GeneralForumHeaderDropDown
+            isMine={generalForumDetailData.mine}
+            data={generalForumDetailData}
+          />
         ),
       }}
     >

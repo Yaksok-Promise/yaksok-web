@@ -149,6 +149,14 @@ const CommentDropDown = ({
             clear(textAreaRef)
           },
         },
+        {
+          label: '답글',
+          value: 'reply',
+          render: <CommunicationDot size={16} stroke="#018381" />,
+          onClick: () => {
+            focusReply(commentId, textAreaRef)
+          },
+        },
       ]
     : [
         {
