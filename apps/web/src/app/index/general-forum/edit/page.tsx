@@ -1,9 +1,9 @@
+import { GeneralForumEdit } from '@/components/general-forum/general-forum-edit'
+import { GeneralForumEditButton } from '@/components/general-forum/general-forum-edit-button'
 import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { TipTapContext } from '@yaksok/ui'
 import { ChevronLeft } from '@yaksok/icons'
-import { GeneralForumEditButton } from '@/components/general-forum/general-forum-edit-button'
-import { GeneralForumEdit } from '@/components/general-forum/general-forum-edit'
+import { TipTapContext } from '@yaksok/ui'
 
 export type GeneralForumEditPageProps = {
   params: {

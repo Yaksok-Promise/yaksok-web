@@ -1,6 +1,6 @@
 import { GeneralForumWrite } from '@/components/general-forum/gener-forum-write'
-import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
 import { GeneralForumCreateButton } from '@/components/general-forum/general-forum-create-button'
+import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { Check, ChevronLeft } from '@yaksok/icons'
 import { TipTapContext } from '@yaksok/ui'

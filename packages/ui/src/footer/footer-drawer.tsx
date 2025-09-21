@@ -10,7 +10,7 @@ export function FooterDrawer() {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-black01 text-subhead1">
+        <AccordionTrigger className="text-black01 text-subhead1" mode="default">
           (주)회사명 사업자 정보
         </AccordionTrigger>
         <AccordionContent>
