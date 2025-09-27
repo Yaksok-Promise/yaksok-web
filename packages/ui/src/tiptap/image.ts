@@ -24,15 +24,25 @@ export function uid(prefix = 'img') {
     .slice(2, 7)}`
 }
 
+function escapeRe(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+function matchUid(name: string, prefix = 'img') {
+  const re = new RegExp(`^${escapeRe(prefix)}-[a-z0-9]+-[a-z0-9]{5}$`)
+  return re.test(name)
+}
+
 export function makeImageAttrsFromFile(file: File) {
   const { registerImage } = magazineStore.getState()
-  registerImage(file.name, file)
   const objectUrl = URL.createObjectURL(file)
-  const baseName = file.name?.replace(/\.[^.]+$/, '') || 'image'
-  const alt = `${baseName}-${uid()}`
-  const name = alt
-  registerImage(name, file)
-  return { src: objectUrl, alt, name }
+  const altName = uid()
+  if (!matchUid(file.name)) {
+    registerImage(altName, file)
+  } else {
+    registerImage(file.name, file)
+  }
+
+  return { src: objectUrl, alt: altName, name: file.name }
 }
 
 // 붙여넣기 이미지 File로 변환
@@ -42,7 +52,7 @@ export async function fileFromRemoteURL(url: string): Promise<File> {
   const ext = (
     url.match(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/i)?.[1] ?? 'png'
   ).toLowerCase()
-  const name = `remote-${uid()}.${ext}`
+  const name = uid()
   return new File([blob], name, { type: blob.type || `image/${ext}` })
 }
 

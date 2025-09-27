@@ -1,10 +1,13 @@
 import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useGetToken } from '@/hooks/use-get-token'
+import { invalidateQueries } from '@/utils/query-client'
+import { splitImagesForEdit } from '@/utils/seperatte-general-forum-img'
 import { useFlow } from '@/utils/stackflow'
-import { Editor, useCurrentEditor } from '@tiptap/react'
-import { Image } from '@yaksok/api/boardMagazineType'
+import { useQueryClient } from '@tanstack/react-query'
+import { useCurrentEditor } from '@tiptap/react'
+
 import { Check } from '@yaksok/icons'
-import { magazineStore, useMagazineStore } from '@yaksok/store'
+import { useMagazineStore } from '@yaksok/store'
 
 export const GeneralForumEditButton = ({ id }: { id: string }) => {
   const { replace } = useFlow()
@@ -12,6 +15,7 @@ export const GeneralForumEditButton = ({ id }: { id: string }) => {
   const { title, tags, category, images, clear, prevImages } =
     useMagazineStore()
   const token = useGetToken()
+  const queryClient = useQueryClient()
   const forumEditMutation = useHttpMutation<FormData>(
     '/api/post/general-forum/{postId}',
     'patch',
@@ -27,12 +31,21 @@ export const GeneralForumEditButton = ({ id }: { id: string }) => {
       onSuccess: () => {
         clear()
         editor?.commands.clearContent()
+        invalidateQueries(queryClient, ['general-forum', id])
         replace('GeneralForumPage', {})
       },
     }
   )
   const handleCreate = async () => {
     if (!editor) return
+    const content = editor.getHTML()
+    console.log('Original', prevImages, images)
+    const { keepImages, newImages, removedImageIds } = splitImagesForEdit({
+      prevImages,
+      images,
+      contentHTML: content,
+    })
+    console.log('Edited', keepImages, newImages, removedImageIds)
     const formData = new FormData()
     formData.append('title', title)
     tags.forEach(tag => {
@@ -41,14 +54,16 @@ export const GeneralForumEditButton = ({ id }: { id: string }) => {
     if (category !== 'ALL') {
       formData.append('category', category)
     }
-    images.forEach(image => {
-      formData.append('images', image)
+    keepImages.forEach(image => {
+      formData.append('keepImages', image)
     })
-    const content = editor.getHTML()
+    newImages.forEach(image => {
+      formData.append('newImages', image.file)
+    })
+
     formData.append('body', content)
     formData.append('imageGrouped', 'false')
-    console.log(images, editor.getHTML())
-    console.log(normalizeImagesForSubmit(editor))
+
     await forumEditMutation.mutateAsync(formData)
   }
   return (
@@ -56,39 +71,4 @@ export const GeneralForumEditButton = ({ id }: { id: string }) => {
       <Check size={24} stroke="white" />
     </button>
   )
-}
-
-// const checkPrevImages = (prevImages: Image[], images: Map<string, File>) => {
-//   console.log(prevImages, images)
-//   const newImages =
-// }
-
-function normalizeImagesForSubmit(editor: Editor) {
-  const { images } = magazineStore.getState()
-  const files: File[] = []
-  let index = 0
-
-  const tr = editor.state.tr
-  editor.state.doc.descendants((node, pos) => {
-    const name: string | undefined = node.attrs?.alt
-    console.log('name', name)
-    const file = images.get(name!)
-    console.log('imageFile', file)
-    if (!file) return
-
-    const cid = `cid:${index}`
-    files.push(file)
-
-    // src 를 cid로, data-index를 부여
-    tr.setNodeMarkup(pos, undefined, {
-      ...node.attrs,
-      name: cid,
-      'data-index': index,
-    })
-    index += 1
-  })
-  if (tr.steps.length) editor.view.dispatch(tr)
-  const bodyWithCid = editor.getHTML()
-  console.log(bodyWithCid)
-  //   return { bodyWithCid, files }
 }
