@@ -33,15 +33,17 @@ export const GeneralForumCreateButton = () => {
     tags.forEach(tag => {
       formData.append('tagNames', tag.name)
     })
-    //formData.append('category', category)
+    if (category !== 'ALL') {
+      console.log(category)
+      formData.append('category', category)
+    }
     images.forEach(image => {
       formData.append('images', image)
     })
     const content = editor.getHTML()
     formData.append('body', content)
     formData.append('imageGrouped', 'false')
-    console.log(images, editor.getHTML())
-    console.log(normalizeImagesForSubmit(editor))
+
     await forumCreateMutation.mutateAsync(formData)
   }
   return (

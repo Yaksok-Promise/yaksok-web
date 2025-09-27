@@ -2,6 +2,7 @@ import { useCurrentEditor } from '@tiptap/react'
 import { useMagazineStore } from '@yaksok/store'
 import { TagInput } from '@yaksok/ui'
 import { MenuBar, Tiptap } from '@yaksok/ui/tiptap'
+import { useEffect } from 'react'
 
 type GeneralForumEditProps = {
   content: string
@@ -9,7 +10,12 @@ type GeneralForumEditProps = {
 export const GeneralForumEdit = ({ content }: GeneralForumEditProps) => {
   const { tags, setTags, title, setTitle } = useMagazineStore()
   const { editor } = useCurrentEditor()
-  editor?.commands.setContent(content)
+
+  useEffect(() => {
+    if (!editor) return
+    editor.commands.setContent(content)
+  }, [editor, content])
+
   return (
     <div className="w-full">
       <input
@@ -23,7 +29,6 @@ export const GeneralForumEdit = ({ content }: GeneralForumEditProps) => {
       <MenuBar editor={editor!} />
       <TagInput value={tags} onChange={setTags} />
       <Tiptap />
-      <button onClick={() => console.log(tags)}>태그 확인</button>
     </div>
   )
 }

@@ -2,7 +2,9 @@
 
 import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useGetToken } from '@/hooks/use-get-token'
+import { invalidateQueries } from '@/utils/query-client'
 import { useFlow } from '@stackflow/react/future'
+import { useQueryClient } from '@tanstack/react-query'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { Pencil, Share, Trash, TriangleWarning } from '@yaksok/icons'
 import { useMagazineStore } from '@yaksok/store'
@@ -18,8 +20,9 @@ export function GeneralForumHeaderDropDown({
   data,
 }: GeneralForumHeaderSelectProps) {
   // 각 버튼 기능 요소 정리 필요
-  const { push, replace } = useFlow()
+  const { push, pop } = useFlow()
   const token = useGetToken()
+  const queryClient = useQueryClient()
   const deleteMutation = useHttpMutation(
     '/api/post/general-forum/{postId}',
     'delete',
@@ -29,6 +32,12 @@ export function GeneralForumHeaderDropDown({
       },
       params: {
         postId: data.id,
+      },
+    },
+    {
+      onSuccess: () => {
+        invalidateQueries(queryClient, ['general-forum'])
+        pop()
       },
     }
   )
@@ -45,7 +54,8 @@ export function GeneralForumHeaderDropDown({
             setTitle(data.title)
             setPrevImages(data.images)
             push('GeneralForumEditPage', {
-              body: data.body,
+              content: data.body,
+              id: data.id,
             })
           },
         },
@@ -55,7 +65,6 @@ export function GeneralForumHeaderDropDown({
           render: <Trash size={16} stroke="#018381" />,
           onClick: async () => {
             await deleteMutation.mutateAsync({})
-            replace('GeneralForumPage', {})
           },
         },
       ]

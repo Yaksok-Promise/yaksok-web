@@ -30,7 +30,7 @@ export function Fallbackimg({
           console.log(e)
           e.currentTarget.src = fallbackSrc
         }}
-        className={cn('aspect-auto object-cover object-center', imgClassName)}
+        className={cn('object-contain object-center', imgClassName)}
       />
     </div>
   )

@@ -10,6 +10,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { CommentResponse } from '@yaksok/api/commentType'
 import { TiptapViewer } from '@yaksok/ui'
+import { changeContent } from '@yaksok/ui/tiptap'
 import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
@@ -38,7 +39,7 @@ export default function GeneralForumDetailPage({
     }
   )
   const { data: generalForumDetailData } = result
-
+  console.log(generalForumDetailData)
   // general forum comment list
   const commentListResult = useHttpQuery<undefined, CommentResponse>(
     [QUERY_KEY.COMMENT_LIST, id],
@@ -77,6 +78,11 @@ export default function GeneralForumDetailPage({
     id: generalForumDetailData.id,
   }
 
+  const content = changeContent(
+    generalForumDetailData.body,
+    generalForumDetailData.images
+  )
+
   return (
     <AppScreen
       appBar={{
@@ -97,7 +103,7 @@ export default function GeneralForumDetailPage({
         <div className="px-4">
           <GeneralForumTitle {...titleProps} />
           <div className="px-4 py-5">
-            <TiptapViewer content={generalForumDetailData.body} />
+            <TiptapViewer content={content} />
           </div>
           <GeneralForumButtonList {...buttonListProps} />
         </div>

@@ -1,3 +1,4 @@
+import CheckingMedicinePage from '@/app/index/checking-medicine/page'
 import ComparePage from '@/app/index/compare/page'
 import FeedbackPage from '@/app/index/feedback/feedback-page'
 import FindIdPassword from '@/app/index/find-id-password/page'
@@ -36,20 +37,21 @@ export const { Stack, useFlow } = stackflow({
         SignupPage: '/signup',
         SigninPage: '/signin',
         FindIdPassword: '/find-id-password',
-        Mypage: '/mypage',
+        Mypage: '/mypage', // 마이페이지
         ProfilePage: '/mypage/profile',
-        PaymentBottomSheetActivity: '/payment-bottom-sheet',
-        MagazinePage: '/magazine',
+        PaymentBottomSheetActivity: '/payment-bottom-sheet', //bottomeSheet 컴포넌트 페이지화
+        MagazinePage: '/magazine', // 라운지 관련 페이지
         MagazineDetailPage: '/magazine/detail',
         MagazineListPage: '/magazine/list',
         MagazineYakinStoryPage: '/magazine/yakin-story',
-        GeneralForumPage: '/general-forum',
+        MagazineMenuPage: '/magazine/menu',
+        GeneralForumPage: '/general-forum', // 자유게시판 tab 관련 페이지
         GeneralForumWritePage: '/general-forum/write',
         GeneralForumDetailPage: '/general-forum/detail',
         GeneralForumEditPage: '/general-forum/edit',
-        MagazineMenuPage: '/magazine/menu',
         GeneralForumMenuPage: '/general-forum/menu',
-        FeedbackPage: '/feedback',
+        FeedbackPage: '/feedback', // 문의 사항
+        CheckingMedicinePage: '/checking-medicine', // 약 재고 조회
       },
       fallbackActivity: () => 'MainPage',
     }),
@@ -74,6 +76,7 @@ export const { Stack, useFlow } = stackflow({
     GeneralForumMenuPage,
     GeneralForumEditPage,
     FeedbackPage,
+    CheckingMedicinePage,
   },
   initialActivity: () => 'MainPage',
 })

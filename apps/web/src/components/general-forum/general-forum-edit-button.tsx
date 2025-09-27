@@ -2,20 +2,25 @@ import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
 import { useGetToken } from '@/hooks/use-get-token'
 import { useFlow } from '@/utils/stackflow'
 import { Editor, useCurrentEditor } from '@tiptap/react'
+import { Image } from '@yaksok/api/boardMagazineType'
 import { Check } from '@yaksok/icons'
 import { magazineStore, useMagazineStore } from '@yaksok/store'
 
-export const GeneralForumEditButton = () => {
+export const GeneralForumEditButton = ({ id }: { id: string }) => {
   const { replace } = useFlow()
   const { editor } = useCurrentEditor()
-  const { title, tags, category, images, clear } = useMagazineStore()
+  const { title, tags, category, images, clear, prevImages } =
+    useMagazineStore()
   const token = useGetToken()
   const forumEditMutation = useHttpMutation<FormData>(
-    '/api/post/general-forum/create',
+    '/api/post/general-forum/{postId}',
     'patch',
     {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      params: {
+        postId: id,
       },
     },
     {
@@ -33,7 +38,9 @@ export const GeneralForumEditButton = () => {
     tags.forEach(tag => {
       formData.append('tagNames', tag.name)
     })
-    //formData.append('category', category)
+    if (category !== 'ALL') {
+      formData.append('category', category)
+    }
     images.forEach(image => {
       formData.append('images', image)
     })
@@ -50,6 +57,11 @@ export const GeneralForumEditButton = () => {
     </button>
   )
 }
+
+// const checkPrevImages = (prevImages: Image[], images: Map<string, File>) => {
+//   console.log(prevImages, images)
+//   const newImages =
+// }
 
 function normalizeImagesForSubmit(editor: Editor) {
   const { images } = magazineStore.getState()
