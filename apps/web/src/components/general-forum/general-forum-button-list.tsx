@@ -1,4 +1,7 @@
-import { useGeneralForumLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
+import {
+  useGeneralForumLikeOptimistic,
+  useGeneralForumScrapCountOptimistic,
+} from '@/hooks/tanstak/use-optimistic-post'
 import { BlankHeart, Bookmark, CommunicationDot, Share } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
@@ -17,7 +20,9 @@ export function GeneralForumButtonList({
   commentCount,
   id,
 }: GeneralForumButtonListProps) {
-  const { handleLike } = useGeneralForumLikeOptimistic(id)
+  const { handleOptimisticPost: handleLike } = useGeneralForumLikeOptimistic(id)
+  const { handleOptimisticPost: handleScrap } =
+    useGeneralForumScrapCountOptimistic(id)
   const buttonList = [
     {
       icon: (
@@ -40,9 +45,7 @@ export function GeneralForumButtonList({
     {
       icon: <Bookmark size={20} stroke="#636366" />,
       value: scrapCount,
-      onClick: () => {
-        console.log('bookmark')
-      },
+      onClick: handleScrap,
     },
   ]
   return (

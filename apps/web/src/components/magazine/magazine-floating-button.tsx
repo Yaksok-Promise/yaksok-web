@@ -1,4 +1,7 @@
-import { useMagazineLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
+import {
+  useMagazineLikeOptimistic,
+  useMagazineScrapCountOptimistic,
+} from '@/hooks/tanstak/use-optimistic-post'
 import { BlankHeart, Bookmark, Share } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
@@ -6,19 +9,23 @@ import { ComponentPropsWithoutRef } from 'react'
 export type MagazineFloatingButtonProps = ComponentPropsWithoutRef<'div'> & {
   inView: boolean
   magazineId: string
+  liked: boolean
+  scraped: boolean
 }
 
 export const MagazineFloatingButton = ({
   inView,
   magazineId,
   className,
+  liked = false,
+  scraped = false,
   ...props
 }: MagazineFloatingButtonProps) => {
-  const { handleLike } = useMagazineLikeOptimistic(magazineId, 'POST')
+  const { handleOptimisticPost: handleLike } =
+    useMagazineLikeOptimistic(magazineId)
+  const { handleOptimisticPost: handleScrap } =
+    useMagazineScrapCountOptimistic(magazineId)
 
-  const handleBookmark = () => {
-    console.log('bookmark')
-  }
   const handleShare = () => {
     console.log('share')
   }
@@ -34,10 +41,18 @@ export const MagazineFloatingButton = ({
       {...props}
     >
       <button onClick={handleLike}>
-        <BlankHeart size={20} stroke="#636366" />
+        <BlankHeart
+          size={20}
+          stroke="#636366"
+          fill={liked ? '#636366' : 'none'}
+        />
       </button>
-      <button onClick={handleBookmark}>
-        <Bookmark size={24} stroke="#636366" />
+      <button onClick={handleScrap}>
+        <Bookmark
+          size={24}
+          stroke="#636366"
+          fill={scraped ? '#636366' : 'none'}
+        />
       </button>
       <button onClick={handleShare}>
         <Share size={24} stroke="#636366" />

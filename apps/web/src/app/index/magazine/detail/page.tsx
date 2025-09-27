@@ -24,9 +24,6 @@ export default function MagazineDetailPage({
   const { portalRef, isOpen, setIsOpen } = usePortal()
   const { ref, inView } = useInView({
     threshold: 0.9,
-    onChange: inView => {
-      console.log(inView)
-    },
   })
 
   const token = useGetToken()
@@ -44,14 +41,16 @@ export default function MagazineDetailPage({
   )
 
   const data = result.data
-  console.log(data)
 
   const headProps = {
     likes: data.likes,
-    views: data.views,
+    scrapCount: data.scrapCount,
     date: data.createdAt,
     title: data.title,
     tags: data.tags,
+    liked: data.liked,
+    // 스크랩 여부 속성 추가 필요
+    scrapped: data.scraped,
   }
 
   return (
@@ -78,7 +77,12 @@ export default function MagazineDetailPage({
           <div className="h-[3000px]">{data.body}</div>
         </main>
         <MagazineDetailFooter ref={ref} />
-        <MagazineFloatingButton inView={inView} magazineId={id} />
+        <MagazineFloatingButton
+          inView={inView}
+          magazineId={id}
+          liked={data.liked}
+          scraped={data.scraped}
+        />
       </AppScreen>
       <Portal />
     </>

@@ -99,9 +99,9 @@ export const SideDrawer = forwardRef(function SideDrawer(
             <ListItem
               navigate={() => {
                 if (mode === 'magazine') {
-                  push('MagazineMenuPage', { tab: 'BOOKMARK' })
+                  push('MagazineMenuPage', { tab: 'SCRAPED' })
                 } else {
-                  push('GeneralForumMenuPage', { tab: 'BOOKMARK' })
+                  push('GeneralForumMenuPage', { tab: 'SCRAPED' })
                 }
                 setIsOpen(false)
               }}

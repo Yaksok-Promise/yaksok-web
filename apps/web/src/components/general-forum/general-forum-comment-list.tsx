@@ -1,5 +1,5 @@
 import { useCommentReplyMutation } from '@/hooks/tanstak/use-comment-mutation'
-import { useCommentLikeOptimistic } from '@/hooks/tanstak/use-optimistic-like'
+import { useCommentLikeOptimistic } from '@/hooks/tanstak/use-optimistic-post'
 import { flattenAndMarkMostLiked } from '@/utils/change-comment-list-optimistic'
 import { CommentResponse } from '@yaksok/api/commentType'
 import {
@@ -92,7 +92,10 @@ const LikedButton = ({
   commentId,
   postId,
 }: LikedButtonProps) => {
-  const { handleLike } = useCommentLikeOptimistic(postId, commentId)
+  const { handleOptimisticPost: handleLike } = useCommentLikeOptimistic(
+    postId,
+    commentId
+  )
   return (
     <button className="flex items-center gap-1" onClick={handleLike}>
       <BlankHeart

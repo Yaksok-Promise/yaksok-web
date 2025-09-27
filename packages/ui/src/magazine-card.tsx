@@ -1,5 +1,5 @@
 import { Magazine } from '@yaksok/api/boardMagazineType'
-import { BlankHeart, Bookmark, SvgIconElement } from '@yaksok/icons'
+import { BlankHeart, Bookmark, Close, SvgIconElement } from '@yaksok/icons'
 import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
@@ -10,12 +10,20 @@ export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
   onClickLike?: (id: string) => void
   onClickBookmark?: (id: string) => void
+  onClickDelete?: (id: string) => void
+  isDelete?: boolean
+  liked?: boolean
+  scrapped?: boolean
 }
 
 export function MagazineListCard({
   data,
   onClickLike,
   onClickBookmark,
+  onClickDelete,
+  isDelete = false,
+  liked = false,
+  scrapped = false,
   ...props
 }: MagazineListCardProps) {
   const tags = data.tag ? data.tag : data.tags
@@ -26,6 +34,17 @@ export function MagazineListCard({
       {...props}
       className="flex max-w-[328px] flex-col border-gray03/20 border-b-[1px] not-first:pt-5"
     >
+      {isDelete && (
+        <button
+          onClick={e => {
+            e.stopPropagation()
+            onClickDelete?.(data.id)
+          }}
+          className="absolute right-0 top-0"
+        >
+          <Close size={16} stroke="#959598" />
+        </button>
+      )}
       <div className="mb-2.5 flex flex-wrap items-center gap-1.25">
         {tags.map((tag, idx) => (
           <Tag key={idx} tag={tag} size="fit" />
@@ -50,7 +69,13 @@ export function MagazineListCard({
         </span>
         <div className="flex gap-1">
           <IconTag
-            icon={<BlankHeart size={16} stroke="#959598" />}
+            icon={
+              <BlankHeart
+                size={16}
+                stroke="#959598"
+                fill={liked ? '#959598' : 'none'}
+              />
+            }
             label={data.likes.toString()}
             onClick={e => {
               e.stopPropagation()
@@ -58,7 +83,13 @@ export function MagazineListCard({
             }}
           />
           <IconTag
-            icon={<Bookmark size={16} stroke="#959598" />}
+            icon={
+              <Bookmark
+                size={16}
+                stroke="#959598"
+                fill={scrapped ? '#959598' : 'none'}
+              />
+            }
             label={data.scrapCount.toString()}
             onClick={e => {
               e.stopPropagation()

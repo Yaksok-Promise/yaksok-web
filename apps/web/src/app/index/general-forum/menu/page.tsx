@@ -1,9 +1,12 @@
 import { BottomsheetLikeBackground } from '@/components/common/bottomsheet-like-background'
-import { GeneralForumAndMagazineMuneTab } from '@/components/common/lounge-and-magazine-mune-tab'
+import {
+  GeneralForumAndMagazineMuneTab,
+  LoungeAndMagazineMuneTab,
+} from '@/components/common/lounge-and-magazine-mune-tab'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 type GeneralForumMenuPageProps = {
   params: {
-    tab: 'LIKE' | 'BOOKMARK' | 'COMMENT' | 'MINE'
+    tab: LoungeAndMagazineMuneTab
   }
 }
 

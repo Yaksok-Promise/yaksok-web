@@ -10,16 +10,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
 import { Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-type Tab = 'LIKE' | 'BOOKMARK' | 'COMMENT' | 'MINE'
+export type LoungeAndMagazineMuneTab = 'LIKE' | 'SCRAPED' | 'COMMENT' | 'MINE'
 
 type LoungeAndMagazineMuneTabProps = {
-  tab: Tab
+  tab: LoungeAndMagazineMuneTab
   queryKey: MagazineOrGeneralForum
 }
 
 const TAB_LIST_TO_KOREAN = {
   LIKE: '좋아요 한 글',
-  BOOKMARK: '스크랩 한 글',
+  SCRAPED: '스크랩 한 글',
   COMMENT: '댓글 단 글',
   MINE: '작성한 글',
 } as const
@@ -27,24 +27,24 @@ export const GeneralForumAndMagazineMuneTab = ({
   tab,
   queryKey,
 }: LoungeAndMagazineMuneTabProps) => {
-  const [value, setValue] = useState<'LIKE' | 'BOOKMARK' | 'COMMENT' | 'MINE'>(
-    tab
-  )
+  const [tabValue, setTabValue] = useState<
+    'LIKE' | 'SCRAPED' | 'COMMENT' | 'MINE'
+  >(tab)
   const queryClient = useQueryClient()
   const changeCategory = (value: string) => {
-    setValue(value as Tab)
+    setTabValue(value as LoungeAndMagazineMuneTab)
     queryClient.invalidateQueries({ queryKey: [queryKey, value] })
   }
 
   const tabList =
     queryKey === 'magazine'
-      ? ['LIKE', 'BOOKMARK']
-      : ['LIKE', 'BOOKMARK', 'COMMENT', 'MINE']
+      ? ['LIKE', 'SCRAPED']
+      : ['LIKE', 'SCRAPED', 'COMMENT', 'MINE']
 
   return (
     <Tabs
       orientation="horizontal"
-      value={value}
+      value={tabValue}
       onValueChange={changeCategory}
       className="rounded-t-full bg-white px-5"
     >
@@ -62,9 +62,9 @@ export const GeneralForumAndMagazineMuneTab = ({
           ))}
         </div>
       </TabsList>
-      <TabsContent value={value} className="mb-10">
+      <TabsContent value={tabValue} className="mb-10">
         <Suspense fallback={<div>Loading...</div>}>
-          <LoungeAndMagazineListItem queryKey={queryKey} value={value} />
+          <LoungeAndMagazineListItem queryKey={queryKey} tabValue={tabValue} />
         </Suspense>
       </TabsContent>
     </Tabs>
@@ -73,11 +73,11 @@ export const GeneralForumAndMagazineMuneTab = ({
 
 type LoungeAndMagazineListItemProps = {
   queryKey: MagazineOrGeneralForum
-  value: Tab
+  tabValue: LoungeAndMagazineMuneTab
 }
 function LoungeAndMagazineListItem({
   queryKey,
-  value,
+  tabValue,
 }: LoungeAndMagazineListItemProps) {
   const { push } = useFlow()
   const params = {
@@ -88,16 +88,33 @@ function LoungeAndMagazineListItem({
   // 추가 설정 필요
   let url: PathType | null = '/api/post/general-forum/my'
 
-  if (queryKey === 'general-forum' && value === 'MINE') {
-    url = '/api/post/general-forum/my'
+  if (queryKey === 'general-forum') {
+    if (tabValue === 'MINE') {
+      url = '/api/post/general-forum/my'
+    } else if (tabValue === 'LIKE') {
+      url = '/api/post/general-forum/my/liked'
+    } else if (tabValue === 'SCRAPED') {
+      url = '/api/post/general-forum/my/scrapped'
+    } else if (tabValue === 'COMMENT') {
+      url = '/api/post/general-forum/my/commented'
+    }
   }
+
+  if (queryKey === 'magazine') {
+    if (tabValue === 'LIKE') {
+      url = '/api/post/magazine/my/liked'
+    } else if (tabValue === 'SCRAPED') {
+      url = '/api/post/magazine/my/scrapped'
+    }
+  }
+
   const token = useGetToken()
 
   const { items, hasNextPage, fetchNextPage } = useHttpInfiniteQuery<
     undefined,
     Magazine
   >(
-    [queryKey, value],
+    [queryKey, tabValue],
     url,
     {
       params: params,
@@ -126,8 +143,8 @@ function LoungeAndMagazineListItem({
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-white pt-10">
         <h1 className="text-gray03 text-head6">
-          {TAB_LIST_TO_KOREAN[value as keyof typeof TAB_LIST_TO_KOREAN]}한 글이
-          없습니다.
+          {TAB_LIST_TO_KOREAN[tabValue as keyof typeof TAB_LIST_TO_KOREAN]}한
+          글이 없습니다.
         </h1>
         <p className="pb-11 text-body2 text-gray05">
           {'회원들의 최신 글을 만나보세요 :)'}
@@ -156,6 +173,9 @@ function LoungeAndMagazineListItem({
             e.stopPropagation()
             onClick(item.id)
           }}
+          liked={tabValue === 'LIKE'}
+          scrapped={tabValue === 'SCRAPED'}
+          isDelete
         />
       ))}
       <div ref={ref} />
