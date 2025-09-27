@@ -6,6 +6,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
 import { useMagazineStore } from '@yaksok/store'
 import { TipTapContext } from '@yaksok/ui'
+import { changeContent } from '@yaksok/ui/tiptap'
 
 export type GeneralForumEditPageProps = {
   params: {
@@ -18,7 +19,8 @@ export default function GeneralForumEditPage({
   params: { content, id },
 }: GeneralForumEditPageProps) {
   const { pop } = useFlow()
-  const { clear } = useMagazineStore()
+  const { clear, prevImages } = useMagazineStore()
+  const newContent = changeContent(content, prevImages)
   return (
     <TipTapContext>
       <AppScreen
@@ -42,7 +44,7 @@ export default function GeneralForumEditPage({
         }}
       >
         <div className="relative h-screen overflow-auto ">
-          <GeneralForumEdit content={content} />
+          <GeneralForumEdit content={newContent} />
         </div>
       </AppScreen>
     </TipTapContext>

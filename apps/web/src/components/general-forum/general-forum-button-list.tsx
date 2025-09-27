@@ -6,18 +6,18 @@ import { ComponentPropsWithoutRef } from 'react'
 export type GeneralForumButtonListProps = {
   likes: number
   liked: boolean
-  views: number
+  scrapCount: number
   commentCount: number
   id: string
 }
 export function GeneralForumButtonList({
   likes,
   liked,
-  views,
+  scrapCount,
   commentCount,
   id,
 }: GeneralForumButtonListProps) {
-  const { handleLike } = useGeneralForumLikeOptimistic(id, 'POST')
+  const { handleLike } = useGeneralForumLikeOptimistic(id)
   const buttonList = [
     {
       icon: (
@@ -39,7 +39,7 @@ export function GeneralForumButtonList({
     },
     {
       icon: <Bookmark size={20} stroke="#636366" />,
-      value: views,
+      value: scrapCount,
       onClick: () => {
         console.log('bookmark')
       },

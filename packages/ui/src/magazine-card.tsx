@@ -59,7 +59,7 @@ export function MagazineListCard({
           />
           <IconTag
             icon={<Bookmark size={16} stroke="#959598" />}
-            label={data.views.toString()}
+            label={data.scrapCount.toString()}
             onClick={e => {
               e.stopPropagation()
               onClickBookmark?.(data.id)

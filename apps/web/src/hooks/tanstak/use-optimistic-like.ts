@@ -116,3 +116,40 @@ export const useCommentLikeOptimistic = (postId: string, commentId: string) => {
     customUpdater
   )
 }
+
+// scrapCount
+
+// magazine
+export const useMagazineScrapCountOptimistic = (magazineId: string) => {
+  return useOptimisticLike<MagazineDetail>(
+    [QUERY_KEY.MAGAZINE, magazineId],
+    magazineId,
+    'POST',
+    updataeScrapCount
+  )
+}
+
+// general-forum
+export const useGeneralForumScrapCountOptimistic = (forumId: string) => {
+  return useOptimisticLike<GeneralForumDetail>(
+    [QUERY_KEY.GENERAL_FORUM, forumId],
+    forumId,
+    'POST',
+    updataeScrapCount
+  )
+}
+
+// updater 수정 필요
+function updataeScrapCount<T extends MagazineDetail | GeneralForumDetail>(
+  magazineData: T | undefined
+): T | undefined {
+  if (!magazineData) return magazineData
+  // 스크랩 여부 데이터 필요
+  const nextScraped = !magazineData.liked
+  const delta = nextScraped ? 1 : -1
+  return {
+    ...magazineData,
+    scraped: nextScraped,
+    scrapCount: Math.max(0, ((magazineData.scrapCount as number) ?? 0) + delta),
+  }
+}

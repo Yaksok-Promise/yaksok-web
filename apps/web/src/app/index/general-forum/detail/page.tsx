@@ -73,7 +73,7 @@ export default function GeneralForumDetailPage({
   const buttonListProps = {
     likes: generalForumDetailData.likes,
     liked: generalForumDetailData.liked,
-    views: generalForumDetailData.views,
+    scrapCount: generalForumDetailData.scrapCount,
     commentCount: countComment,
     id: generalForumDetailData.id,
   }

@@ -19,6 +19,7 @@ export type Magazine = {
   likes: number
   views: number
   tags: Tag[]
+  scrapCount: number
   hasImages: boolean
   tag?: Tag[]
 }
