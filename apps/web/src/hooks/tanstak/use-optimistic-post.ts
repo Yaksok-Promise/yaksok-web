@@ -30,14 +30,14 @@ type PostContext<T> = { previous?: T }
 function useOptimisticPost<T>(
   queryKey: AppointmentQueryKey,
   elementId: string,
-  target: 'LIKE' | 'MAGAZINE' | 'GENERAL_FORUM',
+  target: 'LIKE_POST' | 'LIKE_COMMENT' | 'MAGAZINE' | 'GENERAL_FORUM',
 
   customUpdater: (old: T | undefined) => T | undefined
 ) {
   const queryClient = useQueryClient()
   const token = useGetToken()
   const path =
-    target === 'LIKE'
+    target === 'LIKE_POST' || target === 'LIKE_COMMENT'
       ? '/api/like/toggle'
       : target === 'MAGAZINE'
         ? '/api/post/magazine/{postId}/scrap'
@@ -50,7 +50,7 @@ function useOptimisticPost<T>(
       headers: { Authorization: `Bearer ${token}` },
       query: {
         elementId,
-        target,
+        target: target === 'LIKE_POST' ? 'POST' : 'COMMENT',
       },
       params: {
         postId: elementId,
@@ -100,7 +100,7 @@ export const useMagazineLikeOptimistic = (magazineId: string) => {
   return useOptimisticPost<MagazineDetail>(
     [QUERY_KEY.MAGAZINE, magazineId],
     magazineId,
-    'LIKE',
+    'LIKE_POST',
     updateMagazineLikeOptimistic
   )
 }
@@ -110,7 +110,7 @@ export const useGeneralForumLikeOptimistic = (forumId: string) => {
   return useOptimisticPost<GeneralForumDetail>(
     [QUERY_KEY.GENERAL_FORUM, forumId],
     forumId,
-    'LIKE',
+    'LIKE_POST',
     updateMagazineLikeOptimistic
   )
 }
@@ -123,7 +123,7 @@ export const useCommentLikeOptimistic = (postId: string, commentId: string) => {
   return useOptimisticPost<CommentResponse>(
     [QUERY_KEY.COMMENT_LIST, postId],
     commentId,
-    'LIKE',
+    'LIKE_COMMENT',
     customUpdater
   )
 }
