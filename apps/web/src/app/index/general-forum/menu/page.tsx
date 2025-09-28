@@ -4,6 +4,8 @@ import {
   LoungeAndMagazineMuneTab,
 } from '@/components/common/lounge-and-magazine-mune-tab'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { useFlow } from '@stackflow/react/future'
+import { ChevronLeft } from '@yaksok/icons'
 type GeneralForumMenuPageProps = {
   params: {
     tab: LoungeAndMagazineMuneTab
@@ -13,6 +15,7 @@ type GeneralForumMenuPageProps = {
 export default function GeneralForumMenuPage({
   params: { tab },
 }: GeneralForumMenuPageProps) {
+  const { pop } = useFlow()
   return (
     <AppScreen
       appBar={{
@@ -21,6 +24,12 @@ export default function GeneralForumMenuPage({
         iconColor: '#ffffff',
         backgroundColor: '#000000',
         border: false,
+        backButton: {
+          renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+          onClick: () => {
+            pop()
+          },
+        },
       }}
     >
       <BottomsheetLikeBackground>

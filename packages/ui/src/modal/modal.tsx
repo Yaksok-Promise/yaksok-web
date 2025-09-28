@@ -18,7 +18,7 @@ export const Modal = ({ hide, opened, children }: ModalProps) => {
         onClick={hide}
       >
         <div
-          className="flex min-w-75 flex-col items-center justify-center rounded-[16px] bg-white01 px-5 pt-10 pb-5 text-black01"
+          className="flex min-w-75 flex-col items-center justify-center rounded-[16px] bg-white01 p-5 text-black01"
           onClick={stopPropagation}
         >
           {children}
@@ -48,7 +48,7 @@ const ModalHeader = ({
   return (
     <div
       className={cn(
-        'flex w-full items-center justify-end bg-white01',
+        'mb-2 flex w-full items-center justify-end bg-white01',
         className
       )}
       {...props}

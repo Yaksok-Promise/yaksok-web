@@ -12,7 +12,9 @@ import {
 } from '@yaksok/icons'
 import { useCommentEditorStore } from '@yaksok/store'
 import { Comment, DropDown, NotComment } from '@yaksok/ui'
+import { useModal } from '@yaksok/ui/modal'
 import { RefObject, useMemo, useRef } from 'react'
+import { DeleteModal } from '../common/modal/delete-modal'
 import { GeneralForumTextField } from './general-forum-text-field'
 
 export type GeneralForumCommentListProps = {
@@ -133,6 +135,8 @@ const CommentDropDown = ({
     method: 'delete',
   })
 
+  const { openModal, closeModal, opened } = useModal()
+
   const dropdownMenuList = isMine
     ? [
         {
@@ -148,8 +152,7 @@ const CommentDropDown = ({
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
           onClick: async () => {
-            await commentDeleteMutation.mutateAsync(undefined)
-            clear(textAreaRef)
+            openModal()
           },
         },
         {
@@ -179,9 +182,22 @@ const CommentDropDown = ({
       ]
 
   return (
-    <DropDown
-      data={dropdownMenuList}
-      trigger={<MoreVertical size={16} stroke="#959598" />}
-    />
+    <>
+      <DropDown
+        data={dropdownMenuList}
+        trigger={<MoreVertical size={16} stroke="#959598" />}
+      />
+
+      <DeleteModal
+        opened={opened}
+        closeModal={closeModal}
+        handleDelete={() => {
+          commentDeleteMutation.mutateAsync(undefined)
+          clear(textAreaRef)
+        }}
+      >
+        <span>잠깐, 해당 댓글을 정말 삭제하시겠습니까?</span>
+      </DeleteModal>
+    </>
   )
 }

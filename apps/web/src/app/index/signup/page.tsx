@@ -4,6 +4,7 @@ import { SignupRequest, SignupSchema } from '@/validation/zod'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { useFlow } from '@stackflow/react/future'
 import { ChevronLeft } from '@yaksok/icons'
 import { Header, If, PageSpy } from '@yaksok/ui'
 import { ModalRoot } from '@yaksok/ui/modal'
@@ -24,6 +25,7 @@ const Steps = [
 export type StepsType = (typeof Steps)[number]
 
 export default function SignupPage() {
+  const { pop } = useFlow()
   const { Funnel, Step, handleNext, handlePrev, currentStep } =
     useFunnel<StepsType>(Steps, 'agreement')
 
@@ -50,6 +52,13 @@ export default function SignupPage() {
             <ChevronLeft />
           </Header.Left>
           <Header.Title>회원가입</Header.Title>
+        </Header.Container>
+      </If>
+      <If condition={currentStep === 'agreement'}>
+        <Header.Container>
+          <Header.Left onClick={pop}>
+            <ChevronLeft />
+          </Header.Left>
         </Header.Container>
       </If>
       <div

@@ -9,6 +9,8 @@ import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { Pencil, Share, Trash, TriangleWarning } from '@yaksok/icons'
 import { useMagazineStore } from '@yaksok/store'
 import { DropDown } from '@yaksok/ui'
+import { useModal } from '@yaksok/ui/modal'
+import { DeleteModal } from '../common/modal/delete-modal'
 
 export type GeneralForumHeaderSelectProps = {
   isMine: boolean
@@ -21,6 +23,7 @@ export function GeneralForumHeaderDropDown({
 }: GeneralForumHeaderSelectProps) {
   // 각 버튼 기능 요소 정리 필요
   const { push, pop } = useFlow()
+  const { openModal, closeModal, opened } = useModal()
   const token = useGetToken()
   const queryClient = useQueryClient()
   const deleteMutation = useHttpMutation(
@@ -63,8 +66,8 @@ export function GeneralForumHeaderDropDown({
           label: '삭제',
           value: 'delete',
           render: <Trash size={16} stroke="#018381" />,
-          onClick: async () => {
-            await deleteMutation.mutateAsync({})
+          onClick: () => {
+            openModal()
           },
         },
       ]
@@ -86,5 +89,18 @@ export function GeneralForumHeaderDropDown({
           },
         },
       ]
-  return <DropDown data={_dropdownMenuList} />
+  return (
+    <>
+      <DropDown data={_dropdownMenuList} />
+      <DeleteModal
+        opened={opened}
+        closeModal={closeModal}
+        handleDelete={async () => {
+          await deleteMutation.mutateAsync({})
+        }}
+      >
+        <span>잠깐, 해당 게시글을 정말 삭제하시겠습니까?</span>
+      </DeleteModal>
+    </>
+  )
 }

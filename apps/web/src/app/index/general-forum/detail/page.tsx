@@ -6,10 +6,13 @@ import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { useUpdateToken } from '@/hooks/use-update-token'
 import { QUERY_KEY } from '@/utils/query-key'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { CommentResponse } from '@yaksok/api/commentType'
+import { ChevronLeft } from '@yaksok/icons'
 import { TiptapViewer } from '@yaksok/ui'
+import { ModalRoot } from '@yaksok/ui/modal'
 import { changeContent } from '@yaksok/ui/tiptap'
 import { Suspense } from 'react'
 
@@ -23,6 +26,7 @@ export default function GeneralForumDetailPage({
   params: { id },
 }: CommunityDetailPageProps) {
   useUpdateToken()
+  const { pop } = useFlow()
 
   // general forum detail
   const token = useGetToken()
@@ -84,39 +88,48 @@ export default function GeneralForumDetailPage({
   )
 
   return (
-    <AppScreen
-      appBar={{
-        title: '자유게시판',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        backgroundColor: '#000000',
-        border: false,
-        renderRight: () => (
-          <GeneralForumHeaderDropDown
-            isMine={generalForumDetailData.mine}
-            data={generalForumDetailData}
-          />
-        ),
-      }}
-    >
-      <main className="relative flex min-h-full flex-col bg-bgColor">
-        <div className="px-4">
-          <GeneralForumTitle {...titleProps} />
-          <div className="px-4 py-5">
-            <TiptapViewer content={content} />
-          </div>
-          <GeneralForumButtonList {...buttonListProps} />
-        </div>
-        <div className="mb-40">
-          <Suspense fallback={<div>Loading...</div>}>
-            <GeneralForumCommentList
-              data={commentListData}
-              countComment={countComment}
-              postId={id}
+    <>
+      <AppScreen
+        appBar={{
+          title: '자유게시판',
+          textColor: '#ffffff',
+          iconColor: '#ffffff',
+          backgroundColor: '#000000',
+          border: false,
+          renderRight: () => (
+            <GeneralForumHeaderDropDown
+              isMine={generalForumDetailData.mine}
+              data={generalForumDetailData}
             />
-          </Suspense>
-        </div>
-      </main>
-    </AppScreen>
+          ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              pop()
+            },
+          },
+        }}
+      >
+        <main className="relative flex min-h-full flex-col bg-bgColor">
+          <div className="px-4">
+            <GeneralForumTitle {...titleProps} />
+            <div className="px-4 py-5">
+              <TiptapViewer content={content} />
+            </div>
+            <GeneralForumButtonList {...buttonListProps} />
+          </div>
+          <div className="mb-40">
+            <Suspense fallback={<div>Loading...</div>}>
+              <GeneralForumCommentList
+                data={commentListData}
+                countComment={countComment}
+                postId={id}
+              />
+            </Suspense>
+          </div>
+        </main>
+      </AppScreen>
+      <ModalRoot />
+    </>
   )
 }

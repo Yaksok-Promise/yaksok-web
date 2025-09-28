@@ -31,16 +31,13 @@ export default function GeneralForumEditPage({
           backgroundColor: '#000000',
           border: false,
           renderRight: () => <GeneralForumEditButton id={id} />,
-          renderLeft: () => (
-            <button
-              onClick={() => {
-                clear()
-                pop()
-              }}
-            >
-              <ChevronLeft size={24} stroke="white" />
-            </button>
-          ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              clear()
+              pop()
+            },
+          },
         }}
       >
         <div className="relative h-screen overflow-auto ">

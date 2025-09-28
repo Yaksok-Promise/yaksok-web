@@ -19,6 +19,7 @@ export const DeleteModal = ({
   }
   return (
     <Modal opened={opened} hide={closeModal}>
+      <Modal.Header hide={closeModal} />
       <Modal.Content>
         <h1 className="mb-[35px] flex">{children}</h1>
         <Button onClick={onDelete} size="full">

@@ -2,10 +2,12 @@ import { GeneralForumWrite } from '@/components/general-forum/gener-forum-write'
 import { GeneralForumCreateButton } from '@/components/general-forum/general-forum-create-button'
 import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { Check, ChevronLeft } from '@yaksok/icons'
+import { useFlow } from '@stackflow/react/future'
+import { ChevronLeft } from '@yaksok/icons'
 import { TipTapContext } from '@yaksok/ui'
 
 export default function GeneralForumWritePage() {
+  const { pop } = useFlow()
   return (
     <TipTapContext>
       <AppScreen
@@ -16,11 +18,12 @@ export default function GeneralForumWritePage() {
           backgroundColor: '#000000',
           border: false,
           renderRight: () => <GeneralForumCreateButton />,
-          renderLeft: () => (
-            <button>
-              <ChevronLeft size={24} stroke="white" />
-            </button>
-          ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              pop()
+            },
+          },
         }}
       >
         <div className="relative h-screen overflow-auto ">

@@ -2,11 +2,14 @@ import { LogoutModal, QuitModal } from '@/components/common'
 import ChangeNickname from '@/components/mypage/user-info/change-nickname'
 import ChangePassword from '@/components/mypage/user-info/change-password'
 import useGetMyInfo from '@/hooks/tanstak/use-get-my-info'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { ChevronLeft } from '@yaksok/icons'
 import { Profile, TextField } from '@yaksok/ui'
 import { ModalRoot, useModal } from '@yaksok/ui/modal'
 
 export default function ProfilePage() {
+  const { pop } = useFlow()
   const {
     openModal: openLogoutModal,
     closeModal: closeLogoutModal,
@@ -34,6 +37,12 @@ export default function ProfilePage() {
         title: '회원 정보 수정',
         backgroundColor: '#fafafa',
         border: false,
+        backButton: {
+          renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+          onClick: () => {
+            pop()
+          },
+        },
       }}
     >
       <main className="flex flex-col bg-bgColor px-4 pt-2.5 pb-40">
