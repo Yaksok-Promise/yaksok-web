@@ -1,5 +1,5 @@
 import { Tag as TagType } from '@yaksok/api/commentType'
-import { Close, Plus } from '@yaksok/icons'
+import { CloseSm, Plus } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import {
@@ -50,7 +50,7 @@ export function Tag({
           onClick={onDelete}
           className="ml-0.5 flex items-center justify-center"
         >
-          <Close size={16} stroke="#636366" />
+          <CloseSm size={16} stroke="#636366" />
         </button>
       )}
     </div>

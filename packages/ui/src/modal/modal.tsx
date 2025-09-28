@@ -1,4 +1,4 @@
-import { Close } from '@yaksok/icons'
+import { CloseSm } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { ComponentPropsWithoutRef, ReactNode, SyntheticEvent } from 'react'
 import { createPortal } from 'react-dom'
@@ -55,7 +55,7 @@ const ModalHeader = ({
     >
       {children}
       <button onClick={hide} className="text-center">
-        <Close size={30} />
+        <CloseSm size={30} />
       </button>
     </div>
   )

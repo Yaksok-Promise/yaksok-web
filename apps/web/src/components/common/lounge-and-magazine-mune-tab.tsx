@@ -134,7 +134,7 @@ function LoungeAndMagazineListItem({
     },
   })
 
-  const onClick = (id: string) => {
+  const navigate = (id: string) => {
     const isMagazine = queryKey === 'magazine'
     push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
   }
@@ -171,11 +171,11 @@ function LoungeAndMagazineListItem({
           data={item}
           onClick={e => {
             e.stopPropagation()
-            onClick(item.id)
+            navigate(item.id)
           }}
           liked={tabValue === 'LIKE'}
           scrapped={tabValue === 'SCRAPED'}
-          isDelete
+          isDelete={tabValue === 'MINE' || tabValue === 'SCRAPED'}
         />
       ))}
       <div ref={ref} />

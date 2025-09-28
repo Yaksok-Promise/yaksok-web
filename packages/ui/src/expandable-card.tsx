@@ -1,6 +1,6 @@
 'use client'
 
-import { Close } from '@yaksok/icons'
+import { CloseMd } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 import { cva } from 'class-variance-authority'
 import { AnimatePresence, motion } from 'motion/react'
@@ -54,7 +54,7 @@ export function ExpandableCard({
               aria-label="닫기"
               className="ml-2 flex h-6 w-6 items-center justify-center"
             >
-              <Close size={24} stroke="#48484A" />
+              <CloseMd size={24} stroke="#48484A" />
             </button>
           )}
         </div>

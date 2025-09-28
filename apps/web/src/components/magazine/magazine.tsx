@@ -14,7 +14,7 @@ const MagazineCard = () => {
   const { push } = useFlow()
 
   const goLoungeDetail = () => {
-    push('MagazinePage', {})
+    push('MagazineListPage', {})
   }
   return (
     <div

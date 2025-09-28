@@ -1,5 +1,5 @@
 import { Magazine } from '@yaksok/api/boardMagazineType'
-import { BlankHeart, Bookmark, Close, SvgIconElement } from '@yaksok/icons'
+import { BlankHeart, Bookmark, CloseMd } from '@yaksok/icons'
 import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
@@ -40,9 +40,9 @@ export function MagazineListCard({
             e.stopPropagation()
             onClickDelete?.(data.id)
           }}
-          className="absolute right-0 top-0"
+          className="self-end"
         >
-          <Close size={16} stroke="#959598" />
+          <CloseMd size={24} stroke="#000000" />
         </button>
       )}
       <div className="mb-2.5 flex flex-wrap items-center gap-1.25">
