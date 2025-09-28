@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
 import { GeneralForumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
@@ -88,7 +89,7 @@ export default function GeneralForumDetailPage({
   )
 
   return (
-    <>
+    <AppLayout>
       <AppScreen
         appBar={{
           title: '자유게시판',
@@ -130,6 +131,6 @@ export default function GeneralForumDetailPage({
         </main>
       </AppScreen>
       <ModalRoot />
-    </>
+    </AppLayout>
   )
 }

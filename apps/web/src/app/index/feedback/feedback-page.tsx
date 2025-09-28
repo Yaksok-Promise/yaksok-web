@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { BottomsheetLikeBackground } from '@/components/common/bottomsheet-like-background'
 import { MagazineOrGeneralForum } from '@/const/magazine-and-lounge'
 import { FeedbackFormValues, FeedbackSchema } from '@/validation/zod'
@@ -21,34 +22,38 @@ export default function FeedbackPage({
 
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <AppScreen
-      appBar={{
-        title: '',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        backgroundColor: '#000000',
-        border: false,
-      }}
-    >
-      <BottomsheetLikeBackground>
-        <div className="flex h-full min-h-0 flex-1 flex-col gap-5 rounded-t-[20px] bg-white px-4 pt-11 pb-10">
-          <h1 className="text-gray01 text-head6">피드백・문의</h1>
-          <p className="whitespace-pre-wrap text-black01 text-body2">{`불편한 점이나 궁금한 점이 있으신가요?\n여러분의 의견을 들려주세요.\n더 나은 서비스로 보답하겠습니다.`}</p>
-          <div className="flex">
-            <span className="text-black01 text-subhead2">이메일 | </span>
-            <span className="text-black01 text-body2">yaaksokkr@gmail.com</span>
+    <AppLayout>
+      <AppScreen
+        appBar={{
+          title: '',
+          textColor: '#ffffff',
+          iconColor: '#ffffff',
+          backgroundColor: '#000000',
+          border: false,
+        }}
+      >
+        <BottomsheetLikeBackground>
+          <div className="flex h-full min-h-0 flex-1 flex-col gap-5 rounded-t-[20px] bg-white px-4 pt-11 pb-10">
+            <h1 className="text-gray01 text-head6">피드백・문의</h1>
+            <p className="whitespace-pre-wrap text-black01 text-body2">{`불편한 점이나 궁금한 점이 있으신가요?\n여러분의 의견을 들려주세요.\n더 나은 서비스로 보답하겠습니다.`}</p>
+            <div className="flex">
+              <span className="text-black01 text-subhead2">이메일 | </span>
+              <span className="text-black01 text-body2">
+                yaaksokkr@gmail.com
+              </span>
+            </div>
+            <Button>카카오톡 문의하기</Button>
+            <div className="w-full border-1 border-[#63636633]/20" />
+            {!isOpen && (
+              <Button mode="line" onClick={() => setIsOpen(true)}>
+                서비스 이용 만족도 조사
+              </Button>
+            )}
+            {isOpen && <FeedBackForm />}
           </div>
-          <Button>카카오톡 문의하기</Button>
-          <div className="w-full border-1 border-[#63636633]/20" />
-          {!isOpen && (
-            <Button mode="line" onClick={() => setIsOpen(true)}>
-              서비스 이용 만족도 조사
-            </Button>
-          )}
-          {isOpen && <FeedBackForm />}
-        </div>
-      </BottomsheetLikeBackground>
-    </AppScreen>
+        </BottomsheetLikeBackground>
+      </AppScreen>
+    </AppLayout>
   )
 }
 

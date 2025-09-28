@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { MagazineTitle } from '@/components/magazine/magazine-title'
@@ -12,7 +13,7 @@ export default function MagazineListPage() {
   const { portalRef, isOpen, setIsOpen } = usePortal()
 
   return (
-    <>
+    <AppLayout>
       <AppScreen
         appBar={{
           title: '메거진',
@@ -42,7 +43,7 @@ export default function MagazineListPage() {
       </AppScreen>
 
       <Portal />
-    </>
+    </AppLayout>
   )
 }
 

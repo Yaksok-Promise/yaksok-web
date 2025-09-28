@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { LoungeCategoryKey } from '@/const/magazine-and-lounge'
@@ -14,7 +15,7 @@ export default function GeneralForumPage() {
   const { push } = useFlow()
 
   return (
-    <>
+    <AppLayout>
       <AppScreen
         appBar={{
           title: '자유게시판',
@@ -55,6 +56,6 @@ export default function GeneralForumPage() {
       </AppScreen>
 
       <Portal />
-    </>
+    </AppLayout>
   )
 }

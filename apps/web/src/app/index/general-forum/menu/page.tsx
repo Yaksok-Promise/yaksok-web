@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { BottomsheetLikeBackground } from '@/components/common/bottomsheet-like-background'
 import {
   GeneralForumAndMagazineMuneTab,
@@ -17,25 +18,27 @@ export default function GeneralForumMenuPage({
 }: GeneralForumMenuPageProps) {
   const { pop } = useFlow()
   return (
-    <AppScreen
-      appBar={{
-        title: '',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        backgroundColor: '#000000',
-        border: false,
-        backButton: {
-          renderIcon: () => <ChevronLeft size={24} stroke="white" />,
-          onClick: () => {
-            pop()
+    <AppLayout>
+      <AppScreen
+        appBar={{
+          title: '',
+          textColor: '#ffffff',
+          iconColor: '#ffffff',
+          backgroundColor: '#000000',
+          border: false,
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              pop()
+            },
           },
-        },
-      }}
-    >
-      <BottomsheetLikeBackground>
-        <h1 className="px-5 pt-10 text-gray01 text-head6">자유게시판</h1>
-        <GeneralForumAndMagazineMuneTab tab={tab} queryKey="general-forum" />
-      </BottomsheetLikeBackground>
-    </AppScreen>
+        }}
+      >
+        <BottomsheetLikeBackground>
+          <h1 className="px-5 pt-10 text-gray01 text-head6">자유게시판</h1>
+          <GeneralForumAndMagazineMuneTab tab={tab} queryKey="general-forum" />
+        </BottomsheetLikeBackground>
+      </AppScreen>
+    </AppLayout>
   )
 }

@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { GeneralForumEdit } from '@/components/general-forum/general-forum-edit'
 import { GeneralForumEditButton } from '@/components/general-forum/general-forum-edit-button'
 import { GeneralForumWriteSelect } from '@/components/general-forum/general-forum-write-select'
@@ -22,28 +23,30 @@ export default function GeneralForumEditPage({
   const { clear, prevImages } = useMagazineStore()
   const newContent = changeContent(content, prevImages)
   return (
-    <TipTapContext>
-      <AppScreen
-        appBar={{
-          title: <GeneralForumWriteSelect />,
-          textColor: '#ffffff',
-          iconColor: '#ffffff',
-          backgroundColor: '#000000',
-          border: false,
-          renderRight: () => <GeneralForumEditButton id={id} />,
-          backButton: {
-            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
-            onClick: () => {
-              clear()
-              pop()
+    <AppLayout>
+      <TipTapContext>
+        <AppScreen
+          appBar={{
+            title: <GeneralForumWriteSelect />,
+            textColor: '#ffffff',
+            iconColor: '#ffffff',
+            backgroundColor: '#000000',
+            border: false,
+            renderRight: () => <GeneralForumEditButton id={id} />,
+            backButton: {
+              renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+              onClick: () => {
+                clear()
+                pop()
+              },
             },
-          },
-        }}
-      >
-        <div className="relative h-screen overflow-auto ">
-          <GeneralForumEdit content={newContent} />
-        </div>
-      </AppScreen>
-    </TipTapContext>
+          }}
+        >
+          <div className="relative h-screen overflow-auto ">
+            <GeneralForumEdit content={newContent} />
+          </div>
+        </AppScreen>
+      </TipTapContext>
+    </AppLayout>
   )
 }

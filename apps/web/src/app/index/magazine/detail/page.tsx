@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { MagazineDetailFooter } from '@/components/magazine/magazine-detail-footer'
 import { MagazineDetailHead } from '@/components/magazine/magazine-detail-head'
@@ -54,7 +55,7 @@ export default function MagazineDetailPage({
   }
 
   return (
-    <>
+    <AppLayout>
       <AppScreen
         appBar={{
           title: '메거진',
@@ -85,6 +86,6 @@ export default function MagazineDetailPage({
         />
       </AppScreen>
       <Portal />
-    </>
+    </AppLayout>
   )
 }
