@@ -6,8 +6,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
 import { Magazine } from '@yaksok/api/boardMagazineType'
 import { Button, MagazineListCard } from '@yaksok/ui'
+import { ModalRoot } from '@yaksok/ui/modal'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
-import { Suspense, useState } from 'react'
+import { Fragment, Suspense, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 export type LoungeAndMagazineMuneTab = 'LIKE' | 'SCRAPED' | 'COMMENT' | 'MINE'
@@ -139,6 +140,8 @@ function LoungeAndMagazineListItem({
     push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
   }
 
+  // modalControl
+
   if (items.length === 0) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-white pt-10">
@@ -166,18 +169,20 @@ function LoungeAndMagazineListItem({
   return (
     <div>
       {items.map(item => (
-        <MagazineListCard
-          key={item.id}
-          data={item}
-          onClick={e => {
-            e.stopPropagation()
-            navigate(item.id)
-          }}
-          liked={tabValue === 'LIKE'}
-          scrapped={tabValue === 'SCRAPED'}
-          isDelete={tabValue === 'MINE' || tabValue === 'SCRAPED'}
-        />
+        <Fragment key={item.id}>
+          <MagazineListCard
+            key={item.id}
+            data={item}
+            onClick={e => {
+              e.stopPropagation()
+              navigate(item.id)
+            }}
+            liked={tabValue === 'LIKE'}
+            scrapped={tabValue === 'SCRAPED'}
+          />
+        </Fragment>
       ))}
+      <ModalRoot />
       <div ref={ref} />
     </div>
   )

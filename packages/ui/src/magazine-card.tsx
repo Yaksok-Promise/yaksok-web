@@ -1,5 +1,5 @@
 import { Magazine } from '@yaksok/api/boardMagazineType'
-import { BlankHeart, Bookmark, CloseMd } from '@yaksok/icons'
+import { BlankHeart, Bookmark } from '@yaksok/icons'
 import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
@@ -10,8 +10,6 @@ export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
   onClickLike?: (id: string) => void
   onClickBookmark?: (id: string) => void
-  onClickDelete?: (id: string) => void
-  isDelete?: boolean
   liked?: boolean
   scrapped?: boolean
 }
@@ -20,8 +18,6 @@ export function MagazineListCard({
   data,
   onClickLike,
   onClickBookmark,
-  onClickDelete,
-  isDelete = false,
   liked = false,
   scrapped = false,
   ...props
@@ -34,17 +30,6 @@ export function MagazineListCard({
       {...props}
       className="flex max-w-[328px] flex-col border-gray03/20 border-b-[1px] not-first:pt-5"
     >
-      {isDelete && (
-        <button
-          onClick={e => {
-            e.stopPropagation()
-            onClickDelete?.(data.id)
-          }}
-          className="self-end"
-        >
-          <CloseMd size={24} stroke="#000000" />
-        </button>
-      )}
       <div className="mb-2.5 flex flex-wrap items-center gap-1.25">
         {tags.map((tag, idx) => (
           <Tag key={idx} tag={tag} size="fit" />
@@ -55,9 +40,7 @@ export function MagazineListCard({
           {data.title}
         </h1>
         <Fallbackimg
-          src={
-            data.hasImages && data.thumbnailUrl ? data.thumbnailUrl : undefined
-          }
+          src={data.thumbnailUrl ? data.thumbnailUrl : undefined}
           alt={data.title}
           imgClassName="w-20 h-20"
           wrapperClassName="w-20 h-20 bg-gray01"

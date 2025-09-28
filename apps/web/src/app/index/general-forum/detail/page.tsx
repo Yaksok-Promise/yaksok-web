@@ -39,7 +39,7 @@ export default function GeneralForumDetailPage({
     }
   )
   const { data: generalForumDetailData } = result
-  console.log(generalForumDetailData)
+
   // general forum comment list
   const commentListResult = useHttpQuery<undefined, CommentResponse>(
     [QUERY_KEY.COMMENT_LIST, id],

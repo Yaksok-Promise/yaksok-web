@@ -24,7 +24,7 @@ function App() {
           <Stack />
         </Suspense>
       </ErrorProvider>
-      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
     </QueryClientProvider>
   )
 }
