@@ -33,13 +33,11 @@ export const GeneralForumCreateButton = () => {
     tags.forEach(tag => {
       formData.append('tagNames', tag.name)
     })
-    if (category !== 'ALL') {
-      console.log(category)
-      formData.append('category', category)
-    }
+    formData.append('category', category)
     images.forEach(image => {
       formData.append('images', image)
     })
+
     const content = editor.getHTML()
     formData.append('body', content)
     formData.append('imageGrouped', 'false')
@@ -53,7 +51,7 @@ export const GeneralForumCreateButton = () => {
   )
 }
 
-function normalizeImagesForSubmit(editor: Editor) {
+function _normalizeImagesForSubmit(editor: Editor) {
   const { images } = magazineStore.getState()
   const files: File[] = []
   let index = 0

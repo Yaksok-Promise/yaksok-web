@@ -39,21 +39,24 @@ export const GeneralForumEditButton = ({ id }: { id: string }) => {
   const handleCreate = async () => {
     if (!editor) return
     const content = editor.getHTML()
-    console.log('Original', prevImages, images)
-    const { keepImages, newImages, removedImageIds } = splitImagesForEdit({
+    const {
+      keepImages,
+      newImages,
+      removedImageIds: _removedImageIds,
+    } = splitImagesForEdit({
       prevImages,
       images,
       contentHTML: content,
     })
-    console.log('Edited', keepImages, newImages, removedImageIds)
+
     const formData = new FormData()
     formData.append('title', title)
     tags.forEach(tag => {
       formData.append('tagNames', tag.name)
     })
-    if (category !== 'ALL') {
-      formData.append('category', category)
-    }
+
+    formData.append('category', category)
+
     keepImages.forEach(image => {
       formData.append('keepImages', image)
     })

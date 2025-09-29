@@ -12,7 +12,6 @@ import {
 export function GeneralForumWriteSelect() {
   const { category, setCategory } = useMagazineStore()
   const categoryToKorean = {
-    ALL: '전체',
     QUESTION: '질문',
     REVIEW: '후기',
     DAILY: '잡담·일상',
@@ -32,7 +31,6 @@ export function GeneralForumWriteSelect() {
           }}
           value={category}
         >
-          <DropdownMenuRadioItem value="ALL">전체</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="REVIEW">후기</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="DAILY">잡담·일상</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="QUESTION">질문</DropdownMenuRadioItem>

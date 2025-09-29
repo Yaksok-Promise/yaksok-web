@@ -1,7 +1,7 @@
 import { useStore } from 'zustand'
 import { createStore } from 'zustand/vanilla'
 
-export type Category = 'DAILY' | 'REVIEW' | 'ALL' | 'QUESTION'
+export type Category = 'DAILY' | 'REVIEW' | 'QUESTION'
 
 export type CategoryToKorean = '잡담·일상' | '후기' | '전체' | '질문'
 
@@ -43,7 +43,7 @@ export interface MagazineStore {
 export const magazineStore = createStore<MagazineStore>((set, get) => ({
   title: '',
   tags: [],
-  category: 'ALL' as Category,
+  category: 'DAILY' as Category,
   images: new Map(),
   prevImages: [],
   registerImage: (name: string, file: File) =>
@@ -57,7 +57,7 @@ export const magazineStore = createStore<MagazineStore>((set, get) => ({
       images: new Map(),
       title: '',
       tags: [],
-      category: 'ALL',
+      category: 'DAILY',
       prevImages: [],
     }),
 }))
