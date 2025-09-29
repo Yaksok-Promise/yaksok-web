@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import LoungeMagazine from '@/components/magazine/magazine'
 import Lounge from '@/components/magazine/magazine-lounge'
 import LoungePayment from '@/components/magazine/magazine-payment'
@@ -10,19 +11,21 @@ export default function MagazinePage() {
   useUpdateToken()
   const myInfo = useGetMyInfo()
   return (
-    <AppScreen
-      appBar={{
-        title: '메거진',
-        backgroundColor: '#ffffff',
-        border: false,
-      }}
-    >
-      <main className="flex flex-col bg-white px-4 pb-10">
-        <Lounge name={myInfo.data.name} />
-        <LoungePayment />
-        <LoungeMagazine />
-        <LoungeYaksokSubscription />
-      </main>
-    </AppScreen>
+    <AppLayout>
+      <AppScreen
+        appBar={{
+          title: '메거진',
+          backgroundColor: '#ffffff',
+          border: false,
+        }}
+      >
+        <main className="flex flex-col bg-white px-4 pb-10">
+          <Lounge name={myInfo.data.name} />
+          <LoungePayment />
+          <LoungeMagazine />
+          <LoungeYaksokSubscription />
+        </main>
+      </AppScreen>
+    </AppLayout>
   )
 }

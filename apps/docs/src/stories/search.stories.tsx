@@ -6,6 +6,14 @@ const meta: Meta<SearchProps> = {
   component: Search,
   parameters: {
     layout: 'centered',
+    argsTypes: {
+      iconPosition: {
+        options: ['left', 'right'],
+        control: {
+          type: 'select',
+        },
+      },
+    },
   },
 
   tags: ['autodocs'],

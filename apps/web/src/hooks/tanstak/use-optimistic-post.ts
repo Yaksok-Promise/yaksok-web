@@ -18,35 +18,42 @@ import { useCallback } from 'react'
 import { useGetToken } from '../use-get-token'
 import { useHttpMutation } from './use-http-mutation'
 
-type LikeContext<T> = { previous?: T }
+type PostContext<T> = { previous?: T }
 
 /**
  * 공통 낙관적 좋아요 토글 훅
  * @param queryKey 쿼리 키
  * @param elementId 서버에 전송할 elementId (보통 상세 id)
  * @param target 'POST' | 'COMMENT'
+ * @path target = like, magazine, general-forum
  */
-function useOptimisticLike<T>(
+function useOptimisticPost<T>(
   queryKey: AppointmentQueryKey,
   elementId: string,
-  target: 'POST' | 'COMMENT',
+  target: 'LIKE_POST' | 'LIKE_COMMENT' | 'MAGAZINE' | 'GENERAL_FORUM',
+
   customUpdater: (old: T | undefined) => T | undefined
 ) {
   const queryClient = useQueryClient()
   const token = useGetToken()
+  const path =
+    target === 'LIKE_POST' || target === 'LIKE_COMMENT'
+      ? '/api/like/toggle'
+      : target === 'MAGAZINE'
+        ? '/api/post/magazine/{postId}/scrap'
+        : '/api/post/general-forum/{postId}/scrap'
 
-  const mutation = useHttpMutation<
-    undefined,
-    CheckResultResponse,
-    LikeContext<T>
-  >(
-    '/api/like/toggle',
+  const mutation = useHttpMutation<{}, CheckResultResponse, PostContext<T>>(
+    path,
     'post',
     {
       headers: { Authorization: `Bearer ${token}` },
       query: {
         elementId,
-        target,
+        target: target === 'LIKE_POST' ? 'POST' : 'COMMENT',
+      },
+      params: {
+        postId: elementId,
       },
     },
     {
@@ -81,29 +88,29 @@ function useOptimisticLike<T>(
     }
   )
 
-  const handleLike = useCallback(() => {
-    mutation.mutate(undefined)
+  const handleOptimisticPost = useCallback(() => {
+    mutation.mutate({})
   }, [mutation])
 
-  return { handleLike, mutation }
+  return { handleOptimisticPost, mutation }
 }
 
 // magazine
 export const useMagazineLikeOptimistic = (magazineId: string) => {
-  return useOptimisticLike<MagazineDetail>(
+  return useOptimisticPost<MagazineDetail>(
     [QUERY_KEY.MAGAZINE, magazineId],
     magazineId,
-    'POST',
+    'LIKE_POST',
     updateMagazineLikeOptimistic
   )
 }
 
 // general-forum
 export const useGeneralForumLikeOptimistic = (forumId: string) => {
-  return useOptimisticLike<GeneralForumDetail>(
+  return useOptimisticPost<GeneralForumDetail>(
     [QUERY_KEY.GENERAL_FORUM, forumId],
     forumId,
-    'POST',
+    'LIKE_POST',
     updateMagazineLikeOptimistic
   )
 }
@@ -113,10 +120,47 @@ export const useCommentLikeOptimistic = (postId: string, commentId: string) => {
   const customUpdater = (old: CommentResponse | undefined) =>
     updateCommentListOptimisticByElementId(old, commentId)
 
-  return useOptimisticLike<CommentResponse>(
+  return useOptimisticPost<CommentResponse>(
     [QUERY_KEY.COMMENT_LIST, postId],
     commentId,
-    'COMMENT',
+    'LIKE_COMMENT',
     customUpdater
   )
+}
+
+// scrapCount
+
+// magazine
+export const useMagazineScrapCountOptimistic = (magazineId: string) => {
+  return useOptimisticPost<MagazineDetail>(
+    [QUERY_KEY.MAGAZINE, magazineId],
+    magazineId,
+    'MAGAZINE',
+    updataeScrapCount
+  )
+}
+
+// general-forum
+export const useGeneralForumScrapCountOptimistic = (forumId: string) => {
+  return useOptimisticPost<GeneralForumDetail>(
+    [QUERY_KEY.GENERAL_FORUM, forumId],
+    forumId,
+    'GENERAL_FORUM',
+    updataeScrapCount
+  )
+}
+
+// updater 수정 필요
+function updataeScrapCount<T extends MagazineDetail | GeneralForumDetail>(
+  magazineData: T | undefined
+): T | undefined {
+  if (!magazineData) return magazineData
+  // 스크랩 여부 데이터 필요
+  const nextScraped = !magazineData.scrapped
+  const delta = nextScraped ? 1 : -1
+  return {
+    ...magazineData,
+    scrapped: nextScraped,
+    scrapCount: Math.max(0, ((magazineData.scrapCount as number) ?? 0) + delta),
+  }
 }

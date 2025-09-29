@@ -28,10 +28,17 @@ const boardAndMagazine = [
   '/api/post/magazine/create',
   '/api/post/magazine/list',
   '/api/post/magazine/{postId}',
+  '/api/post/magazine/my/liked',
+  '/api/post/magazine/my/scrapped',
+  '/api/post/magazine/{postId}/scrap',
   '/api/post/general-forum/create',
   '/api/post/general-forum/list',
   '/api/post/general-forum/{postId}',
   '/api/post/general-forum/my',
+  '/api/post/general-forum/my/liked',
+  '/api/post/general-forum/my/scrapped',
+  '/api/post/general-forum/my/commented',
+  '/api/post/general-forum/{postId}/scrap',
 ] as const
 export const pathList = [...users, ...comments, ...sms, ...boardAndMagazine]
 

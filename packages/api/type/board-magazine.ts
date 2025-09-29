@@ -19,7 +19,9 @@ export type Magazine = {
   likes: number
   views: number
   tags: Tag[]
+  scrapCount: number
   hasImages: boolean
+  tag?: Tag[]
 }
 
 export type MagazineDetail = Magazine & {
@@ -29,6 +31,7 @@ export type MagazineDetail = Magazine & {
   instagramUrl: string
   liked: boolean
   mine: boolean
+  scrapped: boolean
 }
 
 export type GeneralForumDetail = MagazineDetail & {

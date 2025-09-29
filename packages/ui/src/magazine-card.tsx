@@ -1,5 +1,5 @@
 import { Magazine } from '@yaksok/api/boardMagazineType'
-import { BlankHeart, Bookmark, SvgIconElement } from '@yaksok/icons'
+import { BlankHeart, Bookmark } from '@yaksok/icons'
 import { changeDate } from '@yaksok/utils'
 import { ComponentPropsWithoutRef } from 'react'
 import { Fallbackimg } from './fallback-img'
@@ -8,10 +8,22 @@ import { Tag } from './tag'
 
 export type MagazineListCardProps = ComponentPropsWithoutRef<'div'> & {
   data: Magazine
+  onClickLike?: (id: string) => void
+  onClickBookmark?: (id: string) => void
+  liked?: boolean
+  scrapped?: boolean
 }
 
-export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
-  const tags = data.tags
+export function MagazineListCard({
+  data,
+  onClickLike,
+  onClickBookmark,
+  liked = false,
+  scrapped = false,
+  ...props
+}: MagazineListCardProps) {
+  const tags = data.tag ? data.tag : data.tags
+
   return (
     <div
       role="button"
@@ -28,9 +40,7 @@ export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
           {data.title}
         </h1>
         <Fallbackimg
-          src={
-            data.hasImages && data.thumbnailUrl ? data.thumbnailUrl : undefined
-          }
+          src={data.thumbnailUrl ? data.thumbnailUrl : undefined}
           alt={data.title}
           imgClassName="w-20 h-20"
           wrapperClassName="w-20 h-20 bg-gray01"
@@ -42,12 +52,32 @@ export function MagazineListCard({ data, ...props }: MagazineListCardProps) {
         </span>
         <div className="flex gap-1">
           <IconTag
-            icon={<BlankHeart size={12} stroke="#959598" />}
+            icon={
+              <BlankHeart
+                size={16}
+                stroke="#959598"
+                fill={liked ? '#959598' : 'none'}
+              />
+            }
             label={data.likes.toString()}
+            onClick={e => {
+              e.stopPropagation()
+              onClickLike?.(data.id)
+            }}
           />
           <IconTag
-            icon={<Bookmark size={12} stroke="#959598" />}
-            label={data.views.toString()}
+            icon={
+              <Bookmark
+                size={16}
+                stroke="#959598"
+                fill={scrapped ? '#959598' : 'none'}
+              />
+            }
+            label={data.scrapCount.toString()}
+            onClick={e => {
+              e.stopPropagation()
+              onClickBookmark?.(data.id)
+            }}
           />
         </div>
       </div>

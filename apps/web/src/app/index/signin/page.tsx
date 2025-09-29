@@ -1,5 +1,5 @@
 import { useHttpMutation } from '@/hooks/tanstak/use-http-mutation'
-import { useFlow } from '@/utils/stackflow'
+
 import {
   SigninRequest,
   SigninSchema,
@@ -9,6 +9,7 @@ import {
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { useFlow } from '@stackflow/react/future'
 import { LoginRequest, LoginResponse } from '@yaksok/api/userType'
 import { useLoginStore } from '@yaksok/store'
 import { Button, OauthButton, TextField } from '@yaksok/ui'

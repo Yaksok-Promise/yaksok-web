@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { GeneralForumButtonList } from '@/components/general-forum/general-forum-button-list'
 import { GeneralForumCommentList } from '@/components/general-forum/general-forum-comment-list'
 import { GeneralForumHeaderDropDown } from '@/components/general-forum/general-forum-header-drop-down'
@@ -6,9 +7,14 @@ import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { useUpdateToken } from '@/hooks/use-update-token'
 import { QUERY_KEY } from '@/utils/query-key'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { CommentResponse } from '@yaksok/api/commentType'
+import { ChevronLeft } from '@yaksok/icons'
+import { TiptapViewer } from '@yaksok/ui'
+import { ModalRoot } from '@yaksok/ui/modal'
+import { changeContent } from '@yaksok/ui/tiptap'
 import { Suspense } from 'react'
 
 type CommunityDetailPageProps = {
@@ -21,6 +27,7 @@ export default function GeneralForumDetailPage({
   params: { id },
 }: CommunityDetailPageProps) {
   useUpdateToken()
+  const { pop } = useFlow()
 
   // general forum detail
   const token = useGetToken()
@@ -71,40 +78,60 @@ export default function GeneralForumDetailPage({
   const buttonListProps = {
     likes: generalForumDetailData.likes,
     liked: generalForumDetailData.liked,
-    views: generalForumDetailData.views,
+    scrapCount: generalForumDetailData.scrapCount,
+    scraped: generalForumDetailData.scrapped,
     commentCount: countComment,
     id: generalForumDetailData.id,
   }
 
+  const content = changeContent(
+    generalForumDetailData.body,
+    generalForumDetailData.images
+  )
+
   return (
-    <AppScreen
-      appBar={{
-        title: '자유게시판',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        backgroundColor: '#000000',
-        border: false,
-        renderRight: () => (
-          <GeneralForumHeaderDropDown isMine={generalForumDetailData.mine} />
-        ),
-      }}
-    >
-      <main className="relative flex min-h-full flex-col bg-bgColor">
-        <div className="px-4">
-          <GeneralForumTitle {...titleProps} />
-          <div className="pt-5 pb-20">{generalForumDetailData.body}</div>
-          <GeneralForumButtonList {...buttonListProps} />
-        </div>
-        <div className="mb-40">
-          <Suspense fallback={<div>Loading...</div>}>
-            <GeneralForumCommentList
-              data={commentListData}
-              countComment={countComment}
-              postId={id}
+    <AppLayout>
+      <AppScreen
+        appBar={{
+          title: '자유게시판',
+          textColor: '#ffffff',
+          iconColor: '#ffffff',
+          backgroundColor: '#000000',
+          border: false,
+          renderRight: () => (
+            <GeneralForumHeaderDropDown
+              isMine={generalForumDetailData.mine}
+              data={generalForumDetailData}
             />
-          </Suspense>
-        </div>
-      </main>
-    </AppScreen>
+          ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              pop()
+            },
+          },
+        }}
+      >
+        <main className="relative flex min-h-full flex-col bg-bgColor">
+          <div className="px-4">
+            <GeneralForumTitle {...titleProps} />
+            <div className="px-4 py-5">
+              <TiptapViewer content={content} />
+            </div>
+            <GeneralForumButtonList {...buttonListProps} />
+          </div>
+          <div className="mb-40">
+            <Suspense fallback={<div>Loading...</div>}>
+              <GeneralForumCommentList
+                data={commentListData}
+                countComment={countComment}
+                postId={id}
+              />
+            </Suspense>
+          </div>
+        </main>
+      </AppScreen>
+      <ModalRoot />
+    </AppLayout>
   )
 }

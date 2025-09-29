@@ -23,7 +23,7 @@ const SvgBookmark = React.forwardRef<
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      fill={fill} // ⭐ fill prop 반영
+      fill={fill}
     />
   </svg>
 ))

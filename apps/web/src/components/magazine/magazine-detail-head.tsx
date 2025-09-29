@@ -6,18 +6,22 @@ import { Bookmark } from 'lucide-react'
 
 export type HeadProps = {
   likes: number
-  views: number
+  scrapCount: number
   date: string
   title: string
   tags: TagType[]
+  liked: boolean
+  scrapped: boolean
 }
 
 export function MagazineDetailHead({
   likes,
-  views,
+  scrapCount,
   date,
   title,
   tags,
+  liked,
+  scrapped,
 }: HeadProps) {
   return (
     <div className="mt-5 mb-6 flex flex-col items-center px-5">
@@ -25,13 +29,25 @@ export function MagazineDetailHead({
         <span className="text-body2 text-gray04">{changeDate(date)}</span>
         <div className="flex gap-1">
           <IconTag
-            icon={<BlankHeart size={12} stroke="#959598" />}
+            icon={
+              <BlankHeart
+                size={12}
+                stroke="#959598"
+                fill={liked ? '#959598' : 'none'}
+              />
+            }
             label={likes.toString()}
             labelClassName="text-gray05 text-body2"
           />
           <IconTag
-            icon={<Bookmark size={12} stroke="#959598" />}
-            label={views.toString()}
+            icon={
+              <Bookmark
+                size={12}
+                stroke="#959598"
+                fill={scrapped ? '#959598' : 'none'}
+              />
+            }
+            label={scrapCount.toString()}
             labelClassName="text-gray05 text-body2"
           />
         </div>

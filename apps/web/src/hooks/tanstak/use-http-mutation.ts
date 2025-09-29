@@ -2,7 +2,7 @@ import { UseMutationOptions, useMutation } from '@tanstack/react-query'
 import { http, PathType, RequestOption } from '@yaksok/api'
 
 export const useHttpMutation = <
-  Body = unknown,
+  Body extends object | FormData = object,
   Res = unknown,
   Context = unknown,
 >(

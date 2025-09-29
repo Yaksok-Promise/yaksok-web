@@ -1,3 +1,4 @@
+import AppLayout from '@/components/common/app-layout'
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { LoungeCategoryKey } from '@/const/magazine-and-lounge'
@@ -14,7 +15,7 @@ export default function GeneralForumPage() {
   const { push } = useFlow()
 
   return (
-    <>
+    <AppLayout>
       <AppScreen
         appBar={{
           title: '자유게시판',
@@ -24,6 +25,7 @@ export default function GeneralForumPage() {
           border: false,
           renderRight: () => (
             <SideDrawer
+              mode="general-forum"
               container={portalRef.current}
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -31,7 +33,7 @@ export default function GeneralForumPage() {
           ),
         }}
       >
-        <main className="relative h-full overflow-auto ">
+        <main className="relative overflow-auto scroll-auto">
           <LoungeAndMagazineTab<LoungeCategoryKey>
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
@@ -54,6 +56,6 @@ export default function GeneralForumPage() {
       </AppScreen>
 
       <Portal />
-    </>
+    </AppLayout>
   )
 }

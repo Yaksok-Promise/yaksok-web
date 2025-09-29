@@ -69,7 +69,7 @@ const useCallbackError = async (error: AxiosError<CustomError>) => {
         return instance(config as AxiosRequestConfig)
       }
     }
-    // 리프레시 토큰 만료
+    // 리프레시 토큰 만료 602로 확인
 
     error.message = error.response?.data?.message?.[0] as string
     return Promise.reject(error)
