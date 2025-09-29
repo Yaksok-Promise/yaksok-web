@@ -10,6 +10,7 @@ export type GeneralForumButtonListProps = {
   likes: number
   liked: boolean
   scrapCount: number
+  scraped: boolean
   commentCount: number
   id: string
 }
@@ -17,6 +18,7 @@ export function GeneralForumButtonList({
   likes,
   liked,
   scrapCount,
+  scraped,
   commentCount,
   id,
 }: GeneralForumButtonListProps) {
@@ -43,7 +45,13 @@ export function GeneralForumButtonList({
       },
     },
     {
-      icon: <Bookmark size={20} stroke="#636366" />,
+      icon: (
+        <Bookmark
+          size={20}
+          stroke="#636366"
+          fill={scraped ? '#636366' : 'none'}
+        />
+      ),
       value: scrapCount,
       onClick: handleScrap,
     },

@@ -82,7 +82,7 @@ export default function MagazineDetailPage({
           inView={inView}
           magazineId={id}
           liked={data.liked}
-          scraped={data.scraped}
+          scraped={data.scrapped}
         />
       </AppScreen>
       <Portal />

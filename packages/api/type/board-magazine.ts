@@ -31,6 +31,7 @@ export type MagazineDetail = Magazine & {
   instagramUrl: string
   liked: boolean
   mine: boolean
+  scrapped: boolean
 }
 
 export type GeneralForumDetail = MagazineDetail & {

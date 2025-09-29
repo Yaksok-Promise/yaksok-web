@@ -79,6 +79,7 @@ export default function GeneralForumDetailPage({
     likes: generalForumDetailData.likes,
     liked: generalForumDetailData.liked,
     scrapCount: generalForumDetailData.scrapCount,
+    scraped: generalForumDetailData.scrapped,
     commentCount: countComment,
     id: generalForumDetailData.id,
   }

@@ -156,11 +156,11 @@ function updataeScrapCount<T extends MagazineDetail | GeneralForumDetail>(
 ): T | undefined {
   if (!magazineData) return magazineData
   // 스크랩 여부 데이터 필요
-  const nextScraped = !magazineData.liked
+  const nextScraped = !magazineData.scrapped
   const delta = nextScraped ? 1 : -1
   return {
     ...magazineData,
-    scraped: nextScraped,
+    scrapped: nextScraped,
     scrapCount: Math.max(0, ((magazineData.scrapCount as number) ?? 0) + delta),
   }
 }
