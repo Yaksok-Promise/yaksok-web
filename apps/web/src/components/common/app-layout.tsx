@@ -1,11 +1,6 @@
+import { useFlow } from '@/utils/stackflow'
 import { useActivity } from '@stackflow/react'
 import { CommunicationDot, Gift, Home, Mail, User } from '@yaksok/icons'
-import { Fragment, useEffect } from 'react'
-import {
-  BottomNavigationButton,
-  BottomNavigationLayout,
-} from '@yaksok/ui/bottom-navigation'
-import { useFlow } from '@/utils/stackflow'
 import {
   isAppointmentPage,
   isBottomStackPage,
@@ -15,6 +10,11 @@ import {
   isMyPage,
 } from '@yaksok/store'
 import { useBottomStackHistoryStore } from '@yaksok/store'
+import {
+  BottomNavigationButton,
+  BottomNavigationLayout,
+} from '@yaksok/ui/bottom-navigation'
+import { Fragment, useEffect } from 'react'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const activity = useActivity()

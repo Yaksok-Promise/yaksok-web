@@ -2,9 +2,9 @@ import { FeedbackFormValues, FeedbackSchema } from '@/validation/zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@yaksok/ui'
 import { cn } from '@yaksok/utils'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { BottomsheetLikeBackground } from '../common/bottomsheet-like-background'
-import { useState } from 'react'
 
 export function FeedbackPage() {
   const [isOpen, setIsOpen] = useState(false)

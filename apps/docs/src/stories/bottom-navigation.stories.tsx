@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { CommunicationDot, Gift, Home, Mail, User } from '@yaksok/icons'
 import {
-  BottomNavigationLayout,
   BottomNavigationButton,
+  BottomNavigationLayout,
   BottomNavigationLayoutProps,
 } from '@yaksok/ui/bottom-navigation'
 import { useState } from 'react'

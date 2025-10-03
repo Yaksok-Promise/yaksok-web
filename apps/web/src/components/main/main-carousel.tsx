@@ -1,5 +1,5 @@
 import NotSolution from '@/assets/notSolution@2.png'
-import { useActions } from '@stackflow/react'
+
 import { Card, CardProps, Carousel } from '@yaksok/ui'
 
 export type MainCarouselProps = {
@@ -7,7 +7,6 @@ export type MainCarouselProps = {
   className?: string
 }
 export function MainCarousel({ data, className }: MainCarouselProps) {
-  const { push } = useActions()
   return (
     <div className={className}>
       {data && (
