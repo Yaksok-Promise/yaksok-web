@@ -1,4 +1,3 @@
-import AppLayout from '@/components/common/app-layout'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { MagazineDetailFooter } from '@/components/magazine/magazine-detail-footer'
 import { MagazineDetailHead } from '@/components/magazine/magazine-detail-head'
@@ -7,10 +6,14 @@ import { useHttpQuery } from '@/hooks/tanstak/use-http-query'
 import { useGetToken } from '@/hooks/use-get-token'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { useStack } from '@stackflow/react'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
+import { ChevronLeft } from 'lucide-react'
 
 import { useInView } from 'react-intersection-observer'
+import { MagazineMenuPageProps } from '../menu/page'
 
 type LoungeDetailPageProps = {
   params: {
@@ -51,11 +54,13 @@ export default function MagazineDetailPage({
     tags: data.tags,
     liked: data.liked,
     // 스크랩 여부 속성 추가 필요
-    scrapped: data.scraped,
+    scrapped: data.scrapped,
   }
-
+  const { activities } = useStack()
+  const previousPage = activities[activities.length - 2]
+  const { replace } = useFlow()
   return (
-    <AppLayout>
+    <>
       <AppScreen
         appBar={{
           title: '메거진',
@@ -71,6 +76,42 @@ export default function MagazineDetailPage({
               setIsOpen={setIsOpen}
             />
           ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              if (previousPage && previousPage.name === 'MagazineListPage') {
+                replace('MagazineListPage', {})
+              } else if (
+                previousPage &&
+                previousPage.name === 'MagazineMenuPage'
+              ) {
+                replace(
+                  'MagazineMenuPage',
+                  previousPage.params as MagazineMenuPageProps['params']
+                )
+              } else {
+                replace('MagazinePage', {})
+              }
+            },
+          },
+          closeButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              if (previousPage && previousPage.name === 'MagazineListPage') {
+                replace('MagazineListPage', {})
+              } else if (
+                previousPage &&
+                previousPage.name === 'MagazineMenuPage'
+              ) {
+                replace(
+                  'MagazineMenuPage',
+                  previousPage.params as MagazineMenuPageProps['params']
+                )
+              } else {
+                replace('MagazinePage', {})
+              }
+            },
+          },
         }}
       >
         <main className="flex flex-col bg-white pb-10">
@@ -86,6 +127,6 @@ export default function MagazineDetailPage({
         />
       </AppScreen>
       <Portal />
-    </AppLayout>
+    </>
   )
 }

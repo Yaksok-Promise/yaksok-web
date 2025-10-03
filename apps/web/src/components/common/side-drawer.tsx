@@ -14,7 +14,7 @@ import {
   Mail,
   Show,
 } from '@yaksok/icons'
-import { Comment, ListItem, Profile, Switch } from '@yaksok/ui'
+import { ListItem, Profile, Switch } from '@yaksok/ui'
 import {
   Drawer,
   DrawerContent,
@@ -39,7 +39,7 @@ export const SideDrawer = forwardRef(function SideDrawer(
 ) {
   const { data } = useGetMyInfo()
 
-  const { push } = useFlow()
+  const { replace } = useFlow()
   return (
     <Drawer
       open={isOpen}
@@ -73,7 +73,7 @@ export const SideDrawer = forwardRef(function SideDrawer(
               </div>
               <button
                 onClick={() => {
-                  push('Mypage', {})
+                  replace('Mypage', {})
                   setIsOpen(false)
                 }}
               >
@@ -86,9 +86,9 @@ export const SideDrawer = forwardRef(function SideDrawer(
             <ListItem
               navigate={() => {
                 if (mode === 'magazine') {
-                  push('MagazineMenuPage', { tab: 'LIKE' })
+                  replace('MagazineMenuPage', { tab: 'LIKE' })
                 } else {
-                  push('GeneralForumMenuPage', { tab: 'LIKE' })
+                  replace('GeneralForumMenuPage', { tab: 'LIKE' })
                 }
                 setIsOpen(false)
               }}
@@ -99,9 +99,9 @@ export const SideDrawer = forwardRef(function SideDrawer(
             <ListItem
               navigate={() => {
                 if (mode === 'magazine') {
-                  push('MagazineMenuPage', { tab: 'SCRAPED' })
+                  replace('MagazineMenuPage', { tab: 'SCRAPED' })
                 } else {
-                  push('GeneralForumMenuPage', { tab: 'SCRAPED' })
+                  replace('GeneralForumMenuPage', { tab: 'SCRAPED' })
                 }
                 setIsOpen(false)
               }}
@@ -112,7 +112,7 @@ export const SideDrawer = forwardRef(function SideDrawer(
             {mode === 'general-forum' && (
               <ListItem
                 navigate={() => {
-                  push('GeneralForumMenuPage', { tab: 'COMMENT' })
+                  replace('GeneralForumMenuPage', { tab: 'COMMENT' })
                   setIsOpen(false)
                 }}
                 icon={<CommunicationDot size={18} stroke={'#000000'} />}
@@ -123,7 +123,7 @@ export const SideDrawer = forwardRef(function SideDrawer(
             {mode === 'general-forum' && (
               <ListItem
                 navigate={() => {
-                  push('GeneralForumMenuPage', { tab: 'MINE' })
+                  replace('GeneralForumMenuPage', { tab: 'MINE' })
                   setIsOpen(false)
                 }}
                 icon={<Show size={18} stroke={'#000000'} />}
@@ -141,7 +141,7 @@ export const SideDrawer = forwardRef(function SideDrawer(
             {mode === 'magazine' && (
               <ListItem
                 navigate={() => {
-                  push('MagazineYakinStoryPage', {})
+                  replace('MagazineYakinStoryPage', {})
                   setIsOpen(false)
                 }}
                 icon={<Attach size={18} />}
@@ -160,7 +160,11 @@ export const SideDrawer = forwardRef(function SideDrawer(
               title={'피드백・문의'}
               className="text-black01 text-body2"
               navigate={() => {
-                push('FeedbackPage', { previousPage: mode })
+                if (mode === 'magazine') {
+                  replace('MagazineFeedbackPage', {})
+                } else {
+                  replace('GeneralForumFeedbackPage', {})
+                }
                 setIsOpen(false)
               }}
             />

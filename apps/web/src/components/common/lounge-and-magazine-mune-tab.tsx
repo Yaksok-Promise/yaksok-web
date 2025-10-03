@@ -5,6 +5,7 @@ import { useFlow } from '@/utils/stackflow'
 import { useQueryClient } from '@tanstack/react-query'
 import { PathType } from '@yaksok/api'
 import { Magazine } from '@yaksok/api/boardMagazineType'
+import { useBottomStackHistoryStore } from '@yaksok/store'
 import { Button, MagazineListCard } from '@yaksok/ui'
 import { ModalRoot } from '@yaksok/ui/modal'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@yaksok/ui/tabs'
@@ -28,6 +29,7 @@ export const GeneralForumAndMagazineMuneTab = ({
   tab,
   queryKey,
 }: LoungeAndMagazineMuneTabProps) => {
+  const { addHistory } = useBottomStackHistoryStore()
   const [tabValue, setTabValue] = useState<
     'LIKE' | 'SCRAPED' | 'COMMENT' | 'MINE'
   >(tab)
@@ -35,6 +37,7 @@ export const GeneralForumAndMagazineMuneTab = ({
   const changeCategory = (value: string) => {
     setTabValue(value as LoungeAndMagazineMuneTab)
     queryClient.invalidateQueries({ queryKey: [queryKey, value] })
+    addHistory({ name: 'GeneralForumMenuPage', params: { tab: value } })
   }
 
   const tabList =
@@ -80,14 +83,13 @@ function LoungeAndMagazineListItem({
   queryKey,
   tabValue,
 }: LoungeAndMagazineListItemProps) {
-  const { push } = useFlow()
+  const { replace } = useFlow()
   const params = {
     size: 10,
     bodySize: 50,
   }
 
-  // 추가 설정 필요
-  let url: PathType | null = '/api/post/general-forum/my'
+  let url: PathType | null = null
 
   if (queryKey === 'general-forum') {
     if (tabValue === 'MINE') {
@@ -116,7 +118,7 @@ function LoungeAndMagazineListItem({
     Magazine
   >(
     [queryKey, tabValue],
-    url,
+    url as PathType,
     {
       params: params,
       headers: {
@@ -137,7 +139,9 @@ function LoungeAndMagazineListItem({
 
   const navigate = (id: string) => {
     const isMagazine = queryKey === 'magazine'
-    push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
+    replace(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', {
+      id,
+    })
   }
 
   // modalControl
@@ -154,8 +158,8 @@ function LoungeAndMagazineListItem({
         </p>
         <Button
           onClick={() => {
-            push(
-              queryKey === 'magazine' ? 'MagazinePage' : 'GeneralForumPage',
+            replace(
+              queryKey === 'magazine' ? 'MagazineListPage' : 'GeneralForumPage',
               {}
             )
           }}

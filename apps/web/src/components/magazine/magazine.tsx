@@ -11,10 +11,10 @@ export default function MagazineLounge() {
 }
 
 const MagazineCard = () => {
-  const { push } = useFlow()
+  const { replace } = useFlow()
 
   const goLoungeDetail = () => {
-    push('MagazineListPage', {})
+    replace('MagazineListPage', {})
   }
   return (
     <div

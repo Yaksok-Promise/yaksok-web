@@ -222,6 +222,10 @@
   --text-caption1--line-height: 18px;
   --text-caption1--letter-spacing: -0.6px;
   --text-caption1--font-weight: 400;
+  --text-bottom-navigation: 10px;
+  --text-bottom-navigation--line-height: 18px;
+  --text-bottom-navigation--font-weight: 400;
+  --text-bottom-navigation--letter-spacing: -0.2px;
 }
 
 html {

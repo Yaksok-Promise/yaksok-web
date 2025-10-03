@@ -91,7 +91,7 @@ function LoungeAndMagazineListItem({
   sort,
   url,
 }: LoungeAndMagazineListItemProps) {
-  const { push } = useFlow()
+  const { replace } = useFlow()
   const params = {
     size: 10,
     category: category === 'All' ? undefined : category,
@@ -116,7 +116,9 @@ function LoungeAndMagazineListItem({
 
   const onClick = (id: string) => {
     const isMagazine = queryKey === 'magazine'
-    push(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', { id })
+    replace(isMagazine ? 'MagazineDetailPage' : 'GeneralForumDetailPage', {
+      id,
+    })
   }
 
   return (

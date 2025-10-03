@@ -1,20 +1,9 @@
-import { BottomsheetLikeBackground } from '@/components/common/bottomsheet-like-background'
-import {
-  GeneralForumAndMagazineMuneTab,
-  LoungeAndMagazineMuneTab,
-} from '@/components/common/lounge-and-magazine-mune-tab'
+import { FeedbackPage } from '@/components/feedback/feedback-page'
 import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { ChevronLeft } from '@yaksok/icons'
 
-export type MagazineMenuPageProps = {
-  params: {
-    tab: LoungeAndMagazineMuneTab
-  }
-}
-export default function MagazineMenuPage({
-  params: { tab },
-}: MagazineMenuPageProps) {
+export default function MagazineFeedbackPage() {
   const { replace } = useFlow()
   return (
     <AppScreen
@@ -38,10 +27,7 @@ export default function MagazineMenuPage({
         },
       }}
     >
-      <BottomsheetLikeBackground>
-        <h1 className="px-5 pt-10 text-gray01 text-head6">Yakin 메거진</h1>
-        <GeneralForumAndMagazineMuneTab tab={tab} queryKey="magazine" />
-      </BottomsheetLikeBackground>
+      <FeedbackPage />
     </AppScreen>
   )
 }

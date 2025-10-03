@@ -5,15 +5,17 @@ import { MagazineTitle } from '@/components/magazine/magazine-title'
 import { MagazineCategoryKey } from '@/const/magazine-and-lounge'
 import { Portal, usePortal } from '@/hooks/use-portal'
 import { useUpdateToken } from '@/hooks/use-update-token'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { ChevronLeft } from '@yaksok/icons'
 import { cn } from '@yaksok/utils'
 
 export default function MagazineListPage() {
   useUpdateToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
-
+  const { replace } = useFlow()
   return (
-    <AppLayout>
+    <>
       <AppScreen
         appBar={{
           title: '메거진',
@@ -29,6 +31,18 @@ export default function MagazineListPage() {
               setIsOpen={setIsOpen}
             />
           ),
+          backButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              replace('MagazinePage', {})
+            },
+          },
+          closeButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              replace('MagazinePage', {})
+            },
+          },
         }}
       >
         <div className="relative h-full overflow-auto">
@@ -41,9 +55,8 @@ export default function MagazineListPage() {
           />
         </div>
       </AppScreen>
-
       <Portal />
-    </AppLayout>
+    </>
   )
 }
 

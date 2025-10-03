@@ -12,6 +12,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { MagazineDetail } from '@yaksok/api/boardMagazineType'
 import { CommentResponse } from '@yaksok/api/commentType'
 import { ChevronLeft } from '@yaksok/icons'
+import { useBottomStackHistoryStore } from '@yaksok/store'
 import { TiptapViewer } from '@yaksok/ui'
 import { ModalRoot } from '@yaksok/ui/modal'
 import { changeContent } from '@yaksok/ui/tiptap'
@@ -27,7 +28,10 @@ export default function GeneralForumDetailPage({
   params: { id },
 }: CommunityDetailPageProps) {
   useUpdateToken()
-  const { pop } = useFlow()
+  const { replace } = useFlow()
+  const {
+    bottomStackHistory: { community },
+  } = useBottomStackHistoryStore()
 
   // general forum detail
   const token = useGetToken()
@@ -107,7 +111,13 @@ export default function GeneralForumDetailPage({
           backButton: {
             renderIcon: () => <ChevronLeft size={24} stroke="white" />,
             onClick: () => {
-              pop()
+              replace(community.name, community.params)
+            },
+          },
+          closeButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              replace(community.name, community.params)
             },
           },
         }}

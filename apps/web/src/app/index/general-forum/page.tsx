@@ -1,4 +1,3 @@
-import AppLayout from '@/components/common/app-layout'
 import { LoungeAndMagazineTab } from '@/components/common/lounge-and-magazine-tab'
 import { SideDrawer } from '@/components/common/side-drawer'
 import { LoungeCategoryKey } from '@/const/magazine-and-lounge'
@@ -12,10 +11,10 @@ import { Button } from '@yaksok/ui'
 export default function GeneralForumPage() {
   useUpdateToken()
   const { portalRef, isOpen, setIsOpen } = usePortal()
-  const { push } = useFlow()
+  const { replace } = useFlow()
 
   return (
-    <AppLayout>
+    <>
       <AppScreen
         appBar={{
           title: '자유게시판',
@@ -31,9 +30,11 @@ export default function GeneralForumPage() {
               setIsOpen={setIsOpen}
             />
           ),
+          backButton: { render: () => null },
+          closeButton: { render: () => null },
         }}
       >
-        <main className="relative overflow-auto scroll-auto">
+        <main className="relative overflow-auto scroll-auto pb-22">
           <LoungeAndMagazineTab<LoungeCategoryKey>
             tab="All"
             tabList={['All', 'QUESTION', 'REVIEW', 'DIALY']}
@@ -46,7 +47,7 @@ export default function GeneralForumPage() {
               size="fit"
               className="flex items-center justify-center gap-1 text-subhead1 shadow-box"
               onClick={() => {
-                push('GeneralForumWritePage', {})
+                replace('GeneralForumWritePage', {})
               }}
             >
               <Pencil size={20} />글 작성하기
@@ -54,8 +55,7 @@ export default function GeneralForumPage() {
           </div>
         </main>
       </AppScreen>
-
       <Portal />
-    </AppLayout>
+    </>
   )
 }

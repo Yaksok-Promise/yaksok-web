@@ -29,7 +29,6 @@ export const useAutoplayProgress = <ProgressElement extends HTMLElement | null>(
     node.style.animationName = 'none'
     node.style.transform = 'translate3d(0,0,0)'
 
-    console.log(timeUntilNext)
     rafId.current = window.requestAnimationFrame(() => {
       timeoutId.current = window.setTimeout(() => {
         node.style.animationName = animationName.current
