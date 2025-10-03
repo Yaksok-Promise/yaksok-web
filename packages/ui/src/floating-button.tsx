@@ -1,5 +1,5 @@
-import React, { ComponentPropsWithoutRef } from 'react'
 import { cn } from '@yaksok/utils'
+import React, { ComponentPropsWithoutRef } from 'react'
 
 export type FloatingButtonProps = ComponentPropsWithoutRef<'div'> & {
   inView: boolean

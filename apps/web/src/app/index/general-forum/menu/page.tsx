@@ -16,7 +16,7 @@ type GeneralForumMenuPageProps = {
 export default function GeneralForumMenuPage({
   params: { tab },
 }: GeneralForumMenuPageProps) {
-  const { pop } = useFlow()
+  const { replace } = useFlow()
   return (
     <AppLayout>
       <AppScreen
@@ -29,7 +29,13 @@ export default function GeneralForumMenuPage({
           backButton: {
             renderIcon: () => <ChevronLeft size={24} stroke="white" />,
             onClick: () => {
-              pop()
+              replace('GeneralForumPage', {})
+            },
+          },
+          closeButton: {
+            renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+            onClick: () => {
+              replace('GeneralForumPage', {})
             },
           },
         }}

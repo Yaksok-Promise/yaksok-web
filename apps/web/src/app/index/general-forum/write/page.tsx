@@ -8,7 +8,7 @@ import { ChevronLeft } from '@yaksok/icons'
 import { TipTapContext } from '@yaksok/ui'
 
 export default function GeneralForumWritePage() {
-  const { pop } = useFlow()
+  const { replace } = useFlow()
   return (
     <AppLayout>
       <TipTapContext>
@@ -23,7 +23,13 @@ export default function GeneralForumWritePage() {
             backButton: {
               renderIcon: () => <ChevronLeft size={24} stroke="white" />,
               onClick: () => {
-                pop()
+                replace('GeneralForumPage', {})
+              },
+            },
+            closeButton: {
+              renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+              onClick: () => {
+                replace('GeneralForumPage', {})
               },
             },
           }}

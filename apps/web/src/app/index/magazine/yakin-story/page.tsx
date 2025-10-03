@@ -1,7 +1,10 @@
 import { BottomsheetLikeBackground } from '@/components/common/bottomsheet-like-background'
+import { useFlow } from '@/utils/stackflow'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { ChevronLeft } from '@yaksok/icons'
 
 export default function MagazineYakinStoryPage() {
+  const { replace } = useFlow()
   return (
     <AppScreen
       appBar={{
@@ -10,6 +13,27 @@ export default function MagazineYakinStoryPage() {
         iconColor: '#ffffff',
         backgroundColor: '#000000',
         border: false,
+        backButton: {
+          renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+          onClick: () => {
+            replace('MagazineListPage', {})
+          },
+        },
+        closeButton: {
+          renderIcon: () => <ChevronLeft size={24} stroke="white" />,
+          onClick: () => {
+            replace('MagazineListPage', {})
+          },
+        },
+        renderLeft: () => (
+          <button
+            onClick={() => {
+              replace('MagazineListPage', {})
+            }}
+          >
+            <ChevronLeft size={24} stroke="white" />
+          </button>
+        ),
       }}
     >
       <BottomsheetLikeBackground>
